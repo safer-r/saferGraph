@@ -1,0 +1,191 @@
+######## prior_plot() #### set graph param before plotting (erase axes for instance)
+
+#' @title prior_plot
+#' @description
+#' Very convenient to erase the axes for post plot axis redrawing using fun_post_plot().
+#' 
+#' Reinitialize and set the graphic parameters before plotting.
+#' 
+#' CANNOT be used if no graphic device already opened.
+#' 
+#' @param param.reinitial Reinitialize graphic parameters before applying the new ones, as defined by the other arguments? Either TRUE or FALSE.
+#' @param xlog.scale Log scale for the x-axis? Either TRUE or FALSE. If TRUE, erases the x-axis, except legend, for further drawing by fun_post_plot()(xlog argument of par()).
+#' @param ylog.scale Log scale for the y-axis? Either TRUE or FALSE. If TRUE, erases the y-axis, except legend, for further drawing by fun_post_plot()(ylog argument of par()).
+#' @param remove.label Remove labels (axis legend) of the two axes? Either TRUE or FALSE (ann argument of par()).
+#' @param remove.x.axis Remove x-axis except legend? Either TRUE or FALSE (control the xaxt argument of par()). Automately set to TRUE if xlog.scale == TRUE.
+#' @param remove.y.axis Remove y-axis except legend? Either TRUE or FALSE (control the yaxt argument of par()). Automately set to TRUE if ylog.scale == TRUE.
+#' @param std.x.range Standard range on the x-axis? TRUE (no range extend) or FALSE (4% range extend). Controls xaxs argument of par() (TRUE is xaxs = "i", FALSE is xaxs = "r").
+#' @param std.y.range Standard range on the y-axis? TRUE (no range extend) or FALSE (4% range extend). Controls yaxs argument of par() (TRUE is yaxs = "i", FALSE is yaxs = "r").
+#' @param down.space Lower vertical margin (in inches, mai argument of par()).
+#' @param left.space Left horizontal margin (in inches, mai argument of par()).
+#' @param up.space Upper vertical margin between plot region and grapical window (in inches, mai argument of par()).
+#' @param right.space Right horizontal margin (in inches, mai argument of par()).
+#' @param orient Scale number orientation (las argument of par()). 0, always parallel to the axis; 1, always horizontal; 2, always perpendicular to the axis; 3, always vertical.
+#' @param dist.legend Numeric value that moves axis legends away in inches (first number of mgp argument of par() but in inches thus / 0.2).
+#' @param tick.length Length of the ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc. 0 means no tick.
+#' @param box.type Bty argument of par(). Either "o", "l", "7", "c", "u", "]", the resulting box resembles the corresponding upper case letter. A value of "n" suppresses the box.
+#' @param amplif.label Increase or decrease the size of the text in legends.
+#' @param amplif.axis Increase or decrease the size of the scale numbers in axis.
+#' @param display.extend Extend display beyond plotting region? Either TRUE or FALSE (xpd argument of par() without NA).
+#' @param return.par Return graphic parameter modification?
+#' @returns Graphic parameter modification.
+#' @details 
+#' REQUIRED PACKAGES
+#' 
+#' none
+#' 
+#' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
+#' 
+#' fun_check()
+#'
+#' @examples
+#' fun_prior_plot(param.reinitial = FALSE, xlog.scale = FALSE, ylog.scale = FALSE, remove.label = TRUE, remove.x.axis = TRUE, remove.y.axis = TRUE, std.x.range = TRUE, std.y.range = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 4.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = FALSE)
+#' @export
+prior_plot <- function(
+        param.reinitial = FALSE, 
+        xlog.scale = FALSE, 
+        ylog.scale = FALSE, 
+        remove.label = TRUE, 
+        remove.x.axis = TRUE, 
+        remove.y.axis = TRUE, 
+        std.x.range = TRUE, 
+        std.y.range = TRUE, 
+        down.space = 1, 
+        left.space = 1, 
+        up.space = 1, 
+        right.space = 1, 
+        orient = 1, 
+        dist.legend = 3.5, 
+        tick.length = 0.5, 
+        box.type = "n", 
+        amplif.label = 1, 
+        amplif.axis = 1, 
+        display.extend = FALSE, 
+        return.par = FALSE
+){
+    # DEBUGGING
+    # param.reinitial = FALSE ; xlog.scale = FALSE ; ylog.scale = FALSE ; remove.label = TRUE ; remove.x.axis = TRUE ; remove.y.axis = TRUE ; std.x.range = TRUE ; std.y.range = TRUE ; down.space = 1 ; left.space = 1 ; up.space = 1 ; right.space = 1 ; orient = 1 ; dist.legend = 4.5 ; tick.length = 0.5 ; box.type = "n" ; amplif.label = 1 ; amplif.axis = 1 ; display.extend = FALSE ; return.par = FALSE # for function debugging
+    # function name
+    function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
+    # end function name
+    # required function checking
+    if(length(utils::find("fun_check", mode = "function")) == 0L){
+        tempo.cat <- paste0("ERROR IN ", function.name, ": REQUIRED fun_check() FUNCTION IS MISSING IN THE R ENVIRONMENT")
+        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    }
+    # end required function checking
+    # argument checking
+    arg.check <- NULL #
+    text.check <- NULL #
+    checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
+    ee <- expression(arg.check <- c(arg.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    tempo <- fun_check(data = param.reinitial, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = xlog.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = ylog.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = remove.label, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = remove.x.axis, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = remove.y.axis, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = std.x.range, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = std.y.range, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = down.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = left.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = up.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = right.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = orient, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = box.type, options = c("o", "l", "7", "c", "u", "]", "n"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = amplif.label, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = amplif.axis, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = display.extend, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = return.par, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    if( ! is.null(arg.check)){
+        if(any(arg.check) == TRUE){
+            stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+        }
+    }
+    # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
+    # end argument checking
+    # main code
+    if(is.null(dev.list())){
+        tempo.cat <- paste0("ERROR IN ", function.name, ": THIS FUNCTION CANNOT BE USED IF NO GRAPHIC DEVICE ALREADY OPENED (dev.list() IS CURRENTLY NULL)")
+        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    }
+    # par.ini recovery
+    # cannot use pdf(file = NULL), because some small differences between pdf() and other devices. For instance, differences with windows() for par()$fin, par()$pin and par()$plt
+    if(param.reinitial == TRUE){
+        if( ! all(names(dev.cur()) == "null device")){
+            active.wind.nb <- dev.cur()
+        }else{
+            active.wind.nb <- 0
+        }
+        if(Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
+            grDevices::windows()
+            ini.par <- par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+            invisible(dev.off()) # close the new window
+        }else if(Sys.info()["sysname"] == "Linux"){
+            if(file.exists(paste0(getwd(), "/Rplots.pdf"))){
+                tempo.cat <- paste0("ERROR IN ", function.name, ": THIS FUNCTION CANNOT BE USED ON LINUX WITH param.reinitial SET TO TRUE IF A Rplots.pdf FILE ALREADY EXISTS HERE: ", getwd())
+                stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            }else{
+                open.fail <- suppressWarnings(try(grDevices::X11(), silent = TRUE))[] # try to open a X11 window. If open.fail == NULL, no problem, meaning that the X11 window is opened. If open.fail != NULL, a pdf can be opened here paste0(getwd(), "/Rplots.pdf")
+                if(is.null(open.fail)){
+                    ini.par <- par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+                    invisible(dev.off()) # close the new window
+                }else if(file.exists(paste0(getwd(), "/Rplots.pdf"))){
+                    ini.par <- par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+                    invisible(dev.off()) # close the new window
+                    file.remove(paste0(getwd(), "/Rplots.pdf")) # remove the pdf file
+                }else{
+                    tempo.cat <- ("ERROR IN fun_prior_plot()\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN")
+                    stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                }
+            }
+        }else{ # macOS
+            grDevices::quartz()
+            ini.par <- par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened)
+            invisible(dev.off()) # close the new window
+        }
+        if( ! all(names(dev.cur()) == "null device")){
+            invisible(dev.set(active.wind.nb)) # go back to the active window if exists
+            par(ini.par) # apply the initial par to current window
+        }
+    }
+    # end par.ini recovery
+    if(remove.x.axis == TRUE){
+        par(xaxt = "n") # suppress the y-axis label
+    }else{
+        par(xaxt = "s")
+    }
+    if(remove.y.axis == TRUE){
+        par(yaxt = "n") # suppress the y-axis label
+    }else{
+        par(yaxt = "s")
+    }
+    if(std.x.range == TRUE){
+        par(xaxs = "i")
+    }else{
+        par(xaxs = "r")
+    }
+    if(std.y.range == TRUE){
+        par(yaxs = "i")
+    }else{
+        par(yaxs = "r")
+    }
+    par(mai = c(down.space, left.space, up.space, right.space), ann = ! remove.label, las = orient, mgp = c(dist.legend/0.2, 1, 0), xpd = display.extend, bty= box.type, cex.lab = amplif.label, cex.axis = amplif.axis)
+    par(tcl = -par()$mgp[2] * tick.length) # tcl gives the length of the ticks as proportion of line text, knowing that mgp is in text lines. So the main ticks are a 0.5 of the distance of the axis numbers by default. The sign provides the side of the tick (negative for outside of the plot region)
+    if(xlog.scale == TRUE){
+        par(xaxt = "n", xlog = TRUE) # suppress the x-axis label
+    }else{
+        par(xlog = FALSE)
+    }
+    if(ylog.scale == TRUE){
+        par(yaxt = "n", ylog = TRUE) # suppress the y-axis label
+    }else{
+        par(ylog = FALSE)
+    }
+    if(return.par == TRUE){
+        tempo.par <- par()
+        return(tempo.par)
+    }
+}
