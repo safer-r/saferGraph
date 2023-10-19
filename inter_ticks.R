@@ -1,38 +1,48 @@
 ######## inter_ticks() #### define coordinates of secondary ticks
 
+# todo list check OK
+# Check r_debugging_tools-v1.4.R
+# Check fun_test() 20201107 (see cute_checks.docx)
+# example sheet
+# check all and any OK
+# -> clear to go Apollo
+# -> transferred into the cute package
+
 #' @title inter_ticks
 #' @description
 #' Define coordinates and values of secondary ticks.
 #' @param lim Vector of 2 numbers indicating the limit range of the axis. Order of the 2 values matters (for inverted axis). If log argument is "log2" or "log10", values in lim must be already log transformed. Thus, negative or zero values are allowed.
-#' @param log Either "log2" (values in the lim argument are log2 transformed) or "log10" (values in the lim argument are log10 transformed), or "no".
+#' @param log Single character string. Either "log2" (values in the lim argument are log2 transformed) or "log10" (values in the lim argument are log10 transformed), or "no".
 #' @param breaks Mandatory vector of numbers indicating the main ticks values/positions when log argument is "no". Ignored when log argument is "log2" or "log10".
-#' @param n Number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".
-#' @param warn.print Logical. Print potential warning messages at the end of the execution? If FALSE, warning messages are never printed, but can still be recovered in the returned list.
+#' @param n Single numeric value. Number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".
+#' @param warn.print Single logical value. Print potential warning messages at the end of the execution? If FALSE, warning messages are never printed, but can still be recovered in the returned list.
 #' @returns 
 #' A list containing :
 #' 
-#' - $log: value of the log argument used
-#' - $coordinates: the coordinates of the secondary ticks on the axis, between the lim values
-#' - $values: the corresponding values associated to each coordinate (with log scale, 2^$values or 10^$values is equivalent to the labels of the axis)
-# - $warn: the potential warning messages. Use cat() for proper display. NULL if no warning
+#' - $log: value of the log argument used.
+#' - $coordinates: the coordinates of the secondary ticks on the axis, between the lim values.
+#' - $values: the corresponding values associated to each coordinate (with log scale, 2^$values or 10^$values is equivalent to the labels of the axis).
+#' - $warn: the potential warning messages. Use cat() for proper display. NULL if no warning.
 #' @details 
 #' REQUIRED PACKAGES
 #' 
 #' none
 #' 
+#' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
 #' fun_check()
-#'
 #' @examples
 #' # no log scale
 #' 
 #' fun_inter_ticks(lim = c(-4,4), log = "no", breaks = c(-2, 0, 2), n = 3)
 #' fun_inter_ticks(lim = c(10, 0), log = "no", breaks = c(10, 8, 6, 4, 2, 0), n = 4)
 #' 
+#' 
 #' # log2
 #' 
 #' fun_inter_ticks(lim = c(-4,4), log = "log2")
+#' 
 #' 
 #' # log10
 #' 
@@ -52,16 +62,22 @@ fun_inter_ticks <- function(
     # lim = c(-10, -20); log = "no"; breaks = c(-20, -15, -10); n = 4 # for function debugging
     # function name
     function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
+    arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
+    arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
     # required function checking
     req.function <- c(
         "fun_check"
     )
+    tempo <- NULL
     for(i1 in req.function){
         if(length(find(i1, mode = "function")) == 0L){
-            tempo.cat <- paste0("ERROR IN ", function.name, "\nREQUIRED ", i1, "() FUNCTION IS MISSING IN THE R ENVIRONMENT")
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            tempo <- c(tempo, i1)
         }
+    }
+    if( ! is.null(tempo)){
+        tempo.cat <- paste0("ERROR IN ", function.name, "\nREQUIRED cute FUNCTION", ifelse(length(tempo) > 1, "S ARE", " IS"), " MISSING IN THE R ENVIRONMENT:\n", paste0(tempo, collapse = "()\n"))
+        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end required function checking
     # argument primary checking
@@ -69,9 +85,9 @@ fun_inter_ticks <- function(
     mandat.args <- c(
         "lim"
     )
-    tempo <- eval(parse(text = paste0("c(missing(", paste0(mandat.args, collapse = "), missing("), "))")))
+    tempo <- eval(parse(text = paste0("missing(", paste0(mandat.args, collapse = ") | missing("), ")")))
     if(any(tempo)){ # normally no NA for missing() output
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", " HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args[tempo], collapse = "\n"))
+        tempo.cat <- paste0("ERROR IN ", function.name, "\nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", "HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end arg with no default values
@@ -90,7 +106,7 @@ fun_inter_ticks <- function(
     }
     tempo <- fun_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(arg.check)){
-        if(any(arg.check) == TRUE){
+        if(any(arg.check, na.rm = TRUE) == TRUE){
             stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
@@ -98,19 +114,32 @@ fun_inter_ticks <- function(
     # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
     # end argument primary checking
     # second round of checking and data preparation
-    # management of NA
-    if(any(is.na(lim)) | any(is.na(log)) | any(is.na(breaks)) | any(is.na(n)) | any(is.na(warn.print))){
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nNO ARGUMENT CAN HAVE NA VALUES")
+    # management of NA arguments
+    if( ! (all(class(arg.user.setting) == "list", na.rm = TRUE) & length(arg.user.setting) == 0)){
+        tempo.arg <- names(arg.user.setting) # values provided by the user
+        tempo.log <- suppressWarnings(sapply(lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.na), FUN = any)) & lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
+        if(any(tempo.log) == TRUE){ # normally no NA because is.na() used here
+            tempo.cat <- paste0("ERROR IN ", function.name, "\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", paste0(tempo.arg[tempo.log], collapse = "\n"))
+            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        }
+    }
+    # end management of NA arguments
+    # management of NULL arguments
+    tempo.arg <-c(
+        "lim", 
+        "log", 
+        # "breaks", # inactivated because can be null
+        # "n", # inactivated because can be null
+        "warn.print" 
+    )
+    tempo.log <- sapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.null)
+    if(any(tempo.log) == TRUE){# normally no NA with is.null()
+        tempo.cat <- paste0("ERROR IN ", function.name, ":\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
-    # end management of NA
-    # management of NULL
-    if(is.null(lim) | is.null(log)){
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nTHESE ARGUMENTS\nlim\nlog\nCANNOT BE NULL")
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
-    }
-    # end management of NULL
-    if(all(diff(lim) == 0L)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
+    # end management of NULL arguments
+    
+    if(all(diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
         tempo.cat <- paste0("ERROR IN ", function.name, "\nlim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES): ", paste(lim, collapse = " "))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }else if(any(lim %in% c(Inf, -Inf))){
@@ -137,7 +166,22 @@ fun_inter_ticks <- function(
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
+    # code that protects set.seed() in the global environment
+    # end code that protects set.seed() in the global environment
+    
+    # warning initiation
+    # end warning initiation
+    
+    # other checkings
+    # end other checkings
+    
+    # reserved word checking
+    # end reserved word checking
+    
     # end second round of checking and data preparation
+    
+    # package checking
+    # end package checking
     # main code
     ini.warning.length <- options()$warning.length
     options(warning.length = 8170)
@@ -181,7 +225,7 @@ fun_inter_ticks <- function(
         tick.pos <- tick.pos[tick.pos >= min(lim) & tick.pos <= max(lim)]
         tick.values <- tick.pos
     }
-    if(any(is.na(tick.pos) | ! is.finite(tick.pos))){ 
+    if(any(is.na(tick.pos) | ! is.finite(tick.pos), na.rm = TURE)){ 
         tempo.cat <- paste0("INTERNAL CODE ERROR IN ", function.name, ": NA or Inf GENERATED FOR THE INTER TICK POSITIONS: ", paste(tick.pos, collapse = " "))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n", ifelse(is.null(warn), "", paste0("IN ADDITION\nWARNING", ifelse(warn.count > 1, "S", ""), ":\n\n", warn))), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
@@ -190,10 +234,13 @@ fun_inter_ticks <- function(
         tempo.warn <- paste0("(", warn.count,") NO INTER TICKS COMPUTED BETWEEN THE LIMITS INDICATED: ", paste(lim, collapse = " "))
         warn <- paste0(ifelse(is.null(warn), tempo.warn, paste0(warn, "\n\n", tempo.warn)))
     }
+    # output
     output <- list(log = log, coordinates = tick.pos, values = tick.values, warn = warn)
     if(warn.print == TRUE & ! is.null(warn)){
         on.exit(warning(paste0("FROM ", function.name, ":\n\n", warn), call. = FALSE)) # to recover the warning messages, see $warn
     }
     on.exit(exp = options(warning.length = ini.warning.length), add = TRUE)
     return(output)
+    # end output
+    # end main code
 }

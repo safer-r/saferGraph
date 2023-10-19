@@ -1,11 +1,19 @@
 ######## scale() #### select nice label numbers when setting number of ticks on an axis
 
+# todo list check OK
+# Check r_debugging_tools-v1.4.R
+# Check fun_test() 20201107 (see cute_checks.docx)
+# example sheet
+# check all and any OK
+# -> clear to go Apollo
+# -> transferred into the cute package
+
 #' @title scale
 #' @description
 #' Attempt to select nice scale numbers when setting n ticks on a lim axis range.
 #' @param n Desired number of main ticks on the axis (integer above 0).
 #' @param lim Vector of 2 numbers indicating the limit range of the axis. Order of the 2 values matters (for inverted axis). Can be log transformed values.
-#' @param kind Either "approx" (approximative), "strict" (strict) or "strict.cl" (strict clean). If "approx", use the scales::trans_breaks() function to provide an easy to read scale of approximately n ticks spanning the range of the lim argument. If "strict", cut the range of the lim argument into n + 1 equidistant part and return the n numbers at each boundary. This often generates numbers uneasy to read. If "strict.cl", provide an easy to read scale of exactly n ticks, but sometimes not completely spanning the range of the lim argument.
+#' @param kind Single character string. Either "approx" (approximative), "strict" (strict) or "strict.cl" (strict clean). If "approx", use the scales::trans_breaks() function to provide an easy to read scale of approximately n ticks spanning the range of the lim argument. If "strict", cut the range of the lim argument into n + 1 equidistant part and return the n numbers at each boundary. This often generates numbers uneasy to read. If "strict.cl", provide an easy to read scale of exactly n ticks, but sometimes not completely spanning the range of the lim argument.
 #' @param lib.path Character vector specifying the absolute pathways of the directories containing the required packages if not in the default directories. Ignored if NULL.
 #' @returns A vector of numbers.
 #' @details 
@@ -16,6 +24,7 @@
 #' ggplot2
 #' 
 #' scales
+#' 
 #' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
@@ -35,6 +44,7 @@
 #' par(yaxt = "s") ; 
 #' axis(side = 2, at = scale)
 #' 
+#' 
 #' # strict number of main ticks
 #' 
 #' ymin = 2 ; 
@@ -46,6 +56,7 @@
 #' plot(ymin:ymax, ymin:ymax, xlim = range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
 #' par(yaxt = "s") ; 
 #' axis(side = 2, at = scale)
+#' 
 #' 
 #' # strict "clean" number of main ticks
 #' 
@@ -59,6 +70,7 @@
 #' par(yaxt = "s") ; 
 #' axis(side = 2, at = scale)
 #' 
+#' 
 #' # approximate number of main ticks, scale inversion
 #' 
 #' ymin = 3.101 ; 
@@ -70,27 +82,59 @@
 #' plot(ymin:ymax, ymin:ymax, xlim = range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
 #' par(yaxt = "s") ; 
 #' axis(side = 2, at = scale)
+#' @importFrom ggplot2 ggplot_build
+#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 scale_y_continuous
+#' @importFrom scales trans_breaks
 #' @export
-fun_scale <- function(n, lim, kind = "approx", lib.path = NULL){
-    
+fun_scale <- function(
+        n, 
+        lim, 
+        kind = "approx", 
+        lib.path = NULL
+){
     # DEBUGGING
     # n = 9 ; lim = c(2, 3.101) ; kind = "approx" ; lib.path = NULL # for function debugging
     # n = 10 ; lim = c(1e-4, 1e6) ; kind = "approx" ; lib.path = NULL # for function debugging
     # function name
     function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
+    arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
+    arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
     # end initial argument checking
     # required function checking
-    if(length(utils::find("fun_check", mode = "function")) == 0L){
-        tempo.cat <- paste0("ERROR IN ", function.name, ": REQUIRED fun_check() FUNCTION IS MISSING IN THE R ENVIRONMENT")
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    req.function <- c(
+        "fun_check", 
+        "fun_round"
+    )
+    tempo <- NULL
+    for(i1 in req.function){
+        if(length(find(i1, mode = "function")) == 0L){
+            tempo <- c(tempo, i1)
+        }
     }
-    if(length(utils::find("fun_round", mode = "function")) == 0L){
-        tempo.cat <- paste0("ERROR IN ", function.name, ": REQUIRED fun_round() FUNCTION IS MISSING IN THE R ENVIRONMENT")
+    if( ! is.null(tempo)){
+        tempo.cat <- paste0("ERROR IN ", function.name, "\nREQUIRED cute FUNCTION", ifelse(length(tempo) > 1, "S ARE", " IS"), " MISSING IN THE R ENVIRONMENT:\n", paste0(tempo, collapse = "()\n"))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end required function checking
-    # argument checking
+    
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
+    
+    # arg with no default values
+    mandat.args <- c(
+        "n", 
+        "lim"
+    )
+    tempo <- eval(parse(text = paste0("missing(", paste0(mandat.args, collapse = ") | missing("), ")")))
+    if(any(tempo)){ # normally no NA for missing() output
+        tempo.cat <- paste0("ERROR IN ", function.name, "\nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", "HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
+        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    }
+    # end arg with no default values
+    
+    # argument primary checking
     arg.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
@@ -102,7 +146,7 @@ fun_scale <- function(n, lim, kind = "approx", lib.path = NULL){
         arg.check <- c(arg.check, TRUE) # 
     }
     tempo <- fun_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
-    if(tempo$problem == FALSE & all(diff(lim) == 0L)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
+    if(tempo$problem == FALSE & all(diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
         tempo.cat <- paste0("ERROR IN ", function.name, ": lim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES)")
         text.check <- c(text.check, tempo.cat)
         arg.check <- c(arg.check, TRUE)
@@ -115,7 +159,7 @@ fun_scale <- function(n, lim, kind = "approx", lib.path = NULL){
     if( ! is.null(lib.path)){
         tempo <- fun_check(data = lib.path, class = "vector", mode = "character", fun.name = function.name) ; eval(ee)
         if(tempo$problem == FALSE){
-            if( ! all(dir.exists(lib.path))){ # separation to avoid the problem of tempo$problem == FALSE and lib.path == NA
+            if( ! all(dir.exists(lib.path), na.rm = TRUE)){ # separation to avoid the problem of tempo$problem == FALSE and lib.path == NA
                 tempo.cat <- paste0("ERROR IN ", function.name, ": DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", paste(lib.path, collapse = "\n"))
                 text.check <- c(text.check, tempo.cat)
                 arg.check <- c(arg.check, TRUE)
@@ -123,13 +167,53 @@ fun_scale <- function(n, lim, kind = "approx", lib.path = NULL){
         }
     }
     if( ! is.null(arg.check)){
-        if(any(arg.check) == TRUE){
+        if(any(arg.check, na.rm = TRUE) == TRUE){
             stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # end argument checking with fun_check()
+    # end argument primary checking with fun_check()
     # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
-    # end argument checking
+    # end argument primary checking
+    
+    # second round of checking and data preparation
+    # management of NA arguments
+    if( ! (all(class(arg.user.setting) == "list", na.rm = TRUE) & length(arg.user.setting) == 0)){
+        tempo.arg <- names(arg.user.setting) # values provided by the user
+        tempo.log <- suppressWarnings(sapply(lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.na), FUN = any)) & lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
+        if(any(tempo.log) == TRUE){ # normally no NA because is.na() used here
+            tempo.cat <- paste0("ERROR IN ", function.name, "\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", paste0(tempo.arg[tempo.log], collapse = "\n"))
+            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        }
+    }
+    # end management of NA arguments
+    
+    # management of NULL arguments
+    tempo.arg <-c(
+        "n", 
+        "lim", 
+        "kind"
+        # "lib.path" = NULL # inactivated because can be null
+    )
+    tempo.log <- sapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.null)
+    if(any(tempo.log) == TRUE){# normally no NA with is.null()
+        tempo.cat <- paste0("ERROR IN ", function.name, ":\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    }
+    # end management of NULL arguments
+    
+    # code that protects set.seed() in the global environment
+    # end code that protects set.seed() in the global environment
+    
+    # warning initiation
+    # end warning initiation
+    
+    # other checkings
+    # end other checkings
+    
+    # reserved word checking
+    # end reserved word checking
+    # end second round of checking and data preparation
+
     # main code
     lim.rank <- rank(lim) # to deal with inverted axis
     lim <- sort(lim)
@@ -168,15 +252,13 @@ fun_scale <- function(n, lim, kind = "approx", lib.path = NULL){
         round.vec <- c(5, 4, 3, 2.5, 2, 1.25, 1)
         dec.table <- outer(log10.vec, round.vec) # table containing the scale units (row: power of ten from -201 to +199, column: the 5, 2.5, 2, 1.25, 1 notches
         
-        
-        
         # recover the number of leading zeros in tempo.inter
         ini.scipen <- options()$scipen
         options(scipen = -1000) # force scientific format
-        if(any(grepl(pattern = "\\+", x = tempo.inter))){ # tempo.inter > 1
+        if(any(grepl(pattern = "\\+", x = tempo.inter), na.rm = TRUE)){ # tempo.inter > 1
             power10.exp <- as.integer(substring(text = tempo.inter, first = (regexpr(pattern = "\\+", text = tempo.inter) + 1))) # recover the power of 10. Example recover 08 from 1e+08
             mantisse <- as.numeric(substr(x = tempo.inter, start = 1, stop = (regexpr(pattern = "\\+", text = tempo.inter) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
-        }else if(any(grepl(pattern = "\\-", x = tempo.inter))){ # tempo.inter < 1
+        }else if(any(grepl(pattern = "\\-", x = tempo.inter), na.rm = TRUE)){ # tempo.inter < 1
             power10.exp <- as.integer(substring(text = tempo.inter, first = (regexpr(pattern = "\\-", text = tempo.inter)))) # recover the power of 10. Example recover 08 from 1e+08
             mantisse <- as.numeric(substr(x = tempo.inter, start = 1, stop = (regexpr(pattern = "\\-", text = tempo.inter) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
         }else{
@@ -239,7 +321,7 @@ fun_scale <- function(n, lim, kind = "approx", lib.path = NULL){
             tempo.cat <- paste0("ERROR IN ", function.name, ": CODE INCONSISTENCY 4")
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
-        if(any(is.na(output))){
+        if(any(is.na(output), na.rm = TRUE)){
             tempo.cat <- paste0("ERROR IN ", function.name, ": CODE INCONSISTENCY 5 (NA GENERATION)")
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
@@ -251,6 +333,9 @@ fun_scale <- function(n, lim, kind = "approx", lib.path = NULL){
     if(diff(lim.rank) < 0){
         output <- rev(output)
     }
+    # output
     return(output)
+    # end output
+    # end main code
 }
 

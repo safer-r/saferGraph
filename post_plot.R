@@ -1,5 +1,13 @@
 ######## post_plot() #### set graph param after plotting (axes redesign for instance)
 
+# todo list check OK
+# Check r_debugging_tools-v1.4.R
+# Check fun_test() 20201107 (see cute_checks.docx)
+# example sheet 
+# check all and any OK
+# -> clear to go Apollo
+# -> transferred into the cute package
+
 #' @title post_plot
 #' @description
 #' Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs (see below).
@@ -38,33 +46,34 @@
 #' @param custom.par List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par.reset == TRUE, the default par() parameters are used.
 #' @returns 
 #' A list containing: 
-#' - $x.mid.left.dev.region: middle of the left margin of the device region, in coordinates of the x-axis
-#' - $x.left.dev.region: left side of the left margin (including the potential margin of the device region), in coordinates of the x-axis
-#' - $x.mid.right.dev.region: middle of the right margin of the device region, in coordinates of the x-axis
-#' - $x.right.dev.region: right side of the right margin (including the potential margin of the device region), in coordinates of the x-axis
-#' - $x.mid.left.fig.region: middle of the left margin of the figure region, in coordinates of the x-axis
-#' - $x.left.fig.region: left side of the left margin, in coordinates of the x-axis
-#' - $x.mid.right.fig.region: middle of the right margin of the figure region, in coordinates of the x-axis
-#' - $x.right.fig.region: right side of the right margin, in coordinates of the x-axis
-#' - $x.left.plot.region: left side of the plot region, in coordinates of the x-axis
-#' - $x.right.plot.region: right side of the plot region, in coordinates of the x-axis
-#' - $x.mid.plot.region: middle of the plot region, in coordinates of the x-axis
-#' - $y.mid.bottom.dev.region: middle of the bottom margin of the device region, in coordinates of the y-axis
-#' - $y.bottom.dev.region: bottom side of the bottom margin (including the potential margin of the device region), in coordinates of the y-axis
-#' - $y.mid.top.dev.region: middle of the top margin of the device region, in coordinates of the y-axis
-#' - $y.top.dev.region: top side of the top margin (including the potential margin of the device region), in coordinates of the y-axis
-#' - $y.mid.bottom.fig.region: middle of the bottom margin of the figure region, in coordinates of the y-axis
-#' - $y.bottom.fig.region: bottom of the bottom margin of the figure region, in coordinates of the y-axis
-#' - $y.mid.top.fig.region: middle of the top margin of the figure region, in coordinates of the y-axis
-#' - $y.top.fig.region: top of the top margin of the figure region, in coordinates of the y-axis
-#' - $y.top.plot.region: top of the plot region, in coordinates of the y-axis
-#' - $y.bottom.plot.region: bottom of the plot region, in coordinates of the y-axis
-#' - $y.mid.plot.region: middle of the plot region, in coordinates of the y-axis
+#' - $x.mid.left.dev.region: middle of the left margin of the device region, in coordinates of the x-axis.
+#' - $x.left.dev.region: left side of the left margin (including the potential margin of the device region), in coordinates of the x-axis.
+#' - $x.mid.right.dev.region: middle of the right margin of the device region, in coordinates of the x-axis.
+#' - $x.right.dev.region: right side of the right margin (including the potential margin of the device region), in coordinates of the x-axis.
+#' - $x.mid.left.fig.region: middle of the left margin of the figure region, in coordinates of the x-axis.
+#' - $x.left.fig.region: left side of the left margin, in coordinates of the x-axis.
+#' - $x.mid.right.fig.region: middle of the right margin of the figure region, in coordinates of the x-axis.
+#' - $x.right.fig.region: right side of the right margin, in coordinates of the x-axis.
+#' - $x.left.plot.region: left side of the plot region, in coordinates of the x-axis.
+#' - $x.right.plot.region: right side of the plot region, in coordinates of the x-axis.
+#' - $x.mid.plot.region: middle of the plot region, in coordinates of the x-axis.
+#' - $y.mid.bottom.dev.region: middle of the bottom margin of the device region, in coordinates of the y-axis.
+#' - $y.bottom.dev.region: bottom side of the bottom margin (including the potential margin of the device region), in coordinates of the y-axis.
+#' - $y.mid.top.dev.region: middle of the top margin of the device region, in coordinates of the y-axis.
+#' - $y.top.dev.region: top side of the top margin (including the potential margin of the device region), in coordinates of the y-axis.
+#' - $y.mid.bottom.fig.region: middle of the bottom margin of the figure region, in coordinates of the y-axis.
+#' - $y.bottom.fig.region: bottom of the bottom margin of the figure region, in coordinates of the y-axis.
+#' - $y.mid.top.fig.region: middle of the top margin of the figure region, in coordinates of the y-axis.
+#' - $y.top.fig.region: top of the top margin of the figure region, in coordinates of the y-axis.
+#' - $y.top.plot.region: top of the plot region, in coordinates of the y-axis.
+#' - $y.bottom.plot.region: bottom of the plot region, in coordinates of the y-axis.
+#' - $y.mid.plot.region: middle of the plot region, in coordinates of the y-axis.
 #' - $text: warning text
 #' @details 
 #' REQUIRED PACKAGES
 #' 
 #' none
+#' 
 #' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
@@ -78,18 +87,21 @@
 #' plot(1:100, log = "y") ; 
 #' fun_post_plot(y.side = 2, y.log.scale = prior.par$ylog, x.lab = "Values", y.lab = "TEST", y.axis.size = 1.25, y.label.size = 1.5, y.dist.legend = 0.7, just.label.add = ! prior.par$ann)
 #' 
-#' # Example of log axis with redrawn x-axis and y-axis:
 #' 
+#' # Example of log axis with redrawn x-axis and y-axis:
+#'
 #' prior.par <- fun_prior_plot(param.reinitial = TRUE) ; 
 #' plot(1:100) ; 
 #' fun_post_plot(x.side = 1, x.lab = "Values", y.side = 2, y.lab = "TEST", y.axis.size = 1, y.label.size = 2, y.dist.legend = 0.6)
+#' 
 #' 
 #' # Example of title easily added to a plot:
 #' 
 #' plot(1:100) ; 
 #' para <- fun_post_plot(corner.text = "TITLE ADDED") 
 #' # try also: par(xpd = TRUE) ; text(x = para$x.mid.left.fig.region, y = para$y.mid.top.fig.region, labels = "TITLE ADDED", cex = 0.5)
-#' 
+#'
+#'
 #' # example with margins in the device region:
 #' 
 #' windows(5,5) ; 
@@ -140,18 +152,31 @@ fun_post_plot <- function(
     # x.side = 0 ; x.log.scale = FALSE ; x.categ = NULL ; x.categ.pos = NULL ; x.lab = "" ; x.axis.size = 1.5 ; x.label.size = 1.5 ; x.dist.legend = 1 ; x.nb.inter.tick = 1 ; y.side = 0 ; y.log.scale = FALSE ; y.categ = NULL ; y.categ.pos = NULL ; y.lab = "" ; y.axis.size = 1.5 ; y.label.size = 1.5 ; y.dist.legend = 0.7 ; y.nb.inter.tick = 1 ; text.angle = 90 ; tick.length = 0.5 ; sec.tick.length = 0.3 ; bg.color = NULL ; grid.lwd = NULL ; grid.col = "white" ; corner.text = "" ; corner.text.size = 1 ; just.label.add = FALSE ; par.reset = FALSE ; custom.par = NULL # for function debugging
     # function name
     function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
+    arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
+    arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
     # required function checking
-    if(length(utils::find("fun_check", mode = "function")) == 0L){
-        tempo.cat <- paste0("ERROR IN ", function.name, ": REQUIRED fun_check() FUNCTION IS MISSING IN THE R ENVIRONMENT")
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    req.function <- c(
+        "fun_check", 
+        "fun_open"
+    )
+    tempo <- NULL
+    for(i1 in req.function){
+        if(length(find(i1, mode = "function")) == 0L){
+            tempo <- c(tempo, i1)
+        }
     }
-    if(length(utils::find("fun_open", mode = "function")) == 0L){
-        tempo.cat <- paste0("ERROR IN ", function.name, ": REQUIRED fun_open() FUNCTION IS MISSING IN THE R ENVIRONMENT")
+    if( ! is.null(tempo)){
+        tempo.cat <- paste0("ERROR IN ", function.name, "\nREQUIRED cute FUNCTION", ifelse(length(tempo) > 1, "S ARE", " IS"), " MISSING IN THE R ENVIRONMENT:\n", paste0(tempo, collapse = "()\n"))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end required function checking
-    # argument checking
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
+    # arg with no default values
+    # end arg with no default values
+    
+    # argument primary checking
     arg.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
@@ -212,12 +237,80 @@ fun_post_plot <- function(
         tempo <- fun_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(arg.check)){
-        if(any(arg.check) == TRUE){
+        if(any(arg.check, na.rm = TRUE) == TRUE){
             stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
     # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
-    # end argument checking
+    # end argument primary checking
+    
+    # second round of checking and data preparation
+    # management of NA arguments
+    if( ! (all(class(arg.user.setting) == "list", na.rm = TRUE) & length(arg.user.setting) == 0)){
+        tempo.arg <- names(arg.user.setting) # values provided by the user
+        tempo.log <- suppressWarnings(sapply(lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.na), FUN = any)) & lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
+        if(any(tempo.log) == TRUE){ # normally no NA because is.na() used here
+            tempo.cat <- paste0("ERROR IN ", function.name, "\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", paste0(tempo.arg[tempo.log], collapse = "\n"))
+            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        }
+    }
+    # end management of NA arguments
+    
+    # management of NULL arguments
+    tempo.arg <-c(
+        "x.side", 
+        "x.log.scale", 
+        # "x.categ", # inactivated because can be null
+        # "x.categ.pos", # inactivated because can be null
+        "x.lab", 
+        "x.axis.size", 
+        "x.label.size", 
+        "x.dist.legend", 
+        "x.nb.inter.tick", 
+        "y.side", 
+        "y.log.scale", 
+        # "y.categ", # inactivated because can be null
+        # "y.categ.pos", # inactivated because can be null
+        "y.lab", 
+        "y.axis.size", 
+        "y.label.size", 
+        "y.dist.legend", 
+        "y.nb.inter.tick" , 
+        "text.angle", 
+        "tick.length", 
+        "sec.tick.length", 
+        # "bg.color", # inactivated because can be null
+        # "grid.lwd", # inactivated because can be null
+        "grid.col", 
+        "corner.text", 
+        "corner.text.size", 
+        "just.label.add", 
+        "par.reset"
+        # "custom.par" # inactivated because can be null
+    )
+    tempo.log <- sapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.null)
+    if(any(tempo.log) == TRUE){# normally no NA with is.null()
+        tempo.cat <- paste0("ERROR IN ", function.name, ":\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    }
+    # end management of NULL arguments
+    
+    # code that protects set.seed() in the global environment
+    # end code that protects set.seed() in the global environment
+    
+    # warning initiation
+    # end warning initiation
+    
+    # other checkings
+    # end other checkings
+    
+    # reserved word checking
+    # end reserved word checking
+    # end second round of checking and data preparation
+    
+    # package checking
+    # end package checking
+    
     # main code
     text <- NULL
     par(tcl = -par()$mgp[2] * tick.length)
@@ -287,10 +380,10 @@ fun_post_plot <- function(
         y.bottom.plot.region <- par("usr")[3] # in y coordinates, bottom of the plot region (according to y scale)
         y.mid.plot.region <- ((par("usr")[3] + par("usr")[4]) / 2) # in x coordinates, right of the plot region (according to x scale)
     }
-    if(any(sapply(FUN = all.equal, c(1, 3), x.side) == TRUE)){
+    if(any(sapply(FUN = all.equal, c(1, 3), x.side) == TRUE, na.rm = TRUE)){
         par(xpd=FALSE, xaxt="s")
         if(is.null(x.categ) & x.log.scale == TRUE){
-            if(any(par()$xaxp[1:2] == 0L)){ # any(sapply(FUN = all.equal, par()$xaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
+            if(any(par()$xaxp[1:2] == 0L, na.rm = TRUE)){ # any(sapply(FUN = all.equal, par()$xaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
                 if(par()$xaxp[1] == 0L){ # isTRUE(all.equal(par()$xaxp[1], 0)) not used because we strictly need zero as a result
                     par(xaxp = c(10^-30, par()$xaxp[2:3])) # because log10(par()$xaxp[1] == 0) == -Inf
                 }
@@ -343,10 +436,10 @@ fun_post_plot <- function(
     }else{
         x.text <- par("usr")[2]
     }
-    if(any(sapply(FUN = all.equal, c(2, 4), y.side) == TRUE)){
+    if(any(sapply(FUN = all.equal, c(2, 4), y.side) == TRUE, na.rm = TRUE)){
         par(xpd=FALSE, yaxt="s")
         if(is.null(y.categ) & y.log.scale == TRUE){
-            if(any(par()$yaxp[1:2] == 0L)){ # any(sapply(FUN = all.equal, par()$yaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
+            if(any(par()$yaxp[1:2] == 0L, na.rm = TRUE)){ # any(sapply(FUN = all.equal, par()$yaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
                 if(par()$yaxp[1] == 0L){ # strict zero needed
                     par(yaxp = c(10^-30, par()$yaxp[2:3])) # because log10(par()$yaxp[1] == 0) == -Inf
                 }
@@ -423,5 +516,8 @@ fun_post_plot <- function(
         }
     }
     output <- list(x.mid.left.dev.region = x.mid.left.dev.region, x.left.dev.region = x.left.dev.region, x.mid.right.dev.region = x.mid.right.dev.region, x.right.dev.region = x.right.dev.region, x.mid.left.fig.region = x.mid.left.fig.region, x.left.fig.region = x.left.fig.region, x.mid.right.fig.region = x.mid.right.fig.region, x.right.fig.region = x.right.fig.region, x.left.plot.region = x.left.plot.region, x.right.plot.region = x.right.plot.region, x.mid.plot.region = x.mid.plot.region, y.mid.bottom.dev.region = y.mid.bottom.dev.region, y.bottom.dev.region = y.bottom.dev.region, y.mid.top.dev.region = y.mid.top.dev.region, y.top.dev.region = y.top.dev.region, y.mid.bottom.fig.region = y.mid.bottom.fig.region, y.bottom.fig.region = y.bottom.fig.region, y.mid.top.fig.region = y.mid.top.fig.region, y.top.fig.region = y.top.fig.region, y.top.plot.region = y.top.plot.region, y.bottom.plot.region = y.bottom.plot.region, y.mid.plot.region = y.mid.plot.region, text = text)
+    # output
     return(output)
+    # end output
+    # end main code
 }
