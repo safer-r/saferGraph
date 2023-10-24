@@ -15,13 +15,13 @@
 #' Provide also positions for legend or additional text on the graph.
 #' 
 #' Use fun_prior_plot() before this function for initial inactivation of the axis drawings.
-#' @param x.side Axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.
-#' @param x.log.scale Log scale for the x-axis? Either TRUE or FALSE.
+#' @param x.side Single integer value indicating the axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.
+#' @param x.log.scale Single logical value. Log scale for the x-axis? Either TRUE or FALSE.
 #' @param x.categ Character vector representing the classes (levels()) to specify when the x-axis is qualititative(stripchart, boxplot).
 #' @param x.categ.pos Position of the classes names (numeric vector of identical length than x.categ). If left NULL, this will be 1:length(levels()).
 #' @param x.lab Label of the x-axis. If x.side == 0 and x.lab != "", then x.lab is printed.
-#' @param x.axis.size Positive numeric. Increase or decrease the size of the x axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
-#' @param x.label.size Positive numeric. Increase or decrease the size of the x axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
+#' @param x.axis.size Single positive numeric value indicating the increase or decrease the size of the x axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
+#' @param x.label.size Single positive numeric value indicating the increase or decrease the size of the x axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
 #' @param x.dist.legend Increase the number to move x-axis legends away in inches (first number of mgp argument of par() but in inches).
 #' @param x.nb.inter.tick Number of secondary ticks between main ticks on x-axis (only if not log scale). 0 means no secondary ticks.
 #' @param y.side Axis at the left (2) or right (4) of the region figure. Write 0 for no change.

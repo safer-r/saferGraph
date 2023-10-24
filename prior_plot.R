@@ -23,16 +23,16 @@
 #' @param remove.y.axis Single logical value. Remove y-axis except legend? Either TRUE or FALSE (control the yaxt argument of par()). Automately set to TRUE if ylog.scale == TRUE.
 #' @param std.x.range Single logical value. Standard range on the x-axis? TRUE (no range extend) or FALSE (4% range extend). Controls xaxs argument of par() (TRUE is xaxs = "i", FALSE is xaxs = "r").
 #' @param std.y.range Single logical value. Standard range on the y-axis? TRUE (no range extend) or FALSE (4% range extend). Controls yaxs argument of par() (TRUE is yaxs = "i", FALSE is yaxs = "r").
-#' @param down.space Lower vertical margin (in inches, mai argument of par()).
-#' @param left.space Left horizontal margin (in inches, mai argument of par()).
-#' @param up.space Upper vertical margin between plot region and grapical window (in inches, mai argument of par()).
-#' @param right.space Right horizontal margin (in inches, mai argument of par()).
-#' @param orient Scale number orientation (las argument of par()). 0, always parallel to the axis; 1, always horizontal; 2, always perpendicular to the axis; 3, always vertical.
-#' @param dist.legend Numeric value that moves axis legends away in inches (first number of mgp argument of par() but in inches thus / 0.2).
-#' @param tick.length Length of the ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc. 0 means no tick.
-#' @param box.type Bty argument of par(). Either "o", "l", "7", "c", "u", "]", the resulting box resembles the corresponding upper case letter. A value of "n" suppresses the box.
-#' @param amplif.label Increase or decrease the size of the text in legends.
-#' @param amplif.axis Increase or decrease the size of the scale numbers in axis.
+#' @param down.space Single positive numeric value indicating the lower vertical margin (in inches, mai argument of par()).
+#' @param left.space Single positive numeric value indicating the left horizontal margin (in inches, mai argument of par()).
+#' @param up.space Single positive numeric value indicating the upper vertical margin between plot region and grapical window (in inches, mai argument of par()).
+#' @param right.space Single positive numeric value indicating the right horizontal margin (in inches, mai argument of par()).
+#' @param orient Single positive numeric value indicating the scale number orientation (las argument of par()). 0, always parallel to the axis; 1, always horizontal; 2, always perpendicular to the axis; 3, always vertical.
+#' @param dist.legend Single positive numeric value that moves axis legends away in inches (first number of mgp argument of par() but in inches thus / 0.2).
+#' @param tick.length Single positive numeric value indicating the length of the ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc. 0 means no tick.
+#' @param box.type The bty argument of par(). Either "o", "l", "7", "c", "u", "]", the resulting box resembles the corresponding upper case letter. A value of "n" suppresses the box.
+#' @param amplif.label Single positive numeric value to increase or decrease the size of the text in legends.
+#' @param amplif.axis Single positive numeric value to increase or decrease the size of the scale numbers in axis.
 #' @param display.extend Single logical value. Extend display beyond plotting region? Either TRUE or FALSE (xpd argument of par() without NA).
 #' @param return.par Single logical value. Return graphic parameter modification?
 #' @returns Graphic parameter modification.

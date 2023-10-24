@@ -14,7 +14,7 @@
 #' @param lim Vector of 2 numbers indicating the limit range of the axis. Order of the 2 values matters (for inverted axis). If log argument is "log2" or "log10", values in lim must be already log transformed. Thus, negative or zero values are allowed.
 #' @param log Single character string. Either "log2" (values in the lim argument are log2 transformed) or "log10" (values in the lim argument are log10 transformed), or "no".
 #' @param breaks Mandatory vector of numbers indicating the main ticks values/positions when log argument is "no". Ignored when log argument is "log2" or "log10".
-#' @param n Single numeric value. Number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".
+#' @param n Single numeric value indicating the number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".
 #' @param warn.print Single logical value. Print potential warning messages at the end of the execution? If FALSE, warning messages are never printed, but can still be recovered in the returned list.
 #' @returns 
 #' A list containing :
@@ -85,9 +85,9 @@ fun_inter_ticks <- function(
     mandat.args <- c(
         "lim"
     )
-    tempo <- eval(parse(text = paste0("missing(", paste0(mandat.args, collapse = ") | missing("), ")")))
+    tempo <- eval(parse(text = paste0("c(missing(", paste0(mandat.args, collapse = "),missing("), "))")))
     if(any(tempo)){ # normally no NA for missing() output
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", "HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
+        tempo.cat <- paste0("ERROR IN ", function.name, "\nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", " HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end arg with no default values

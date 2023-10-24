@@ -28,8 +28,8 @@
 #' @param pdf Single logical value. Use pdf display? If FALSE, a GUI is opened.
 #' @param pdf.path Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.
 #' @param pdf.name Single character string. Name of the pdf file containing the graphs (the .pdf extension is added by the function, if not detected in the name end). Ignored if pdf == FALSE.
-#' @param width Width of the window (single number in inches).
-#' @param height Height of the window (single number in inches).
+#' @param width Single positive numeric value indicating the width of the window (in inches).
+#' @param height Single positive numeric value indicating the height of the window (in inches).
 #' @param paper Single character string. Paper argument of the pdf function (paper format). Only used for pdf(). Either "a4", "letter", "legal", "us", "executive", "a4r", "USr" or "special". If "special", means that the paper dimension will be width and height. With another paper format, if width or height is over the size of the paper, width or height will be modified such that the plot is adjusted to the paper dimension (see $dim in the returned list below to see the modified dimensions). Ignored if pdf == FALSE.
 #' @param pdf.overwrite Single logical value. Existing pdf can be overwritten? . Ignored if pdf == FALSE.
 #' @param rescale Kind of GUI. Either "R", "fit", or "fixed". Ignored on Mac and Linux OS. See ?windows for details.

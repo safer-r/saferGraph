@@ -10,7 +10,7 @@
 
 #' @title width
 #' @description
-#' Rescale the width of a window to open depending on the number of classes to plot.
+#' Rescale the width of a window to open depending on the number of categories of qualitative variable to plot on the x-axis.
 #' Can be used for height, considering that it is as if it was a width.
 #' 
 #' This order can be used:
@@ -26,12 +26,12 @@
 #' post_plot() if fun_prior_plot() has been used # not for ggplot2
 #' 
 #' close()
-#' @param class.nb Single numeric value of class to plot.
-#' @param inches.per.class.nb Single numeric value of inches per unit of class.nb. 2 means 2 inches for each boxplot for instance.
-#' @param ini.window.width:initial Window width (single numeric value in inches).
-#' @param inch.left.space Left horizontal margin of the figure region (single numeric value in inches).
-#' @param inch.right.space Right horizontal margin of the figure region (single numeric value in inches).
-#' @param boundarie.space Space between the right and left limits of the plotting region and the plot (0.5 means half a class width).
+#' @param categ.nb Single positive numeric value of number of categories to plot.
+#' @param inches.per.categ.nb Single positive numeric value of inches per unit of categ.nb. 2 means 2 inches for each boxplot for instance.
+#' @param ini.window.width Single positive numeric value indicating the initial Window width (in inches).
+#' @param inch.left.space Single positive numeric value indicating the left horizontal margin of the figure region (in inches).
+#' @param inch.right.space Single positive numeric value indicating the right horizontal margin of the figure region (in inches).
+#' @param boundarie.space Single positive numeric value indicating the space between the right and left limits of the plotting region and the plot (0.5 means half a category width). It is as if empty categories were added on the right and left of the plot.
 #' @returns The new window width in inches.
 #' @details 
 #' REQUIRED PACKAGES
@@ -43,18 +43,18 @@
 #' 
 #' fun_check()
 #' @examples
-#' width(class.nb = 10, inches.per.class.nb = 0.2, ini.window.width = 7, inch.left.space = 1, inch.right.space = 1, boundarie.space = 0.5)
+#' width(categ.nb = 10, inches.per.categ.nb = 0.2, ini.window.width = 7, inch.left.space = 1, inch.right.space = 1, boundarie.space = 0.5)
 #' @export
 width <- function(
-        class.nb, 
-        inches.per.class.nb = 1, 
+        categ.nb, 
+        inches.per.categ.nb = 1, 
         ini.window.width = 7, 
         inch.left.space, 
         inch.right.space, 
         boundarie.space = 0.5
 ){
     # DEBUGGING
-    # class.nb = 10 ; inches.per.class.nb = 0.2 ; ini.window.width = 7 ; inch.left.space = 1 ; inch.right.space = 1 ; boundarie.space = 0.5 # for function debugging
+    # categ.nb = 10 ; inches.per.categ.nb = 0.2 ; ini.window.width = 7 ; inch.left.space = 1 ; inch.right.space = 1 ; boundarie.space = 0.5 # for function debugging
     # function name
     function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
@@ -82,13 +82,13 @@ width <- function(
     
     # arg with no default values
     mandat.args <- c(
-        "class.nb", 
+        "categ.nb", 
         "inch.left.space", 
         "inch.right.space" 
     )
-    tempo <- eval(parse(text = paste0("missing(", paste0(mandat.args, collapse = ") | missing("), ")")))
+    tempo <- eval(parse(text = paste0("c(missing(", paste0(mandat.args, collapse = "),missing("), "))")))
     if(any(tempo)){ # normally no NA for missing() output
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", "HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
+        tempo.cat <- paste0("ERROR IN ", function.name, "\nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", " HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end arg with no default values
@@ -98,8 +98,8 @@ width <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- expression(arg.check <- c(arg.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- fun_check(data = class.nb, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = inches.per.class.nb, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = categ.nb, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- fun_check(data = inches.per.categ.nb, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
     tempo <- fun_check(data = ini.window.width, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
     tempo <- fun_check(data = inch.left.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
     tempo <- fun_check(data = inch.right.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
@@ -126,8 +126,8 @@ width <- function(
     
     # management of NULL arguments
     tempo.arg <-c(
-        "class.nb", 
-        "inches.per.class.nb",
+        "categ.nb", 
+        "inches.per.categ.nb",
         "ini.window.width",
         "inch.left.space", 
         "inch.right.space", 
@@ -157,9 +157,9 @@ width <- function(
     # end package checking
 
     # main code
-    range.max <- class.nb + boundarie.space # the max range of the future plot
+    range.max <- categ.nb + boundarie.space # the max range of the future plot
     range.min <- boundarie.space # the min range of the future plot
-    window.width <- inch.left.space + inch.right.space + inches.per.class.nb * (range.max - range.min)
+    window.width <- inch.left.space + inch.right.space + inches.per.categ.nb * (range.max - range.min)
     # output
     return(window.width)
     # end output
