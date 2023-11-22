@@ -321,7 +321,7 @@ fun_scale <- function(
             tempo.cat <- paste0("ERROR IN ", function.name, ": CODE INCONSISTENCY 4")
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
-        if(any(is.na(output), na.rm = TRUE)){
+        if(any(is.na(output))){
             tempo.cat <- paste0("ERROR IN ", function.name, ": CODE INCONSISTENCY 5 (NA GENERATION)")
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }

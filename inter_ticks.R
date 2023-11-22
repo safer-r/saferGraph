@@ -225,7 +225,7 @@ fun_inter_ticks <- function(
         tick.pos <- tick.pos[tick.pos >= min(lim) & tick.pos <= max(lim)]
         tick.values <- tick.pos
     }
-    if(any(is.na(tick.pos) | ! is.finite(tick.pos), na.rm = TURE)){ 
+    if(any(is.na(tick.pos) | ! is.finite(tick.pos), na.rm = TRUE)){ 
         tempo.cat <- paste0("INTERNAL CODE ERROR IN ", function.name, ": NA or Inf GENERATED FOR THE INTER TICK POSITIONS: ", paste(tick.pos, collapse = " "))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n", ifelse(is.null(warn), "", paste0("IN ADDITION\nWARNING", ifelse(warn.count > 1, "S", ""), ":\n\n", warn))), call. = FALSE) # == in stop() to be able to add several messages between ==
     }

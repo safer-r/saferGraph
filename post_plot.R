@@ -16,33 +16,33 @@
 #' 
 #' Use fun_prior_plot() before this function for initial inactivation of the axis drawings.
 #' @param x.side Single integer value indicating the axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.
-#' @param x.log.scale Single logical value. Log scale for the x-axis? Either TRUE or FALSE.
-#' @param x.categ Character vector representing the classes (levels()) to specify when the x-axis is qualititative(stripchart, boxplot).
-#' @param x.categ.pos Position of the classes names (numeric vector of identical length than x.categ). If left NULL, this will be 1:length(levels()).
-#' @param x.lab Label of the x-axis. If x.side == 0 and x.lab != "", then x.lab is printed.
-#' @param x.axis.size Single positive numeric value indicating the increase or decrease the size of the x axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
-#' @param x.label.size Single positive numeric value indicating the increase or decrease the size of the x axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
-#' @param x.dist.legend Increase the number to move x-axis legends away in inches (first number of mgp argument of par() but in inches).
-#' @param x.nb.inter.tick Number of secondary ticks between main ticks on x-axis (only if not log scale). 0 means no secondary ticks.
-#' @param y.side Axis at the left (2) or right (4) of the region figure. Write 0 for no change.
-#' @param y.log.scale Log scale for the y-axis? Either TRUE or FALSE.
-#' @param y.categ Classes (levels()) to specify when the y-axis is qualititative(stripchart, boxplot).
-#' @param y.categ.pos Position of the classes names (numeric vector of identical length than y.categ). If left NULL, this will be 1:length(levels()).
+#' @param x.log.scale Single logical value. Log scale for the x-axis?
+#' @param x.categ Vector of character indicating the categories when the x-axis is qualitative(stripchart, boxplot).
+#' @param x.categ.pos Numeric vector of identical length than x.categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).
+#' @param x.lab Single character string of the label of the x-axis. If x.side == 0 and x.lab != "", then x.lab is printed.
+#' @param x.axis.size Single positive numeric value to increase or decrease the size of the x axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
+#' @param x.label.size Single positive numeric value to increase or decrease the size of the x axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
+#' @param x.dist.legend Single positive numeric value to move x-axis legends away (first number of mgp argument of par() but in inches).
+#' @param x.nb.inter.tick Single positive integer value indicating the number of secondary ticks between main ticks on x-axis (only if not log scale). 0 means no secondary ticks.
+#' @param y.side Single integer of either 0, 2 or 4 value to display the axis at the left (2) or right (4) of the region figure. Write 0 for no change.
+#' @param y.log.scale Single logical value. Log scale for the y-axis?
+#' @param y.categ Vector of character indicating the categories when the y-axis is qualitative(stripchart, boxplot).
+#' @param y.categ.pos Numeric vector of identical length than y.categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).
 #' @param y.lab Label of the y-axis. If y.side == 0 and y.lab != "", then y.lab is printed.
-#' @param y.axis.size Positive numeric. Increase or decrease the size of the y axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
-#' @param y.label.size Positive numeric. Increase or decrease the size of the y axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
-#' @param y.dist.legend Increase the number to move y-axis legends away in inches (first number of mgp argument of par() but in inches).
-#' @param y.nb.inter.tick Number of secondary ticks between main ticks on y-axis (only if not log scale). 0 means non secondary ticks.
-#' @param text.angle Angle of the text when axis is qualitative.
-#' @param tick.length Length of the main ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
-#' @param sec.tick.length Length of the secondary ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
-#' @param bg.color Background color of the plot region. NULL for no color. BEWARE: cover/hide an existing plot !
-#' @param grid.lwd If non NULL, activate the grid line (specify the line width).
-#' @param grid.col Grid line color (only if grid.lwd non NULL).
-#' @param corner.text Text to add at the top right corner of the window.
-#' @param corner.text.size Positive numeric. Increase or decrease the size of the text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
-#' @param par.reset To reset all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.
-#' @param just.label.add Just add axis labels (legend)? Either TRUE or FALSE. If TRUE, at least (x.side == 0 & x.lab != "") or (y.side == 0 & y.lab != "") must be set to display the corresponding x.lab or y.lab.
+#' @param y.axis.size Single positive numeric value to increase or decrease the size of the y axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
+#' @param y.label.size Single positive numeric value to increase or decrease the size of the y axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
+#' @param y.dist.legend Single positive numeric value to move y-axis legends away (first number of mgp argument of par() but in inches).
+#' @param y.nb.inter.tick Single positive integer value indicating the number of secondary ticks between main ticks on y-axis (only if not log scale). 0 means no secondary ticks.
+#' @param text.angle Single numeric value for the angle of the text when axis is qualitative.
+#' @param tick.length Single positive proportion value indicating the length of the main ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
+#' @param sec.tick.length Single positive proportion value indicating the length of the secondary ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
+#' @param bg.color Background color of the plot region. Either (1) NULL (no color), or (2) a single character string or integer. Color can be a color name (see ?colors() in R), an hexadecimal color code, or an integer (according to palette()). BEWARE: cover/hide an existing plot !
+#' @param grid.lwd Vector of positive numeric values. If non NULL, both activate the grid lines and specify the line widths.
+#' @param grid.col Grid line colors (only if grid.lwd non NULL). Either (1) NULL (no color), or (2) a vector of character strings or integers. Color can be color names (see ?colors() in R), hexadecimal color codes, or integers (according to palette()).
+#' @param corner.text Single character string adding a text at the top right corner of the window.
+#' @param corner.text.size Single positive numeric value to increase or decrease the size of the text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
+#' @param par.reset Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.
+#' @param just.label.add Single logical value that just add axis labels (legend). If TRUE, at least (x.side == 0 & x.lab != "") or (y.side == 0 & y.lab != "") must be set to display the corresponding x.lab or y.lab.
 #' @param custom.par List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par.reset == TRUE, the default par() parameters are used.
 #' @returns 
 #' A list containing: 
