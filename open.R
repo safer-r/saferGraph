@@ -12,7 +12,7 @@
 #' 
 #' plot() or any other plotting
 #' 
-#' post_plot() if fun_prior_plot() has been used # not for ggplot2
+#' post_plot() if prior_plot() has been used # not for ggplot2
 #' 
 #' close()
 #' @param pdf Single logical value. Use pdf display? If FALSE, a GUI is opened.
@@ -35,21 +35,21 @@
 #' @details 
 #' REQUIRED PACKAGES
 #' 
-#' none
+#' cuteDev
 #' 
 #' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
-#' fun_check()
+#' arg_check()
 #'
 #'
 #' WARNINGS
 #'
 #' On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
 #' @examples
-#' fun_open(pdf = FALSE, pdf.path = "C:/Users/yhan/Desktop", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
+#' open(pdf = FALSE, pdf.path = "C:/Users/yhan/Desktop", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
 #' @export
-fun_open <- function(
+open <- function(
         pdf = TRUE, 
         pdf.path = "working.dir", 
         pdf.name = "graph", 
@@ -68,9 +68,12 @@ fun_open <- function(
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
+    # package checking
+    # check of lib.path
+    # end check of lib.path
     # required function checking
     req.function <- c(
-        "fun_check"
+        "arg_check"
     )
     tempo <- NULL
     for(i1 in req.function){
@@ -86,29 +89,34 @@ fun_open <- function(
     # reserved words (to avoid bugs)
     # end reserved words (to avoid bugs)
     
+    
+    # argument primary checking
     # arg with no default values
     # end arg with no default values
-    # argument primary checking
-    arg.check <- NULL #
+    # argument checking with arg_check()
+    argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(arg.check <- c(arg.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- fun_check(data = pdf, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = pdf.path, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = pdf.name, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = width, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = height, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = paper, options = c("a4", "letter", "legal", "us", "executive", "a4r", "USr", "special", "A4", "LETTER", "LEGAL", "US"), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data =pdf.overwrite, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = rescale, options = c("R", "fit", "fixed"), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = remove.read.only, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = return.output, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(arg.check)){
-        if(any(arg.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    tempo <- arg_check(data = pdf, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = pdf.path, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = pdf.name, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = width, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = height, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = paper, options = c("a4", "letter", "legal", "us", "executive", "a4r", "USr", "special", "A4", "LETTER", "LEGAL", "US"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data =pdf.overwrite, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = rescale, options = c("R", "fit", "fixed"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = remove.read.only, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = return.output, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    if( ! is.null(argum.check)){
+        if(any(argum.check, na.rm = TRUE) == TRUE){
+            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
+    # end argument checking with arg_check()
+    # check with r_debugging_tools
+    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using arg_check()
+    # end check with r_debugging_tools
     # end argument primary checking
     
     # second round of checking and data preparation
@@ -155,10 +163,7 @@ fun_open <- function(
     # reserved word checking
     # end reserved word checking
     # end second round of checking and data preparation
-    
-    # package checking
-    # end package checking
-    
+   
     # main code
     if(pdf.path == "working.dir"){
         pdf.path <- getwd()
@@ -209,7 +214,7 @@ fun_open <- function(
                     invisible(dev.off()) # close the new window
                 }else if(file.exists(paste0(getwd(), "/Rplots.pdf"))){
                     file.remove(paste0(getwd(), "/Rplots.pdf")) # remove the pdf file
-                    tempo.cat <- ("ERROR IN fun_open()\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE fun_open() FUNCTION TO TRUE AND RERUN")
+                    tempo.cat <- ("ERROR IN function.name\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE function.name FUNCTION TO TRUE AND RERUN")
                     stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
                 }
             }
@@ -239,7 +244,7 @@ fun_open <- function(
             grDevices::windows(width = width, height = height, rescale = rescale)
         }else if(Sys.info()["sysname"] == "Linux"){
             if( ! is.null(open.fail)){
-                tempo.cat <- "ERROR IN fun_open()\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE fun_open() FUNCTION TO TRUE AND RERUN"
+                tempo.cat <- "ERROR IN function.name\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE function.name FUNCTION TO TRUE AND RERUN"
                 stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }else{
                 grDevices::X11(width = width, height = height)
@@ -249,6 +254,8 @@ fun_open <- function(
         }
     }
     # output
+    # warning output
+    # end warning output
     if(return.output == TRUE){
         output <- list(pdf.loc = pdf.loc, ini.par = ini.par, zone.ini = zone.ini, dim = dev.size())
         return(output)
