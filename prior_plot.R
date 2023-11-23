@@ -1,13 +1,13 @@
 #' @title prior_plot
 #' @description
-#' Very convenient to erase the axes for post plot axis redrawing using fun_post_plot().
+#' Very convenient to erase the axes for post plot axis redrawing using post_plot().
 #' 
 #' Reinitialize and set the graphic parameters before plotting.
 #' 
 #' CANNOT be used if no graphic device already opened.
 #' @param param.reinitial Single logical value. Reinitialize graphic parameters before applying the new ones, as defined by the other arguments? Either TRUE or FALSE.
-#' @param xlog.scale Single logical value. Log scale for the x-axis? Either TRUE or FALSE. If TRUE, erases the x-axis, except legend, for further drawing by fun_post_plot()(xlog argument of par()).
-#' @param ylog.scale Single logical value. Log scale for the y-axis? Either TRUE or FALSE. If TRUE, erases the y-axis, except legend, for further drawing by fun_post_plot()(ylog argument of par()).
+#' @param xlog.scale Single logical value. Log scale for the x-axis? Either TRUE or FALSE. If TRUE, erases the x-axis, except legend, for further drawing by post_plot()(xlog argument of par()).
+#' @param ylog.scale Single logical value. Log scale for the y-axis? Either TRUE or FALSE. If TRUE, erases the y-axis, except legend, for further drawing by post_plot()(ylog argument of par()).
 #' @param remove.label Single logical value. Remove labels (axis legend) of the two axes? Either TRUE or FALSE (ann argument of par()).
 #' @param remove.x.axis Single logical value. Remove x-axis except legend? Either TRUE or FALSE (control the xaxt argument of par()). Automately set to TRUE if xlog.scale == TRUE.
 #' @param remove.y.axis Single logical value. Remove y-axis except legend? Either TRUE or FALSE (control the yaxt argument of par()). Automately set to TRUE if ylog.scale == TRUE.
@@ -29,14 +29,14 @@
 #' @details 
 #' REQUIRED PACKAGES
 #' 
-#' none
+#' cuteDev
 #' 
 #' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
-#' fun_check()
+#' arg_check()
 #' @examples
-#' fun_prior_plot(param.reinitial = FALSE, xlog.scale = FALSE, ylog.scale = FALSE, remove.label = TRUE, remove.x.axis = TRUE, remove.y.axis = TRUE, std.x.range = TRUE, std.y.range = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 4.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = FALSE)
+#' prior_plot(param.reinitial = FALSE, xlog.scale = FALSE, ylog.scale = FALSE, remove.label = TRUE, remove.x.axis = TRUE, remove.y.axis = TRUE, std.x.range = TRUE, std.y.range = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 4.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = FALSE)
 #' @export
 prior_plot <- function(
         param.reinitial = FALSE, 
@@ -67,9 +67,13 @@ prior_plot <- function(
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
+    
+    # package checking
+    # check of lib.path
+    # end check of lib.path
     # required function checking
     req.function <- c(
-        "fun_check"
+        "arg_check"
     )
     tempo <- NULL
     for(i1 in req.function){
@@ -86,40 +90,44 @@ prior_plot <- function(
     # reserved words (to avoid bugs)
     # end reserved words (to avoid bugs)
     
-    # arg with no default values
-    # end arg with no default values
     
     # argument primary checking
-    arg.check <- NULL #
+    # arg with no default values
+    # end arg with no default values
+    # argument checking with arg_check()
+    argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(arg.check <- c(arg.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- fun_check(data = param.reinitial, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = xlog.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = ylog.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = remove.label, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = remove.x.axis, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = remove.y.axis, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = std.x.range, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = std.y.range, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = down.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = left.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = up.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = right.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = orient, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = box.type, options = c("o", "l", "7", "c", "u", "]", "n"), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = amplif.label, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = amplif.axis, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = display.extend, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = return.par, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(arg.check)){
-        if(any(arg.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    tempo <- arg_check(data = param.reinitial, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = xlog.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = ylog.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = remove.label, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = remove.x.axis, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = remove.y.axis, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = std.x.range, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = std.y.range, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = down.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = left.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = up.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = right.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = orient, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = box.type, options = c("o", "l", "7", "c", "u", "]", "n"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = amplif.label, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = amplif.axis, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = display.extend, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = return.par, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    if( ! is.null(argum.check)){
+        if(any(argum.check, na.rm = TRUE) == TRUE){
+            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
+    # argument checking with arg_check()
+    # check with r_debugging_tools
+    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using arg_check()
+    # end check with r_debugging_tools
     # end argument primary checking
     
     # second round of checking and data preparation
@@ -176,10 +184,7 @@ prior_plot <- function(
     # reserved word checking
     # end reserved word checking
     # end second round of checking and data preparation
-    
-    # package checking
-    # end package checking
-    
+
     # main code
     if(is.null(dev.list())){
         tempo.cat <- paste0("ERROR IN ", function.name, ": THIS FUNCTION CANNOT BE USED IF NO GRAPHIC DEVICE ALREADY OPENED (dev.list() IS CURRENTLY NULL)")
@@ -211,7 +216,7 @@ prior_plot <- function(
                     invisible(dev.off()) # close the new window
                     file.remove(paste0(getwd(), "/Rplots.pdf")) # remove the pdf file
                 }else{
-                    tempo.cat <- ("ERROR IN fun_prior_plot()\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN")
+                    tempo.cat <- ("ERROR IN function.name\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN")
                     stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
                 }
             }
@@ -259,6 +264,8 @@ prior_plot <- function(
         par(ylog = FALSE)
     }
     # output
+    # warning output
+    # end warning output
     if(return.par == TRUE){
         tempo.par <- par()
         return(tempo.par)
