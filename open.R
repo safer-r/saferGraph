@@ -1,13 +1,3 @@
-######## open() #### open a GUI or pdf graphic window
-
-# todo list check OK
-# Check r_debugging_tools-v1.4.R
-# Check fun_test() 20201107 (see cute_checks.docx)
-# example sheet
-# check all and any OK
-# -> clear to go Apollo
-# -> transferred into the cute package
-
 #' @title open
 #' @description
 #' Open a pdf or screen (GUI) graphic window and return initial graphic parameters.

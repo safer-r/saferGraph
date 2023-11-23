@@ -1,13 +1,3 @@
-######## empty_graph() #### text to display for empty graphs
-
-# todo list check OK
-# Check r_debugging_tools-v1.4.R
-# Check fun_test() 20201107 (see cute_checks.docx)
-# example sheet
-# check all and any OK
-# -> clear to go Apollo
-# -> transferred into the cute package
-
 #' @title empty_graph
 #' @description
 #' Display an empty plot with a text in the middle of the window (for instance to specify that no plot can be drawn).

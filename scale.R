@@ -1,13 +1,3 @@
-######## scale() #### select nice label numbers when setting number of ticks on an axis
-
-# todo list check OK
-# Check r_debugging_tools-v1.4.R
-# Check fun_test() 20201107 (see cute_checks.docx)
-# example sheet
-# check all and any OK
-# -> clear to go Apollo
-# -> transferred into the cute package
-
 #' @title scale
 #' @description
 #' Attempt to select nice scale numbers when setting n ticks on a lim axis range.

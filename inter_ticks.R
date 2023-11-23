@@ -1,13 +1,3 @@
-######## inter_ticks() #### define coordinates of secondary ticks
-
-# todo list check OK
-# Check r_debugging_tools-v1.4.R
-# Check fun_test() 20201107 (see cute_checks.docx)
-# example sheet
-# check all and any OK
-# -> clear to go Apollo
-# -> transferred into the cute package
-
 #' @title inter_ticks
 #' @description
 #' Define coordinates and values of secondary ticks.
