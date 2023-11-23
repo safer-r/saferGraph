@@ -9,6 +9,10 @@
 #' @details 
 #' REQUIRED PACKAGES
 #' 
+#' cuteDev
+#' 
+#' cuteTool
+#' 
 #' if kind = "approx":
 #' 
 #' ggplot2
@@ -18,7 +22,7 @@
 #' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
-#' fun_check()
+#' arg_check()
 #' 
 #' fun_round()
 #' @examples
@@ -91,11 +95,36 @@ fun_scale <- function(
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
-    # end initial argument checking
-    # required function checking
+    # check of lib.path
+    if( ! is.null(lib.path)){
+        if( ! all(typeof(lib.path) == "character")){ # no na.rm = TRUE with typeof
+            tempo.cat <- paste0("ERROR IN ", function.name, ": DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT MUST BE A VECTOR OF CHARACTERS:\n", paste(lib.path, collapse = "\n"))
+            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        }else if( ! all(dir.exists(lib.path), na.rm = TRUE)){ # separation to avoid the problem of tempo$problem == FALSE and lib.path == NA
+            tempo.cat <- paste0("ERROR IN ", function.name, ": DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", paste(lib.path, collapse = "\n"))
+            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        }
+    }
+    # end check of lib.path
+    # check of cuteDev package using an internal function of the cuteGraph package
+    .cuteDev_package_check(lib.path = lib.path)
+    # end check of cuteDev package using an internal function of the cuteGraph package
+    # cuteDev pkg_check function checking
+    if(length(find("pkg_check", mode = "function")) == 0L){
+        tempo.cat <- paste0("ERROR IN ", function.name, "\npkg_check() FUNCTION IS MISSING IN THE cuteDev PACKAGE")
+        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    }
+    # end cuteDev pkg_check function checking
+# check of other required packages
+    pkg_check(req.package = c(
+        "cuteTool"
+    ), load = TRUE, lib.path = lib.path) # load = TRUE because otherwise, the "# check of the required function from the required packages" section does not work
+    # end check of other required packages
+    # end package checking
+    # check of the required function from the required packages
     req.function <- c(
-        "fun_check", 
-        "fun_round"
+        "arg_check", 
+        "round"
     )
     tempo <- NULL
     for(i1 in req.function){
@@ -107,11 +136,9 @@ fun_scale <- function(
         tempo.cat <- paste0("ERROR IN ", function.name, "\nREQUIRED cute FUNCTION", ifelse(length(tempo) > 1, "S ARE", " IS"), " MISSING IN THE R ENVIRONMENT:\n", paste0(tempo, collapse = "()\n"))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
-    # end required function checking
+    # end check of the required function from the required packages
     
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
-    
+    # argument primary checking
     # arg with no default values
     mandat.args <- c(
         "n", 
@@ -123,27 +150,26 @@ fun_scale <- function(
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end arg with no default values
-    
-    # argument primary checking
-    arg.check <- NULL #
+    # argument checking with arg_check()
+    argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(arg.check <- c(arg.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
     tempo <- fun_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, neg.values = FALSE, fun.name = function.name) ; eval(ee)
     if(tempo$problem == FALSE & isTRUE(all.equal(n, 0))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
         tempo.cat <- paste0("ERROR IN ", function.name, ": n ARGUMENT MUST BE A NON NULL AND POSITIVE INTEGER")
         text.check <- c(text.check, tempo.cat)
-        arg.check <- c(arg.check, TRUE) # 
+        argum.check <- c(argum.check, TRUE) # 
     }
     tempo <- fun_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
     if(tempo$problem == FALSE & all(diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
         tempo.cat <- paste0("ERROR IN ", function.name, ": lim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES)")
         text.check <- c(text.check, tempo.cat)
-        arg.check <- c(arg.check, TRUE)
+        argum.check <- c(argum.check, TRUE)
     }else if(tempo$problem == FALSE & any(lim %in% c(Inf, -Inf))){
         tempo.cat <- paste0("ERROR IN ", function.name, ": lim ARGUMENT CANNOT CONTAIN -Inf OR Inf VALUES")
         text.check <- c(text.check, tempo.cat)
-        arg.check <- c(arg.check, TRUE)
+        argum.check <- c(argum.check, TRUE)
     }
     tempo <- fun_check(data = kind, options = c("approx", "strict", "strict.cl"), length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(lib.path)){
@@ -152,17 +178,19 @@ fun_scale <- function(
             if( ! all(dir.exists(lib.path), na.rm = TRUE)){ # separation to avoid the problem of tempo$problem == FALSE and lib.path == NA
                 tempo.cat <- paste0("ERROR IN ", function.name, ": DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", paste(lib.path, collapse = "\n"))
                 text.check <- c(text.check, tempo.cat)
-                arg.check <- c(arg.check, TRUE)
+                argum.check <- c(argum.check, TRUE)
             }
         }
     }
-    if( ! is.null(arg.check)){
-        if(any(arg.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    if( ! is.null(argum.check)){
+        if(any(argum.check, na.rm = TRUE) == TRUE){
+            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # end argument primary checking with fun_check()
-    # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
+    # end argument checking with arg_check()
+    # check with r_debugging_tools
+    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
+    # end check with r_debugging_tools
     # end argument primary checking
     
     # second round of checking and data preparation
@@ -209,8 +237,8 @@ fun_scale <- function(
     lim <- sort(lim)
     if(kind == "approx"){
         # package checking
-        fun_pack(req.package = c("ggplot2"), lib.path = lib.path)
-        fun_pack(req.package = c("scales"), lib.path = lib.path)
+        pkg_check(req.package = c("ggplot2"), lib.path = lib.path)
+        pkg_check(req.package = c("scales"), lib.path = lib.path)
         # end package checking
         output <- ggplot2::ggplot_build(ggplot2::ggplot() + ggplot2::scale_y_continuous(
             breaks = scales::trans_breaks(
@@ -324,6 +352,8 @@ fun_scale <- function(
         output <- rev(output)
     }
     # output
+    # warning output
+    # end warning output
     return(output)
     # end output
     # end main code
