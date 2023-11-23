@@ -16,29 +16,29 @@
 #' @details 
 #' REQUIRED PACKAGES
 #' 
-#' none
+#' cuteDev
 #' 
 #' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
-#' fun_check()
+#' arg_check()
 #' @examples
 #' # no log scale
 #' 
-#' fun_inter_ticks(lim = c(-4,4), log = "no", breaks = c(-2, 0, 2), n = 3)
-#' fun_inter_ticks(lim = c(10, 0), log = "no", breaks = c(10, 8, 6, 4, 2, 0), n = 4)
+#' inter_ticks(lim = c(-4,4), log = "no", breaks = c(-2, 0, 2), n = 3)
+#' inter_ticks(lim = c(10, 0), log = "no", breaks = c(10, 8, 6, 4, 2, 0), n = 4)
 #' 
 #' 
 #' # log2
 #' 
-#' fun_inter_ticks(lim = c(-4,4), log = "log2")
+#' inter_ticks(lim = c(-4,4), log = "log2")
 #' 
 #' 
 #' # log10
 #' 
-#' fun_inter_ticks(lim = c(-2,3), log = "log10")
+#' inter_ticks(lim = c(-2,3), log = "log10")
 #' @export
-fun_inter_ticks <- function(
+inter_ticks <- function(
         lim, 
         log = "log10", 
         breaks = NULL, 
@@ -55,9 +55,12 @@ fun_inter_ticks <- function(
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
+    # package checking
+    # check of lib.path
+    # end check of lib.path
     # required function checking
     req.function <- c(
-        "fun_check"
+        "arg_check"
     )
     tempo <- NULL
     for(i1 in req.function){
@@ -70,6 +73,8 @@ fun_inter_ticks <- function(
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end required function checking
+    
+    
     # argument primary checking
     # arg with no default values
     mandat.args <- c(
@@ -81,27 +86,29 @@ fun_inter_ticks <- function(
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end arg with no default values
-    # using fun_check()
-    arg.check <- NULL #
+    # argument checking with arg_check()
+    argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(arg.check <- c(arg.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- fun_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = log, options = c("no", "log2", "log10"), length = 1, fun.name = function.name) ; eval(ee)
+    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    tempo <- arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = log, options = c("no", "log2", "log10"), length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(breaks)){
-        tempo <- fun_check(data = breaks, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = breaks, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(n)){
-        tempo <- fun_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
     }
-    tempo <- fun_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(arg.check)){
-        if(any(arg.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    tempo <- arg_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    if( ! is.null(argum.check)){
+        if(any(argum.check, na.rm = TRUE) == TRUE){
+            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # end using fun_check()
-    # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
+    # end argument checking with arg_check()
+    # check with r_debugging_tools
+    # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using arg_check()
+    # end check with r_debugging_tools
     # end argument primary checking
     # second round of checking and data preparation
     # management of NA arguments
@@ -165,13 +172,9 @@ fun_inter_ticks <- function(
     # other checkings
     # end other checkings
     
-    # reserved word checking
-    # end reserved word checking
-    
+    # reserved word checking to avoid bugs
+    # end reserved word checking to avoid bugs
     # end second round of checking and data preparation
-    
-    # package checking
-    # end package checking
     # main code
     ini.warning.length <- options()$warning.length
     options(warning.length = 8170)
@@ -225,6 +228,8 @@ fun_inter_ticks <- function(
         warn <- paste0(ifelse(is.null(warn), tempo.warn, paste0(warn, "\n\n", tempo.warn)))
     }
     # output
+    # warning output
+    # end warning output
     output <- list(log = log, coordinates = tick.pos, values = tick.values, warn = warn)
     if(warn.print == TRUE & ! is.null(warn)){
         on.exit(warning(paste0("FROM ", function.name, ":\n\n", warn), call. = FALSE)) # to recover the warning messages, see $warn
