@@ -9,28 +9,28 @@
 #' @details 
 #' REQUIRED PACKAGES
 #' 
-#' none
+#' cuteDev
 #' 
 #' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
-#' fun_check()
+#' arg_check()
 #' @examples
 #' # simple example
 #' 
-#' fun_empty_graph(text = "NO GRAPH")
+#' empty_graph(text = "NO GRAPH")
 #' 
 #' 
 #' # white page
 #' 
-#' fun_empty_graph() # white page
+#' empty_graph() # white page
 #' 
 #' 
 #' # all the arguments
 #' 
-#' fun_empty_graph(text = "NO GRAPH", text.size = 2, title = "GRAPH1", title.size = 1)
+#' empty_graph(text = "NO GRAPH", text.size = 2, title = "GRAPH1", title.size = 1)
 #' @export
-fun_empty_graph <- function(
+empty_graph <- function(
         text = NULL, 
         text.size = 1, 
         title = NULL, 
@@ -43,9 +43,13 @@ fun_empty_graph <- function(
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
+    # package checking
+    # check of lib.path
+    # end check of lib.path
+
     # required function checking
     req.function <- c(
-        "fun_check"
+        "arg_check"
     )
     tempo <- NULL
     for(i1 in req.function){
@@ -62,28 +66,32 @@ fun_empty_graph <- function(
     # reserved words (to avoid bugs)
     # end reserved words (to avoid bugs)
     
-    # arg with no default values
-    # end arg with no default values
     
     # argument primary checking
-    arg.check <- NULL #
+    # arg with no default values
+    # end arg with no default values
+    # argument checking with arg_check()
+    argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(arg.check <- c(arg.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
     if( ! is.null(text)){
-        tempo <- fun_check(data = text, class = "vector", mode = "character", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = text, class = "vector", mode = "character", length = 1, fun.name = function.name) ; eval(ee)
     }
-    tempo <- fun_check(data = text.size, class = "vector", mode = "numeric", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = text.size, class = "vector", mode = "numeric", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(title)){
-        tempo <- fun_check(data = title, class = "vector", mode = "character", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = title, class = "vector", mode = "character", length = 1, fun.name = function.name) ; eval(ee)
     }
-    tempo <- fun_check(data = title.size, class = "vector", mode = "numeric", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(arg.check)){
-        if(any(arg.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    tempo <- cuteDev::arg_check(data = title.size, class = "vector", mode = "numeric", length = 1, fun.name = function.name) ; eval(ee)
+    if( ! is.null(argum.check)){
+        if(any(argum.check, na.rm = TRUE) == TRUE){
+            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
+    # end argument checking with arg_check()
+    # check with r_debugging_tools
+    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using cuteDev::arg_check()
+    # end check with r_debugging_tools
     # end argument primary checking
     
     # second round of checking and data preparation
@@ -121,12 +129,9 @@ fun_empty_graph <- function(
     # other checkings
     # end other checkings
     
-    # reserved word checking
-    # end reserved word checking
+    # reserved word checking to avoid bugs
+    # end reserved word checking to avoid bugs
     # end second round of checking and data preparation
-    
-    # package checking
-    # end package checking
     
     # main code
     ini.par <- par(no.readonly = TRUE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
@@ -141,6 +146,8 @@ fun_empty_graph <- function(
         text(x = x.left.dev.region, y = y.top.dev.region, labels = title, adj=c(0, 1), cex = title.size)
     }
     # output
+    # warning output
+    # end warning output
     par(ini.par)
     # end output
     # end main code
