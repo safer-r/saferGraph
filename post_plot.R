@@ -4,7 +4,7 @@
 #' 
 #' Provide also positions for legend or additional text on the graph.
 #' 
-#' Use fun_prior_plot() before this function for initial inactivation of the axis drawings.
+#' Use prior_plot() before this function for initial inactivation of the axis drawings.
 #' @param x.side Single integer value indicating the axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.
 #' @param x.log.scale Single logical value. Log scale for the x-axis?
 #' @param x.categ Vector of character indicating the categories when the x-axis is qualitative(stripchart, boxplot).
@@ -62,43 +62,43 @@
 #' @details 
 #' REQUIRED PACKAGES
 #' 
-#' none
+#' cuteDev
 #' 
 #' 
 #' REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
 #' 
-#' fun_check()
+#' arg_check()
 #'
-#' fun_open() to reinitialize graph parameters if par.reset = TRUE and custom.par = NULL
+#' open() to reinitialize graph parameters if par.reset = TRUE and custom.par = NULL
 #' @examples
 #' # Example of log axis with log y-axis and unmodified x-axis:
 #' 
-#' prior.par <- fun_prior_plot(param.reinitial = TRUE, xlog.scale = FALSE, ylog.scale = TRUE, remove.label = TRUE, remove.x.axis = FALSE, remove.y.axis = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 0.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = TRUE) ; 
+#' prior.par <- prior_plot(param.reinitial = TRUE, xlog.scale = FALSE, ylog.scale = TRUE, remove.label = TRUE, remove.x.axis = FALSE, remove.y.axis = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 0.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = TRUE) ; 
 #' plot(1:100, log = "y") ; 
-#' fun_post_plot(y.side = 2, y.log.scale = prior.par$ylog, x.lab = "Values", y.lab = "TEST", y.axis.size = 1.25, y.label.size = 1.5, y.dist.legend = 0.7, just.label.add = ! prior.par$ann)
+#' post_plot(y.side = 2, y.log.scale = prior.par$ylog, x.lab = "Values", y.lab = "TEST", y.axis.size = 1.25, y.label.size = 1.5, y.dist.legend = 0.7, just.label.add = ! prior.par$ann)
 #' 
 #' 
 #' # Example of log axis with redrawn x-axis and y-axis:
 #'
-#' prior.par <- fun_prior_plot(param.reinitial = TRUE) ; 
+#' prior.par <- prior_plot(param.reinitial = TRUE) ; 
 #' plot(1:100) ; 
-#' fun_post_plot(x.side = 1, x.lab = "Values", y.side = 2, y.lab = "TEST", y.axis.size = 1, y.label.size = 2, y.dist.legend = 0.6)
+#' post_plot(x.side = 1, x.lab = "Values", y.side = 2, y.lab = "TEST", y.axis.size = 1, y.label.size = 2, y.dist.legend = 0.6)
 #' 
 #' 
 #' # Example of title easily added to a plot:
 #' 
 #' plot(1:100) ; 
-#' para <- fun_post_plot(corner.text = "TITLE ADDED") 
+#' para <- post_plot(corner.text = "TITLE ADDED") 
 #' # try also: par(xpd = TRUE) ; text(x = para$x.mid.left.fig.region, y = para$y.mid.top.fig.region, labels = "TITLE ADDED", cex = 0.5)
 #'
 #'
 #' # example with margins in the device region:
 #' 
 #' windows(5,5) ; 
-#' fun_prior_plot(box.type = "o") ; 
+#' prior_plot(box.type = "o") ; 
 #' par(mai=c(0.5,0.5,0.5,0.5), omi = c(0.25,0.25,1,0.25), xaxs = "i", yaxs = "i") ; 
 #' plot(0:10) ; 
-#' a <- fun_post_plot(x.side = 0, y.side = 0) ; 
+#' a <- post_plot(x.side = 0, y.side = 0) ; 
 #' x <- c(a$x.mid.left.dev.region, a$x.left.dev.region, a$x.mid.right.dev.region, a$x.right.dev.region, a$x.mid.left.fig.region, a$x.left.fig.region, a$x.mid.right.fig.region, a$x.right.fig.region, a$x.right.plot.region, a$x.left.plot.region, a$x.mid.plot.region) ; 
 #' y <- c(a$y.mid.bottom.dev.region, a$y.bottom.dev.region, a$y.mid.top.dev.region, a$y.top.dev.region, a$y.mid.bottom.fig.region, a$y.bottom.fig.region, a$y.mid.top.fig.region, a$y.top.fig.region, a$y.top.plot.region, a$y.bottom.plot.region, a$y.mid.plot.region) ; 
 #' par(xpd = NA) ; 
@@ -107,7 +107,7 @@
 #' points(y = rep(5, length(x)), x = x, pch = 16, col = "blue") ; 
 #' text(y = rep(5, length(x)), x = x, c("x.mid.left.dev.region", "x.left.dev.region", "x.mid.right.dev.region", "x.right.dev.region", "x.mid.left.fig.region", "x.left.fig.region", "x.mid.right.fig.region", "x.right.fig.region", "x.right.plot.region", "x.left.plot.region", "x.mid.plot.region"), cex = 0.65, srt = 90, col = grey(0.25))
 #' @export
-fun_post_plot <- function(
+post_plot <- function(
         x.side = 0, 
         x.log.scale = FALSE, 
         x.categ = NULL, 
@@ -145,10 +145,14 @@ fun_post_plot <- function(
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
+    # package checking
+    # check of lib.path
+    # end check of lib.path
+
     # required function checking
     req.function <- c(
-        "fun_check", 
-        "fun_open"
+        "arg_check", 
+        "open"
     )
     tempo <- NULL
     for(i1 in req.function){
@@ -163,75 +167,80 @@ fun_post_plot <- function(
     # end required function checking
     # reserved words (to avoid bugs)
     # end reserved words (to avoid bugs)
-    # arg with no default values
-    # end arg with no default values
+    
     
     # argument primary checking
-    arg.check <- NULL #
+    # arg with no default values
+    # end arg with no default values
+    # argument checking with arg_check()
+    argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(arg.check <- c(arg.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- fun_check(data = x.side, options = c(0, 1, 3), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = x.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    tempo <- arg_check(data = x.side, options = c(0, 1, 3), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = x.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(x.categ)){
-        tempo <- fun_check(data = x.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = x.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(x.categ.pos)){
-        tempo <- fun_check(data = x.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = x.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
     }
-    tempo <- fun_check(data = x.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = x.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = x.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = x.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = x.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = y.side, options = c(0, 2, 4), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = y.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = x.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = x.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = x.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = x.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = x.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = y.side, options = c(0, 2, 4), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = y.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(y.categ)){
-        tempo <- fun_check(data = y.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = y.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(y.categ.pos)){
-        tempo <- fun_check(data = y.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = y.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
     }
-    tempo <- fun_check(data = y.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = y.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = y.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = y.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = y.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = text.angle, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = sec.tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = y.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = y.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = y.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = y.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = y.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = text.angle, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = sec.tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
     if( ! is.null(bg.color)){
-        tempo <- fun_check(data = bg.color, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = bg.color, class = "character", length = 1, fun.name = function.name) ; eval(ee)
         if( ! (bg.color %in% colors() | grepl(pattern = "^#", bg.color))){ # check color
             tempo.cat <- paste0("ERROR IN ", function.name, ": bg.color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY colors()")
             text.check <- c(text.check, tempo.cat)
-            arg.check <- c(arg.check, TRUE)
+            argum.check <- c(argum.check, TRUE)
         }
     }
     if( ! is.null(grid.lwd)){
-        tempo <- fun_check(data = grid.lwd, class = "vector", mode = "numeric", neg.values = FALSE, fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = grid.lwd, class = "vector", mode = "numeric", neg.values = FALSE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(grid.col)){
-        tempo <- fun_check(data = grid.col, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = grid.col, class = "character", length = 1, fun.name = function.name) ; eval(ee)
         if( ! (grid.col %in% colors() | grepl(pattern = "^#", grid.col))){ # check color
             tempo.cat <- paste0("ERROR IN ", function.name, ": grid.col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY colors()")
             text.check <- c(text.check, tempo.cat)
-            arg.check <- c(arg.check, TRUE)
+            argum.check <- c(argum.check, TRUE)
         }
     }
-    tempo <- fun_check(data = corner.text, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = corner.text.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = just.label.add, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- fun_check(data = par.reset, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = corner.text, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = corner.text.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = just.label.add, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- arg_check(data = par.reset, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(custom.par)){
-        tempo <- fun_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- arg_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; eval(ee)
     }
-    if( ! is.null(arg.check)){
-        if(any(arg.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[arg.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    if( ! is.null(argum.check)){
+        if(any(argum.check, na.rm = TRUE) == TRUE){
+            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using fun_check()
+    # end argument checking with arg_check()
+    # check with r_debugging_tools
+    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using arg_check()
+    # end check with r_debugging_tools
     # end argument primary checking
     
     # second round of checking and data preparation
@@ -247,7 +256,7 @@ fun_post_plot <- function(
     # end management of NA arguments
     
     # management of NULL arguments
-    tempo.arg <-c(
+    tempo.arg <- c(
         "x.side", 
         "x.log.scale", 
         # "x.categ", # inactivated because can be null
@@ -294,12 +303,9 @@ fun_post_plot <- function(
     # other checkings
     # end other checkings
     
-    # reserved word checking
-    # end reserved word checking
+    # reserved word checking to avoid bugs
+    # end reserved word checking to avoid bugs
     # end second round of checking and data preparation
-    
-    # package checking
-    # end package checking
     
     # main code
     text <- NULL
@@ -507,6 +513,8 @@ fun_post_plot <- function(
     }
     output <- list(x.mid.left.dev.region = x.mid.left.dev.region, x.left.dev.region = x.left.dev.region, x.mid.right.dev.region = x.mid.right.dev.region, x.right.dev.region = x.right.dev.region, x.mid.left.fig.region = x.mid.left.fig.region, x.left.fig.region = x.left.fig.region, x.mid.right.fig.region = x.mid.right.fig.region, x.right.fig.region = x.right.fig.region, x.left.plot.region = x.left.plot.region, x.right.plot.region = x.right.plot.region, x.mid.plot.region = x.mid.plot.region, y.mid.bottom.dev.region = y.mid.bottom.dev.region, y.bottom.dev.region = y.bottom.dev.region, y.mid.top.dev.region = y.mid.top.dev.region, y.top.dev.region = y.top.dev.region, y.mid.bottom.fig.region = y.mid.bottom.fig.region, y.bottom.fig.region = y.bottom.fig.region, y.mid.top.fig.region = y.mid.top.fig.region, y.top.fig.region = y.top.fig.region, y.top.plot.region = y.top.plot.region, y.bottom.plot.region = y.bottom.plot.region, y.mid.plot.region = y.mid.plot.region, text = text)
     # output
+    # warning output
+    # end warning output
     return(output)
     # end output
     # end main code
