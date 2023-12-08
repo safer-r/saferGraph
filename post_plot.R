@@ -106,6 +106,7 @@
 #' text(x = rep(5, length(y)), y = y, c("y.mid.bottom.dev.region", "y.bottom.dev.region", "y.mid.top.dev.region", "y.top.dev.region", "y.mid.bottom.fig.region", "y.bottom.fig.region", "y.mid.top.fig.region", "y.top.fig.region", "y.top.plot.region", "y.bottom.plot.region", "y.mid.plot.region"), cex = 0.65, col = grey(0.25)) ; 
 #' points(y = rep(5, length(x)), x = x, pch = 16, col = "blue") ; 
 #' text(y = rep(5, length(x)), x = x, c("x.mid.left.dev.region", "x.left.dev.region", "x.mid.right.dev.region", "x.right.dev.region", "x.mid.left.fig.region", "x.left.fig.region", "x.mid.right.fig.region", "x.right.fig.region", "x.right.plot.region", "x.left.plot.region", "x.mid.plot.region"), cex = 0.65, srt = 90, col = grey(0.25))
+#' @importFrom cuteDev arg_check
 #' @export
 post_plot <- function(
         x.side = 0, 
@@ -141,7 +142,11 @@ post_plot <- function(
     # DEBUGGING
     # x.side = 0 ; x.log.scale = FALSE ; x.categ = NULL ; x.categ.pos = NULL ; x.lab = "" ; x.axis.size = 1.5 ; x.label.size = 1.5 ; x.dist.legend = 1 ; x.nb.inter.tick = 1 ; y.side = 0 ; y.log.scale = FALSE ; y.categ = NULL ; y.categ.pos = NULL ; y.lab = "" ; y.axis.size = 1.5 ; y.label.size = 1.5 ; y.dist.legend = 0.7 ; y.nb.inter.tick = 1 ; text.angle = 90 ; tick.length = 0.5 ; sec.tick.length = 0.3 ; bg.color = NULL ; grid.lwd = NULL ; grid.col = "white" ; corner.text = "" ; corner.text.size = 1 ; just.label.add = FALSE ; par.reset = FALSE ; custom.par = NULL # for function debugging
     # function name
-    function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
+    ini <- match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
+    function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
+    if(function.name[1] == "::()"){
+        function.name <- function.name[3]
+    }
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
@@ -149,65 +154,56 @@ post_plot <- function(
     # check of lib.path
     # end check of lib.path
 
-    # required function checking
-    req.function <- c(
-        "arg_check", 
-        "open"
+    # check of the required function from the required packages
+    .pack_and_function_check(
+        fun = c(
+            "cuteDev::arg_check"
+        ),
+        lib.path = NULL,
+        external.function.name = function.name
     )
-    tempo <- NULL
-    for(i1 in req.function){
-        if(length(find(i1, mode = "function")) == 0L){
-            tempo <- c(tempo, i1)
-        }
-    }
-    if( ! is.null(tempo)){
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nREQUIRED cute FUNCTION", ifelse(length(tempo) > 1, "S ARE", " IS"), " MISSING IN THE R ENVIRONMENT:\n", paste0(tempo, collapse = "()\n"))
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
-    }
-    # end required function checking
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
-    
-    
+    # end check of the required function from the required packages
+    # end package checking
+
     # argument primary checking
     # arg with no default values
     # end arg with no default values
-    # argument checking with arg_check()
+    # argument checking with cuteDev::arg_check()
     argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- arg_check(data = x.side, options = c(0, 1, 3), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = x.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = x.side, options = c(0, 1, 3), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = x.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(x.categ)){
-        tempo <- arg_check(data = x.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = x.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(x.categ.pos)){
-        tempo <- arg_check(data = x.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = x.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
     }
-    tempo <- arg_check(data = x.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = x.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = x.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = x.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = x.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = y.side, options = c(0, 2, 4), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = y.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = x.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = x.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = x.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = x.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = x.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = y.side, options = c(0, 2, 4), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = y.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(y.categ)){
-        tempo <- arg_check(data = y.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = y.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(y.categ.pos)){
-        tempo <- arg_check(data = y.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = y.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
     }
-    tempo <- arg_check(data = y.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = y.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = y.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = y.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = y.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = text.angle, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = sec.tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = y.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = y.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = y.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = y.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = y.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = text.angle, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = sec.tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
     if( ! is.null(bg.color)){
-        tempo <- arg_check(data = bg.color, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = bg.color, class = "character", length = 1, fun.name = function.name) ; eval(ee)
         if( ! (bg.color %in% colors() | grepl(pattern = "^#", bg.color))){ # check color
             tempo.cat <- paste0("ERROR IN ", function.name, ": bg.color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY colors()")
             text.check <- c(text.check, tempo.cat)
@@ -215,29 +211,29 @@ post_plot <- function(
         }
     }
     if( ! is.null(grid.lwd)){
-        tempo <- arg_check(data = grid.lwd, class = "vector", mode = "numeric", neg.values = FALSE, fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = grid.lwd, class = "vector", mode = "numeric", neg.values = FALSE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(grid.col)){
-        tempo <- arg_check(data = grid.col, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = grid.col, class = "character", length = 1, fun.name = function.name) ; eval(ee)
         if( ! (grid.col %in% colors() | grepl(pattern = "^#", grid.col))){ # check color
             tempo.cat <- paste0("ERROR IN ", function.name, ": grid.col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY colors()")
             text.check <- c(text.check, tempo.cat)
             argum.check <- c(argum.check, TRUE)
         }
     }
-    tempo <- arg_check(data = corner.text, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = corner.text.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = just.label.add, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = par.reset, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = corner.text, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = corner.text.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = just.label.add, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = par.reset, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(custom.par)){
-        tempo <- arg_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- cuteDev::arg_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(argum.check)){
         if(any(argum.check, na.rm = TRUE) == TRUE){
             stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # end argument checking with arg_check()
+    # end argument checking with cuteDev::arg_check()
     # check with r_debugging_tools
     # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using arg_check()
     # end check with r_debugging_tools
@@ -303,8 +299,8 @@ post_plot <- function(
     # other checkings
     # end other checkings
     
-    # reserved word checking to avoid bugs
-    # end reserved word checking to avoid bugs
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
     
     # main code
@@ -497,7 +493,7 @@ post_plot <- function(
     }
     par(xpd=FALSE)
     if(par.reset == TRUE){
-        tempo.par <- fun_open(pdf = FALSE, return.output = TRUE)
+        tempo.par <- open(pdf = FALSE, return.output = TRUE)
         invisible(dev.off()) # close the new window
         if( ! is.null(custom.par)){
             if( ! names(custom.par) %in% names(tempo.par$ini.par)){
