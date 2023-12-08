@@ -29,6 +29,7 @@
 #' # all the arguments
 #' 
 #' empty_graph(text = "NO GRAPH", text.size = 2, title = "GRAPH1", title.size = 1)
+#' @importFrom cuteDev arg_check
 #' @export
 empty_graph <- function(
         text = NULL, 
@@ -39,7 +40,11 @@ empty_graph <- function(
     # DEBUGGING
     # text = "NO GRAPH" ; title = "GRAPH1" ; text.size = 1
     # function name
-    function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
+    ini <- match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
+    function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
+    if(function.name[1] == "::()"){
+        function.name <- function.name[3]
+    }
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
@@ -47,26 +52,17 @@ empty_graph <- function(
     # check of lib.path
     # end check of lib.path
 
-    # required function checking
-    req.function <- c(
-        "arg_check"
+    # check of the required function from the required packages
+    .pack_and_function_check(
+        fun = c(
+            "cuteDev::arg_check"
+        ),
+        lib.path = NULL,
+        external.function.name = function.name
     )
-    tempo <- NULL
-    for(i1 in req.function){
-        if(length(find(i1, mode = "function")) == 0L){
-            tempo <- c(tempo, i1)
-        }
-    }
-    if( ! is.null(tempo)){
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nREQUIRED cute FUNCTION", ifelse(length(tempo) > 1, "S ARE", " IS"), " MISSING IN THE R ENVIRONMENT:\n", paste0(tempo, collapse = "()\n"))
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
-    }
-    # end required function checking
-    
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
-    
-    
+    # end check of the required function from the required packages
+    # end package checking
+
     # argument primary checking
     # arg with no default values
     # end arg with no default values
@@ -74,7 +70,7 @@ empty_graph <- function(
     argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    ee <- expression(argum.check = c(argum.check, tempo$problem) , text.check = c(text.check, tempo$text) , checked.arg.names = c(checked.arg.names, tempo$object.name))
     if( ! is.null(text)){
         tempo <- cuteDev::arg_check(data = text, class = "vector", mode = "character", length = 1, fun.name = function.name) ; eval(ee)
     }
@@ -129,8 +125,8 @@ empty_graph <- function(
     # other checkings
     # end other checkings
     
-    # reserved word checking to avoid bugs
-    # end reserved word checking to avoid bugs
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
     
     # main code

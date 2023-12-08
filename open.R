@@ -48,6 +48,7 @@
 #' On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
 #' @examples
 #' open(pdf = FALSE, pdf.path = "C:/Users/yhan/Desktop", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
+#' @importFrom cuteDev arg_check
 #' @export
 open <- function(
         pdf = TRUE, 
@@ -71,25 +72,16 @@ open <- function(
     # package checking
     # check of lib.path
     # end check of lib.path
-    # required function checking
-    req.function <- c(
-        "arg_check"
+    .pack_and_function_check(
+        fun = c(
+            "cuteDev::arg_check"
+        ),
+        lib.path = NULL,
+        external.function.name = function.name
     )
-    tempo <- NULL
-    for(i1 in req.function){
-        if(length(find(i1, mode = "function")) == 0L){
-            tempo <- c(tempo, i1)
-        }
-    }
-    if( ! is.null(tempo)){
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nREQUIRED cute FUNCTION", ifelse(length(tempo) > 1, "S ARE", " IS"), " MISSING IN THE R ENVIRONMENT:\n", paste0(tempo, collapse = "()\n"))
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
-    }
-    # end required function checking
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
-    
-    
+    # end check of the required function from the required packages
+    # end package checking
+
     # argument primary checking
     # arg with no default values
     # end arg with no default values
@@ -98,24 +90,24 @@ open <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- arg_check(data = pdf, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = pdf.path, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = pdf.name, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = width, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = height, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = paper, options = c("a4", "letter", "legal", "us", "executive", "a4r", "USr", "special", "A4", "LETTER", "LEGAL", "US"), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data =pdf.overwrite, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = rescale, options = c("R", "fit", "fixed"), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = remove.read.only, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- arg_check(data = return.output, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = pdf, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = pdf.path, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = pdf.name, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = width, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = height, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = paper, options = c("a4", "letter", "legal", "us", "executive", "a4r", "USr", "special", "A4", "LETTER", "LEGAL", "US"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data =pdf.overwrite, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = rescale, options = c("R", "fit", "fixed"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = remove.read.only, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- cuteDev::arg_check(data = return.output, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(argum.check)){
         if(any(argum.check, na.rm = TRUE) == TRUE){
             stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # end argument checking with arg_check()
+    # end argument checking with cuteDev::arg_check()
     # check with r_debugging_tools
-    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using arg_check()
+    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using cuteDev::arg_check()
     # end check with r_debugging_tools
     # end argument primary checking
     
@@ -160,8 +152,8 @@ open <- function(
     # other checkings
     # end other checkings
     
-    # reserved word checking
-    # end reserved word checking
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
    
     # main code
