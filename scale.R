@@ -235,10 +235,6 @@ scale <- function(
     lim.rank <- rank(lim) # to deal with inverted axis
     lim <- sort(lim)
     if(kind == "approx"){
-        # package checking
-        cuteDev::pkg_check(req.package = c("ggplot2"), lib.path = lib.path)
-        cuteDev::pkg_check(req.package = c("scales"), lib.path = lib.path)
-        # end package checking
         output <- ggplot2::ggplot_build(ggplot2::ggplot() + ggplot2::scale_y_continuous(
             breaks = scales::trans_breaks(
                 trans = "identity", 
