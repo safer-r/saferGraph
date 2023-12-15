@@ -1,9 +1,23 @@
 Package: cuteGraph
 Type: Package
-Title: What the package does (short line)
+Title: Functions for graphics management
 Version: 1.0
 Date: 2023-12-15
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: c(
+    person("Gaël", "Millot", , "gael.millot@pasteur.fr", role = c("aut", "cre")),
+    person("Yushi", "Han", , "yushi.han2000@gmail.com", role = "aut")
+  )
+Encoding: UTF-8
+Author: Gaël Millot [aut, cre], Yushi Han [aut]
+Maintainer: Gaël Millot <gael.millot@pasteur.fr>
+Description: Functions for graphics management.
+License: GPL-3
+RoxygenNote: 7.2.3
+Imports: 
+    cuteDev (>= 1.0),
+    cuteTool (>= 1.0),
+    ggplot2,
+    scales
+Remotes: 
+    yushiHn/cuteDev,
+    yushiHn/cuteTool

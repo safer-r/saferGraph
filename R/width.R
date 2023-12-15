@@ -34,7 +34,7 @@
 #' arg_check()
 #' @examples
 #' width(categ.nb = 10, inches.per.categ.nb = 0.2, ini.window.width = 7, inch.left.space = 1, inch.right.space = 1, boundarie.space = 0.5)
-#' @importFrom cuteDev width
+#' @importFrom cuteDev arg_check
 #' @export
 width <- function(
         categ.nb, 

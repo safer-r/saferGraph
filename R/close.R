@@ -20,7 +20,7 @@
 #' dev.list() ; 
 #' close(kind = c("pdf", "x11"), return.text = TRUE) ; 
 #' dev.list()
-#' @importFrom cuteDev close
+#' @importFrom cuteDev arg_check
 #' @export
 close <- function(
         kind = "pdf", 
