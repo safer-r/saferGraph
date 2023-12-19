@@ -23,13 +23,16 @@ REQUIRED PACKAGES
 cuteDev
 
 
-REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
+REQUIRED FUNCTIONS FROM THE cute PACKAGE
 
 arg_check()
 }
 \examples{
+\dontrun{
+# Screen devices should not be used in examples
 windows() ; 
 windows() ; 
+}
 pdf() ; 
 dev.list() ; 
 close(kind = c("pdf", "x11"), return.text = TRUE) ; 

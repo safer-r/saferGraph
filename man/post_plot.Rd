@@ -134,13 +134,16 @@ REQUIRED PACKAGES
 cuteDev
 
 
-REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
+REQUIRED FUNCTIONS FROM THE cute PACKAGE
 
 arg_check()
 
 open() to reinitialize graph parameters if par.reset = TRUE and custom.par = NULL
 }
 \examples{
+\dontrun{
+# Screen devices should not be used in examples
+
 # Example of log axis with log y-axis and unmodified x-axis:
 
 prior.par <- prior_plot(param.reinitial = TRUE, xlog.scale = FALSE, ylog.scale = TRUE, remove.label = TRUE, remove.x.axis = FALSE, remove.y.axis = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 0.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = TRUE) ; 
@@ -176,4 +179,5 @@ points(x = rep(5, length(y)), y = y, pch = 16, col = "red") ;
 text(x = rep(5, length(y)), y = y, c("y.mid.bottom.dev.region", "y.bottom.dev.region", "y.mid.top.dev.region", "y.top.dev.region", "y.mid.bottom.fig.region", "y.bottom.fig.region", "y.mid.top.fig.region", "y.top.fig.region", "y.top.plot.region", "y.bottom.plot.region", "y.mid.plot.region"), cex = 0.65, col = grey(0.25)) ; 
 points(y = rep(5, length(x)), x = x, pch = 16, col = "blue") ; 
 text(y = rep(5, length(x)), x = x, c("x.mid.left.dev.region", "x.left.dev.region", "x.mid.right.dev.region", "x.right.dev.region", "x.mid.left.fig.region", "x.left.fig.region", "x.mid.right.fig.region", "x.right.fig.region", "x.right.plot.region", "x.left.plot.region", "x.mid.plot.region"), cex = 0.65, srt = 90, col = grey(0.25))
+}
 }

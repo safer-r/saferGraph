@@ -35,7 +35,7 @@ ggplot2
 scales
 
 
-REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
+REQUIRED FUNCTIONS FROM THE cute PACKAGE
 
 arg_check()
 
@@ -50,7 +50,7 @@ n = 5 ;
 scale <- scale(n = n, lim = c(ymin, ymax), kind = "approx") ; 
 scale ; 
 par(yaxt = "n", yaxs = "i", las = 1) ; 
-plot(ymin:ymax, ymin:ymax, xlim = range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ;
+plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ;
 par(yaxt = "s") ; 
 axis(side = 2, at = scale)
 
@@ -63,7 +63,7 @@ n = 5 ;
 scale <- scale(n = n, lim = c(ymin, ymax), kind = "strict") ; 
 scale ; 
 par(yaxt = "n", yaxs = "i", las = 1) ; 
-plot(ymin:ymax, ymin:ymax, xlim = range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
+plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
 par(yaxt = "s") ; 
 axis(side = 2, at = scale)
 
@@ -76,7 +76,7 @@ n = 5 ;
 scale <- scale(n = n, lim = c(ymin, ymax), kind = "strict.cl") ; 
 scale ; 
 par(yaxt = "n", yaxs = "i", las = 1) ; 
-plot(ymin:ymax, ymin:ymax, xlim = range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
+plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
 par(yaxt = "s") ; 
 axis(side = 2, at = scale)
 
@@ -89,7 +89,7 @@ n = 5 ;
 scale <- scale(n = n, lim = c(ymin, ymax), kind = "approx") ; 
 scale ; 
 par(yaxt = "n", yaxs = "i", las = 1) ; 
-plot(ymin:ymax, ymin:ymax, xlim = range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
+plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
 par(yaxt = "s") ; 
 axis(side = 2, at = scale)
 }

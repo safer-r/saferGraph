@@ -51,6 +51,9 @@ inter_ticks <- function(
     # lim = c(0, 26.5) ; log = "no" ; breaks = c(0, 10, 20) ; n = 3 # for function debugging
     # lim = c(10, 0); log = "no"; breaks = c(10, 8, 6, 4, 2, 0); n = 4 # for function debugging
     # lim = c(-10, -20); log = "no"; breaks = c(-20, -15, -10); n = 4 # for function debugging
+    # package name
+    package.name <- "cuteGraph"
+    # end package name
     # function name
     ini <- match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
     function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
@@ -82,7 +85,7 @@ inter_ticks <- function(
     )
     tempo <- eval(parse(text = paste0("c(missing(", paste0(mandat.args, collapse = "),missing("), "))")))
     if(any(tempo)){ # normally no NA for missing() output
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", " HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
+        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: \nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", " HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end arg with no default values
@@ -116,7 +119,7 @@ inter_ticks <- function(
         tempo.arg <- names(arg.user.setting) # values provided by the user
         tempo.log <- suppressWarnings(sapply(lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.na), FUN = any)) & lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
         if(any(tempo.log) == TRUE){ # normally no NA because is.na() used here
-            tempo.cat <- paste0("ERROR IN ", function.name, "\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", paste0(tempo.arg[tempo.log], collapse = "\n"))
+            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: \n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", paste0(tempo.arg[tempo.log], collapse = "\n"))
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
@@ -131,35 +134,35 @@ inter_ticks <- function(
     )
     tempo.log <- sapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.null)
     if(any(tempo.log) == TRUE){# normally no NA with is.null()
-        tempo.cat <- paste0("ERROR IN ", function.name, ":\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE:\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end management of NULL arguments
     
     if(all(diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nlim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES): ", paste(lim, collapse = " "))
+        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: \nlim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES): ", paste(lim, collapse = " "))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }else if(any(lim %in% c(Inf, -Inf))){
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nlim ARGUMENT CANNOT CONTAIN -Inf OR Inf VALUES")
+        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: \nlim ARGUMENT CANNOT CONTAIN -Inf OR Inf VALUES")
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     if(log == "no" & is.null(breaks)){
-        tempo.cat <- paste0("ERROR IN ", function.name, "\nbreaks ARGUMENT CANNOT BE NULL IF log ARGUMENT IS \"no\"")
+        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: \nbreaks ARGUMENT CANNOT BE NULL IF log ARGUMENT IS \"no\"")
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     if( ! is.null(breaks)){
         if(length(breaks) < 2){
-            tempo.cat <- paste0("ERROR IN ", function.name, "\nbreaks ARGUMENT MUST HAVE 2 VALUES AT LEAST (OTHERWISE, INTER TICK POSITIONS CANNOT BE COMPUTED): ", paste(breaks, collapse = " "))
+            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: \nbreaks ARGUMENT MUST HAVE 2 VALUES AT LEAST (OTHERWISE, INTER TICK POSITIONS CANNOT BE COMPUTED): ", paste(breaks, collapse = " "))
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
         if( ! isTRUE(all.equal(diff(sort(breaks)), rep(diff(sort(breaks))[1], length(diff(sort(breaks))))))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
-            tempo.cat <- paste0("ERROR IN ", function.name, "\nbreaks ARGUMENT MUST HAVE EQUIDISTANT VALUES (OTHERWISE, EQUAL NUMBER OF INTER TICK BETWEEN MAIN TICKS CANNOT BE COMPUTED): ", paste(breaks, collapse = " "))
+            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: \nbreaks ARGUMENT MUST HAVE EQUIDISTANT VALUES (OTHERWISE, EQUAL NUMBER OF INTER TICK BETWEEN MAIN TICKS CANNOT BE COMPUTED): ", paste(breaks, collapse = " "))
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
     if( ! is.null(n)){
         if(n <= 0){
-            tempo.cat <- paste0("ERROR IN ", function.name, "\nn ARGUMENT MUST BE A POSITIVE AND NON NULL INTEGER: ", paste(n, collapse = " "))
+            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: \nn ARGUMENT MUST BE A POSITIVE AND NON NULL INTEGER: ", paste(n, collapse = " "))
             stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
@@ -219,7 +222,7 @@ inter_ticks <- function(
         tick.values <- tick.pos
     }
     if(any(is.na(tick.pos) | ! is.finite(tick.pos), na.rm = TRUE)){ 
-        tempo.cat <- paste0("INTERNAL CODE ERROR IN ", function.name, ": NA or Inf GENERATED FOR THE INTER TICK POSITIONS: ", paste(tick.pos, collapse = " "))
+        tempo.cat <- paste0("INTERNAL CODE ERROR IN ", function.name, " OF THE", package.name, " PACKAGE: NA or Inf GENERATED FOR THE INTER TICK POSITIONS: ", paste(tick.pos, collapse = " "))
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n", ifelse(is.null(warn), "", paste0("IN ADDITION\nWARNING", ifelse(warn.count > 1, "S", ""), ":\n\n", warn))), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     if(length(tick.pos) == 0L){

@@ -69,7 +69,7 @@ REQUIRED PACKAGES
 cuteDev
 
 
-REQUIRED FUNCTIONS FROM CUTE_LITTLE_R_FUNCTION
+REQUIRED FUNCTIONS FROM THE cute PACKAGE
 
 arg_check()
 
@@ -79,5 +79,8 @@ WARNINGS
 On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
 }
 \examples{
-open(pdf = FALSE, pdf.path = "C:/Users/yhan/Desktop", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
+\dontrun{
+# Screen devices should not be used in examples
+open(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
+}
 }
