@@ -45,4 +45,5 @@ empty_graph() # white page
 # all the arguments
 
 empty_graph(text = "NO GRAPH", text.size = 2, title = "GRAPH1", title.size = 1)
+
 }

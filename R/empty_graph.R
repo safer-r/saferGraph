@@ -25,7 +25,13 @@
 #' 
 #' empty_graph() # white page
 #' 
-#' t
+#' 
+#' # all the arguments
+#' 
+#' empty_graph(text = "NO GRAPH", text.size = 2, title = "GRAPH1", title.size = 1)
+#' 
+#' @export
+empty_graph <- function(
         text = NULL, 
         text.size = 1, 
         title = NULL, 
