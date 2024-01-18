@@ -20,10 +20,13 @@
 #' windows() ; 
 #' }
 #' pdf() ; 
-#' dev.list() ; 
+#' grDevices::dev.list() ; 
 #' close(kind = c("pdf", "x11"), return.text = TRUE) ; 
-#' dev.list()
+#' grDevices::dev.list()
 #' @importFrom cuteDev arg_check
+#' @importFrom grDevices x11
+#' @importFrom grDevices dev.list
+#' @importFrom grDevices dev.off
 #' @export
 close <- function(
         kind = "pdf", 
@@ -123,31 +126,31 @@ close <- function(
     if(Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
         if(any(kind %in% c("windows", "quartz", "x11", "X11"))){
             tempo <- kind %in% c("windows", "quartz", "x11", "X11")
-            kind[tempo] <- "windows" # term are replaced by what is displayed when using a <- dev.list() ; names(a)
+            kind[tempo] <- "windows" # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
         }
     }else if(Sys.info()["sysname"] == "Linux"){
         if(any(kind %in% c("windows", "quartz", "x11", "X11"))){
-            tempo.device <- suppressWarnings(try(X11(), silent = TRUE))[] # open a X11 window to try to recover the X11 system used
+            tempo.device <- suppressWarnings(try(grDevices::X11(), silent = TRUE))[] # open a X11 window to try to recover the X11 system used
             if( ! is.null(tempo.device)){
                 text <- paste0(text, "\nCANNOT CLOSE GUI GRAPHIC DEVICES AS REQUIRED BECAUSE THIS LINUX SYSTEM DOES NOT HAVE IT")
             }else{
                 tempo <- kind %in% c("windows", "quartz", "x11", "X11")
-                kind[tempo] <- names(dev.list()[length(dev.list())]) # term are replaced by what is displayed when using a <- dev.list() ; names(a)
-                invisible(dev.off()) # close the X11 opened by tempo
+                kind[tempo] <- names(grDevices::dev.list()[length(grDevices::dev.list())]) # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
+                invisible(grDevices::dev.off()) # close the X11 opened by tempo
             }
         }
     }else{ # for macOS
         if(any(kind %in% c("windows", "quartz", "x11", "X11"))){
             tempo <- kind %in% c("windows", "quartz", "x11", "X11")
-            kind[tempo] <- "quartz" # term are replaced by what is displayed when using a <- dev.list() ; names(a)
+            kind[tempo] <- "quartz" # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
         }
     }
     kind <- unique(kind)
-    if(length(dev.list()) != 0){
-        for(i in length(names(dev.list())):1){
-            if(names(dev.list())[i] %in% kind){
-                text <- paste0(text, "\n", names(dev.list())[i], " DEVICE NUMBER ", dev.list()[i], " HAS BEEN CLOSED")
-                invisible(dev.off(dev.list()[i]))
+    if(length(grDevices::dev.list()) != 0){
+        for(i in length(names(grDevices::dev.list())):1){
+            if(names(grDevices::dev.list())[i] %in% kind){
+                text <- paste0(text, "\n", names(grDevices::dev.list())[i], " DEVICE NUMBER ", grDevices::dev.list()[i], " HAS BEEN CLOSED")
+                invisible(grDevices::dev.off(grDevices::dev.list()[i]))
             }
         }
     }

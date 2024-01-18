@@ -34,7 +34,7 @@ windows() ;
 windows() ; 
 }
 pdf() ; 
-dev.list() ; 
+grDevices::dev.list() ; 
 close(kind = c("pdf", "x11"), return.text = TRUE) ; 
-dev.list()
+grDevices::dev.list()
 }

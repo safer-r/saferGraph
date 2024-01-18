@@ -12,8 +12,8 @@
 #' @param remove.label Single logical value. Remove labels (axis legend) of the two axes? Either TRUE or FALSE (ann argument of par()).
 #' @param remove.x.axis Single logical value. Remove x-axis except legend? Either TRUE or FALSE (control the xaxt argument of par()). Automately set to TRUE if xlog.scale == TRUE.
 #' @param remove.y.axis Single logical value. Remove y-axis except legend? Either TRUE or FALSE (control the yaxt argument of par()). Automately set to TRUE if ylog.scale == TRUE.
-#' @param std.x.range Single logical value. Standard range on the x-axis? TRUE (no range extend) or FALSE (4% range extend). Controls xaxs argument of par() (TRUE is xaxs = "i", FALSE is xaxs = "r").
-#' @param std.y.range Single logical value. Standard range on the y-axis? TRUE (no range extend) or FALSE (4% range extend). Controls yaxs argument of par() (TRUE is yaxs = "i", FALSE is yaxs = "r").
+#' @param std.x.range Single logical value. Standard range on the x-axis? TRUE (no range extend) or FALSE (4\% range extend). Controls xaxs argument of par() (TRUE is xaxs = "i", FALSE is xaxs = "r").
+#' @param std.y.range Single logical value. Standard range on the y-axis? TRUE (no range extend) or FALSE (4\% range extend). Controls yaxs argument of par() (TRUE is yaxs = "i", FALSE is yaxs = "r").
 #' @param down.space Single positive numeric value indicating the lower vertical margin (in inches, mai argument of par()).
 #' @param left.space Single positive numeric value indicating the left horizontal margin (in inches, mai argument of par()).
 #' @param up.space Single positive numeric value indicating the upper vertical margin between plot region and grapical window (in inches, mai argument of par()).
@@ -43,6 +43,11 @@
 #' prior_plot(param.reinitial = FALSE, xlog.scale = FALSE, ylog.scale = FALSE, remove.label = TRUE, remove.x.axis = TRUE, remove.y.axis = TRUE, std.x.range = TRUE, std.y.range = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 4.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = FALSE)
 #' }
 #' @importFrom cuteDev arg_check
+#' @importFrom grDevices dev.list
+#' @importFrom grDevices dev.cur
+#' @importFrom graphics par
+#' @importFrom grDevices dev.off
+#' @importFrom grDevices dev.set
 #' @export
 prior_plot <- function(
         param.reinitial = FALSE, 
@@ -190,22 +195,22 @@ prior_plot <- function(
     # end second round of checking and data preparation
 
     # main code
-    if(is.null(dev.list())){ 
-        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: THIS FUNCTION CANNOT BE USED IF NO GRAPHIC DEVICE ALREADY OPENED (dev.list() IS CURRENTLY NULL)")
+    if(is.null(grDevices::dev.list())){ 
+        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: THIS FUNCTION CANNOT BE USED IF NO GRAPHIC DEVICE ALREADY OPENED (grDevices::dev.list() IS CURRENTLY NULL)")
         stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # par.ini recovery
     # cannot use pdf(file = NULL), because some small differences between pdf() and other devices. For instance, differences with windows() for par()$fin, par()$pin and par()$plt
     if(param.reinitial == TRUE){
-        if( ! all(names(dev.cur()) == "null device", na.rm = TRUE)){
-            active.wind.nb <- dev.cur()
+        if( ! all(names(grDevices::dev.cur()) == "null device", na.rm = TRUE)){
+            active.wind.nb <- grDevices::dev.cur()
         }else{
             active.wind.nb <- 0
         }
         if(Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
             grDevices::windows()
-            ini.par <- par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-            invisible(dev.off()) # close the new window
+            ini.par <- graphics::par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+            invisible(grDevices::dev.off()) # close the new window
         }else if(Sys.info()["sysname"] == "Linux"){
             if(file.exists(paste0(getwd(), "/Rplots.pdf"))){
                 tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: THIS FUNCTION CANNOT BE USED ON LINUX WITH param.reinitial SET TO TRUE IF A Rplots.pdf FILE ALREADY EXISTS HERE: ", getwd())
@@ -213,11 +218,11 @@ prior_plot <- function(
             }else{
                 open.fail <- suppressWarnings(try(grDevices::X11(), silent = TRUE))[] # try to open a X11 window. If open.fail == NULL, no problem, meaning that the X11 window is opened. If open.fail != NULL, a pdf can be opened here paste0(getwd(), "/Rplots.pdf")
                 if(is.null(open.fail)){
-                    ini.par <- par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-                    invisible(dev.off()) # close the new window
+                    ini.par <- graphics::par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+                    invisible(grDevices::dev.off()) # close the new window
                 }else if(file.exists(paste0(getwd(), "/Rplots.pdf"))){
-                    ini.par <- par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-                    invisible(dev.off()) # close the new window
+                    ini.par <- graphics::par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+                    invisible(grDevices::dev.off()) # close the new window
                     file.remove(paste0(getwd(), "/Rplots.pdf")) # remove the pdf file
                 }else{
                     tempo.cat <- ("ERROR IN function.name\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN")
@@ -226,52 +231,52 @@ prior_plot <- function(
             }
         }else{ # macOS
             grDevices::quartz()
-            ini.par <- par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened)
-            invisible(dev.off()) # close the new window
+            ini.par <- graphics::par(no.readonly = FALSE) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened)
+            invisible(grDevices::dev.off()) # close the new window
         }
-        if( ! all(names(dev.cur()) == "null device", na.rm = TRUE)){
-            invisible(dev.set(active.wind.nb)) # go back to the active window if exists
-            par(ini.par) # apply the initial par to current window
+        if( ! all(names(grDevices::dev.cur()) == "null device", na.rm = TRUE)){
+            invisible(grDevices::dev.set(active.wind.nb)) # go back to the active window if exists
+            graphics::par(ini.par) # apply the initial par to current window
         }
     }
     # end par.ini recovery
     if(remove.x.axis == TRUE){
-        par(xaxt = "n") # suppress the y-axis label
+        graphics::par(xaxt = "n") # suppress the y-axis label
     }else{
-        par(xaxt = "s")
+        graphics::par(xaxt = "s")
     }
     if(remove.y.axis == TRUE){
-        par(yaxt = "n") # suppress the y-axis label
+        graphics::par(yaxt = "n") # suppress the y-axis label
     }else{
-        par(yaxt = "s")
+        graphics::par(yaxt = "s")
     }
     if(std.x.range == TRUE){
-        par(xaxs = "i")
+        graphics::par(xaxs = "i")
     }else{
-        par(xaxs = "r")
+        graphics::par(xaxs = "r")
     }
     if(std.y.range == TRUE){
-        par(yaxs = "i")
+        graphics::par(yaxs = "i")
     }else{
-        par(yaxs = "r")
+        graphics::par(yaxs = "r")
     }
-    par(mai = c(down.space, left.space, up.space, right.space), ann = ! remove.label, las = orient, mgp = c(dist.legend/0.2, 1, 0), xpd = display.extend, bty= box.type, cex.lab = amplif.label, cex.axis = amplif.axis)
-    par(tcl = -par()$mgp[2] * tick.length) # tcl gives the length of the ticks as proportion of line text, knowing that mgp is in text lines. So the main ticks are a 0.5 of the distance of the axis numbers by default. The sign provides the side of the tick (negative for outside of the plot region)
+    graphics::par(mai = c(down.space, left.space, up.space, right.space), ann = ! remove.label, las = orient, mgp = c(dist.legend/0.2, 1, 0), xpd = display.extend, bty= box.type, cex.lab = amplif.label, cex.axis = amplif.axis)
+    graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # tcl gives the length of the ticks as proportion of line text, knowing that mgp is in text lines. So the main ticks are a 0.5 of the distance of the axis numbers by default. The sign provides the side of the tick (negative for outside of the plot region)
     if(xlog.scale == TRUE){
-        par(xaxt = "n", xlog = TRUE) # suppress the x-axis label
+        graphics::par(xaxt = "n", xlog = TRUE) # suppress the x-axis label
     }else{
-        par(xlog = FALSE)
+        graphics::par(xlog = FALSE)
     }
     if(ylog.scale == TRUE){
-        par(yaxt = "n", ylog = TRUE) # suppress the y-axis label
+        graphics::par(yaxt = "n", ylog = TRUE) # suppress the y-axis label
     }else{
-        par(ylog = FALSE)
+        graphics::par(ylog = FALSE)
     }
     # output
     # warning output
     # end warning output
     if(return.par == TRUE){
-        tempo.par <- par()
+        tempo.par <- graphics::par()
         return(tempo.par)
     }
     # end output

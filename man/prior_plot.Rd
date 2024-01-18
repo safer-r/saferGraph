@@ -40,9 +40,9 @@ prior_plot(
 
 \item{remove.y.axis}{Single logical value. Remove y-axis except legend? Either TRUE or FALSE (control the yaxt argument of par()). Automately set to TRUE if ylog.scale == TRUE.}
 
-\item{std.x.range}{Single logical value. Standard range on the x-axis? TRUE (no range extend) or FALSE (4% range extend). Controls xaxs argument of par() (TRUE is xaxs = "i", FALSE is xaxs = "r").}
+\item{std.x.range}{Single logical value. Standard range on the x-axis? TRUE (no range extend) or FALSE (4\% range extend). Controls xaxs argument of par() (TRUE is xaxs = "i", FALSE is xaxs = "r").}
 
-\item{std.y.range}{Single logical value. Standard range on the y-axis? TRUE (no range extend) or FALSE (4% range extend). Controls yaxs argument of par() (TRUE is yaxs = "i", FALSE is yaxs = "r").}
+\item{std.y.range}{Single logical value. Standard range on the y-axis? TRUE (no range extend) or FALSE (4\% range extend). Controls yaxs argument of par() (TRUE is yaxs = "i", FALSE is yaxs = "r").}
 
 \item{down.space}{Single positive numeric value indicating the lower vertical margin (in inches, mai argument of par()).}
 

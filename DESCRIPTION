@@ -17,6 +17,8 @@ Imports:
     cuteDev (>= 1.0),
     cuteTool (>= 1.0),
     ggplot2,
+    graphics,
+    grDevices,
     scales
 Remotes: 
     yushiHn/cuteDev,

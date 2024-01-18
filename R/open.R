@@ -52,6 +52,9 @@
 #' open(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
 #' }
 #' @importFrom cuteDev arg_check
+#' @importFrom grDevices dev.off
+#' @importFrom grDevices dev.list
+#' @importFrom grDevices dev.size
 #' @export
 open <- function(
         pdf = TRUE, 
@@ -182,12 +185,12 @@ open <- function(
         open.fail <- NULL
         grDevices::windows()
         ini.par <- par(no.readonly = remove.read.only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-        invisible(dev.off()) # close the new window
+        invisible(grDevices::dev.off()) # close the new window
     }else if(Sys.info()["sysname"] == "Linux"){
         if(pdf == TRUE){# cannot use pdf(file = NULL), because some small differences between pdf() and other devices. For instance, differences with windows() for par()$fin, par()$pin and par()$plt
             if(exists(".Random.seed", envir = .GlobalEnv)){ # if .Random.seed does not exists, it means that no random operation has been performed yet in any R environment
                 tempo.random.seed <- .Random.seed
-                on.exit(assign(".Random.seed", tempo.random.seed, env = .GlobalEnv))
+                on.exit(assign(".Random.seed", tempo.random.seed, envir = .GlobalEnv))
             }else{
                 on.exit(set.seed(NULL)) # inactivate seeding -> return to complete randomness
             }
@@ -198,7 +201,7 @@ open <- function(
             }
             grDevices::pdf(width = width, height = height, file=paste0(pdf.path, "/recover_ini_par", tempo.code, ".pdf"), paper = paper)
             ini.par <- par(no.readonly = remove.read.only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-            invisible(dev.off()) # close the pdf window
+            invisible(grDevices::dev.off()) # close the pdf window
             file.remove(paste0(pdf.path, "/recover_ini_par", tempo.code, ".pdf")) # remove the pdf file
         }else{
             # test if X11 can be opened
@@ -209,7 +212,7 @@ open <- function(
                 open.fail <- suppressWarnings(try(grDevices::X11(), silent = TRUE))[] # try to open a X11 window. If open.fail == NULL, no problem, meaning that the X11 window is opened. If open.fail != NULL, a pdf can be opened here paste0(getwd(), "/Rplots.pdf")
                 if(is.null(open.fail)){
                     ini.par <- par(no.readonly = remove.read.only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-                    invisible(dev.off()) # close the new window
+                    invisible(grDevices::dev.off()) # close the new window
                 }else if(file.exists(paste0(getwd(), "/Rplots.pdf"))){
                     file.remove(paste0(getwd(), "/Rplots.pdf")) # remove the pdf file
                     tempo.cat <- ("ERROR IN function.name\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE function.name FUNCTION TO TRUE AND RERUN")
@@ -221,7 +224,7 @@ open <- function(
         open.fail <- NULL
         grDevices::quartz()
         ini.par <- par(no.readonly = remove.read.only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-        invisible(dev.off()) # close the new window
+        invisible(grDevices::dev.off()) # close the new window
     }
     # end par.ini recovery 
     zone.ini <- matrix(1, ncol=1) # to recover the initial parameters for next figure region when device region split into several figure regions
@@ -255,7 +258,7 @@ open <- function(
     # warning output
     # end warning output
     if(return.output == TRUE){
-        output <- list(pdf.loc = pdf.loc, ini.par = ini.par, zone.ini = zone.ini, dim = dev.size())
+        output <- list(pdf.loc = pdf.loc, ini.par = ini.par, zone.ini = zone.ini, dim = grDevices::dev.size())
         return(output)
     }
     # output
