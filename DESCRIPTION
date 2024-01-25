@@ -19,7 +19,9 @@ Imports:
     ggplot2,
     graphics,
     grDevices,
-    scales
+    scales,
+    stats,
+    utils
 Remotes: 
     yushiHn/cuteDev,
     yushiHn/cuteTool

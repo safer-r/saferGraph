@@ -81,7 +81,7 @@
 #' @importFrom ggplot2 scale_y_continuous
 #' @importFrom scales trans_breaks
 #' @importFrom cuteDev arg_check
-#' @importFrom cuteTool round
+#' @importFrom cuteTool round2
 #' @export
 scale <- function(
         n, 
@@ -131,7 +131,7 @@ scale <- function(
             "ggplot2::scale_y_continuous",
             "scales::trans_breaks",
             "cuteDev::arg_check",
-            "cuteTool::round"
+            "cuteTool::round2"
         ),
         lib.path = lib.path,
         external.function.name = function.name
@@ -251,7 +251,7 @@ scale <- function(
         }
         output <- output[ ! is.na(output)]
     }else if(kind == "strict"){
-        output <- cuteTool::round(seq(lim[1] ,lim[2], length.out = n), 2)
+        output <- cuteTool::round2(seq(lim[1] ,lim[2], length.out = n), 2)
     }else if(kind == "strict.cl"){
         tempo.range <- diff(sort(lim))
         tempo.max <- base::max(lim)
