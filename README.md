@@ -1,17 +1,17 @@
 
-# cuteGraph <a href="">[<img src="man/figures/logo.png" align="right" height="140" />](https://yushihn.github.io/cuteGraph)</a>
+# saferGraph <a href="">[<img src="man/figures/saferGraph.png" align="right" height="140" />](https://safer-r.github.io/saferGraph)</a>
 
 <br />
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/yushiHn/cuteGraph/workflows/R-CMD-check/badge.svg)](https://github.com/yushiHn/cuteGraph/actions)
+[![R-CMD-check](https://github.com/safer-r/saferGraph/workflows/R-CMD-check/badge.svg)](https://github.com/safer-r/saferGraph/actions)
 
-[![Codecov test coverage](https://codecov.io/github/yushiHn/cuteGraph/coverage.svg?branch=master)](https://app.codecov.io/github/yushiHn/cuteGraph?branch=master)
-[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/cuteGraph)](https://cran.r-project.org/package=cuteGraph)
-[![downloads](https://cranlogs.r-pkg.org/badges/cuteGraph)](https://www.rdocumentation.org/trends)
+[![Codecov test coverage](https://codecov.io/github/yushiHn/saferGraph/coverage.svg?branch=master)](https://app.codecov.io/github/yushiHn/saferGraph?branch=master)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/saferGraph)](https://cran.r-project.org/package=saferGraph)
+[![downloads](https://cranlogs.r-pkg.org/badges/saferGraph)](https://www.rdocumentation.org/trends)
 [![](https://img.shields.io/badge/license-GPL3.0-green.svg)](https://opensource.org/licenses/MITgpl-3-0)
-[![rworkflows](https://github.com/yushiHn/cuteGraph/actions/workflows/rworkflows.yml/badge.svg)](https://github.com/yushiHn/cuteGraph/actions/workflows/rworkflows.yml)
+[![rworkflows](https://github.com/safer-r/saferGraph/actions/workflows/rworkflows.yml/badge.svg)](https://github.com/safer-r/saferGraph/actions/workflows/rworkflows.yml)
 <!-- badges: end -->
 
 <br />
@@ -31,7 +31,7 @@
 
 ## Description
 
-Set of R functions for the development of R functions, written according to the [cute_project](https://github.com/gael-millot/cute_project) specifications.
+Set of R functions for the development of R functions, written according to the [safer project](https://github.com/safer-r) specifications.
 
 <br />
 
@@ -50,40 +50,30 @@ Set of R functions for the development of R functions, written according to the 
 
 <br />
 
-This order can be used:
-
-- width()
-- open()
-- prior_plot() # not for ggplot2
-- plot() or any other plotting
-- post_plot() if prior_plot() has been used # not for ggplot2
-- close()
-
-<br />
-Read `vignette("cuteGraph")` for more details.
+Read `vignette("saferGraph")` for more details.
 
 <br />
 
 ## Versions
 
-The different *cuteGraph* releases are tagged [here](https://github.com/yushiHn/cuteGraph/tags).
+The different *saferGraph* releases are tagged [here](https://github.com/safer-r/saferGraph/tags).
 
 <br />
 
 ## Installation
 
-*cuteGraph* can be currently be installed from GitHub:
+*saferGraph* can be currently be installed from GitHub:
 
 ```r
 install.packages("remotes")
-remotes::install_github("https://github.com/yushiHn/cuteGraph")
+remotes::install_github("https://github.com/safer-r/saferGraph")
 ```
 
 Older versions can be installed like this:
 
 ```r
 v <- "v1.0" # desired tag version
-remotes::install_github(paste0("https://github.com/yushiHn/cuteGraph/tree/", v))
+remotes::install_github(paste0("https://github.com/safer-r/saferGraph/tree/", v))
 ```
 
 <br />
@@ -98,10 +88,10 @@ See the GNU General Public License for more details at https://www.gnu.org/licen
 
 ## Citation
 
-If you are using functions of *cuteGraph*, please cite: 
+If you are using functions of *saferGraph*, please cite: 
 
-> Han Y, Serizay J, Millot GA (2023). _The R cuteGraph package_.
-> <https://github.com/yushiHn/cuteGraph/>.
+> Han Y, Serizay J, Millot GA (2023). _The R saferGraph package_.
+> <https://github.com/safer-r/saferGraph/>.
 
 <br />
 
@@ -111,11 +101,15 @@ If you are using functions of *cuteGraph*, please cite:
 
 [Jacques Serizai](https://github.com/js2264), Spatial Regulation of Genomes team, Institut Pasteur, Paris, France
 
-[Gael A. Millot](https://gitlab.pasteur.fr/gmillot), Bioinformatics and Biostatistics Hub, Institut Pasteur, Paris, France
+[Gael A. Millot](https://github.com/gael-millot), Bioinformatics and Biostatistics Hub, Institut Pasteur, Paris, France
 
 <br />
 
 ## Acknowledgements
 
-The developers & maintainers of [R](https://www.r-project.org/) as well as packages used in the *cuteGraph* functions.
+The developers & maintainers of the mentioned softwares and packages, including:
+
+- [R](https://www.r-project.org/)
+- [Git](https://git-scm.com/)
+- [Github](https://github.com/)
 
