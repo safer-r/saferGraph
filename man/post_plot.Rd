@@ -97,28 +97,51 @@ post_plot(
 }
 \value{
 A list containing: 
+
 - $x.mid.left.dev.region: middle of the left margin of the device region, in coordinates of the x-axis.
+
 - $x.left.dev.region: left side of the left margin (including the potential margin of the device region), in coordinates of the x-axis.
+
 - $x.mid.right.dev.region: middle of the right margin of the device region, in coordinates of the x-axis.
+
 - $x.right.dev.region: right side of the right margin (including the potential margin of the device region), in coordinates of the x-axis.
+
 - $x.mid.left.fig.region: middle of the left margin of the figure region, in coordinates of the x-axis.
+
 - $x.left.fig.region: left side of the left margin, in coordinates of the x-axis.
+
 - $x.mid.right.fig.region: middle of the right margin of the figure region, in coordinates of the x-axis.
+
 - $x.right.fig.region: right side of the right margin, in coordinates of the x-axis.
+
 - $x.left.plot.region: left side of the plot region, in coordinates of the x-axis.
+
 - $x.right.plot.region: right side of the plot region, in coordinates of the x-axis.
+
 - $x.mid.plot.region: middle of the plot region, in coordinates of the x-axis.
+
 - $y.mid.bottom.dev.region: middle of the bottom margin of the device region, in coordinates of the y-axis.
+
 - $y.bottom.dev.region: bottom side of the bottom margin (including the potential margin of the device region), in coordinates of the y-axis.
+
 - $y.mid.top.dev.region: middle of the top margin of the device region, in coordinates of the y-axis.
+
 - $y.top.dev.region: top side of the top margin (including the potential margin of the device region), in coordinates of the y-axis.
+
 - $y.mid.bottom.fig.region: middle of the bottom margin of the figure region, in coordinates of the y-axis.
+
 - $y.bottom.fig.region: bottom of the bottom margin of the figure region, in coordinates of the y-axis.
+
 - $y.mid.top.fig.region: middle of the top margin of the figure region, in coordinates of the y-axis.
+
 - $y.top.fig.region: top of the top margin of the figure region, in coordinates of the y-axis.
+
 - $y.top.plot.region: top of the plot region, in coordinates of the y-axis.
+
 - $y.bottom.plot.region: bottom of the plot region, in coordinates of the y-axis.
+
 - $y.mid.plot.region: middle of the plot region, in coordinates of the y-axis.
+
 - $text: warning text
 }
 \description{
@@ -127,18 +150,6 @@ Redesign axis. If x.side = 0, y.side = 0, the function just adds text at toprigh
 Provide also positions for legend or additional text on the graph.
 
 Use prior_plot() before this function for initial inactivation of the axis drawings.
-}
-\details{
-REQUIRED PACKAGES
-
-cuteDev
-
-
-REQUIRED FUNCTIONS FROM THE cute PACKAGE
-
-arg_check()
-
-open() to reinitialize graph parameters if par.reset = TRUE and custom.par = NULL
 }
 \examples{
 \dontrun{

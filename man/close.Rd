@@ -17,16 +17,6 @@ Text regarding the kind parameter and the devices that were finally closed.
 \description{
 Close only specific graphic windows (devices).
 }
-\details{
-REQUIRED PACKAGES
-
-cuteDev
-
-
-REQUIRED FUNCTIONS FROM THE cute PACKAGE
-
-arg_check()
-}
 \examples{
 \dontrun{
 # Screen devices should not be used in examples

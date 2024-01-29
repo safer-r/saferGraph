@@ -10,18 +10,12 @@
 #' A list containing :
 #' 
 #' - $log: value of the log argument used.
+#' 
 #' - $coordinates: the coordinates of the secondary ticks on the axis, between the lim values.
+#' 
 #' - $values: the corresponding values associated to each coordinate (with log scale, 2^$values or 10^$values is equivalent to the labels of the axis).
+#' 
 #' - $warn: the potential warning messages. Use cat() for proper display. NULL if no warning.
-#' @details 
-#' REQUIRED PACKAGES
-#' 
-#' cuteDev
-#' 
-#' 
-#' REQUIRED FUNCTIONS FROM THE cute PACKAGE
-#' 
-#' arg_check()
 #' @examples
 #' # no log scale
 #' 
@@ -37,7 +31,7 @@
 #' # log10
 #' 
 #' inter_ticks(lim = c(-2,3), log = "log10")
-#' @importFrom cuteDev arg_check
+#' @importFrom saferDev arg_check
 #' @export
 inter_ticks <- function(
         lim, 
@@ -52,7 +46,7 @@ inter_ticks <- function(
     # lim = c(10, 0); log = "no"; breaks = c(10, 8, 6, 4, 2, 0); n = 4 # for function debugging
     # lim = c(-10, -20); log = "no"; breaks = c(-20, -15, -10); n = 4 # for function debugging
     # package name
-    package.name <- "cuteGraph"
+    package.name <- "saferGraph"
     # end package name
     # function name
     ini <- match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
@@ -69,7 +63,7 @@ inter_ticks <- function(
     # check of the required function from the required packages
     .pack_and_function_check(
         fun = c(
-            "cuteDev::arg_check"
+            "saferDev::arg_check"
         ),
         lib.path = NULL,
         external.function.name = function.name
@@ -94,15 +88,15 @@ inter_ticks <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- expression(argum.check = c(argum.check, tempo$problem) , text.check = c(text.check, tempo$text) , checked.arg.names = c(checked.arg.names, tempo$object.name))
-    tempo <- cuteDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = log, options = c("no", "log2", "log10"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = log, options = c("no", "log2", "log10"), length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(breaks)){
-        tempo <- cuteDev::arg_check(data = breaks, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = breaks, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(n)){
-        tempo <- cuteDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
     }
-    tempo <- cuteDev::arg_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(argum.check)){
         if(any(argum.check, na.rm = TRUE) == TRUE){
             stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #

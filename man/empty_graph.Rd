@@ -21,16 +21,6 @@ An empty plot.
 \description{
 Display an empty plot with a text in the middle of the window (for instance to specify that no plot can be drawn).
 }
-\details{
-REQUIRED PACKAGES
-
-cuteDev
-
-
-REQUIRED FUNCTIONS FROM THE cute PACKAGE
-
-arg_check()
-}
 \examples{
 # simple example
 

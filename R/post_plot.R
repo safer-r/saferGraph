@@ -36,40 +36,52 @@
 #' @param custom.par List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par.reset == TRUE, the default par() parameters are used.
 #' @returns 
 #' A list containing: 
+#' 
 #' - $x.mid.left.dev.region: middle of the left margin of the device region, in coordinates of the x-axis.
+#' 
 #' - $x.left.dev.region: left side of the left margin (including the potential margin of the device region), in coordinates of the x-axis.
+#' 
 #' - $x.mid.right.dev.region: middle of the right margin of the device region, in coordinates of the x-axis.
+#' 
 #' - $x.right.dev.region: right side of the right margin (including the potential margin of the device region), in coordinates of the x-axis.
+#' 
 #' - $x.mid.left.fig.region: middle of the left margin of the figure region, in coordinates of the x-axis.
+#' 
 #' - $x.left.fig.region: left side of the left margin, in coordinates of the x-axis.
+#' 
 #' - $x.mid.right.fig.region: middle of the right margin of the figure region, in coordinates of the x-axis.
+#' 
 #' - $x.right.fig.region: right side of the right margin, in coordinates of the x-axis.
+#' 
 #' - $x.left.plot.region: left side of the plot region, in coordinates of the x-axis.
+#' 
 #' - $x.right.plot.region: right side of the plot region, in coordinates of the x-axis.
+#' 
 #' - $x.mid.plot.region: middle of the plot region, in coordinates of the x-axis.
+#' 
 #' - $y.mid.bottom.dev.region: middle of the bottom margin of the device region, in coordinates of the y-axis.
+#' 
 #' - $y.bottom.dev.region: bottom side of the bottom margin (including the potential margin of the device region), in coordinates of the y-axis.
+#' 
 #' - $y.mid.top.dev.region: middle of the top margin of the device region, in coordinates of the y-axis.
+#' 
 #' - $y.top.dev.region: top side of the top margin (including the potential margin of the device region), in coordinates of the y-axis.
+#' 
 #' - $y.mid.bottom.fig.region: middle of the bottom margin of the figure region, in coordinates of the y-axis.
+#' 
 #' - $y.bottom.fig.region: bottom of the bottom margin of the figure region, in coordinates of the y-axis.
+#' 
 #' - $y.mid.top.fig.region: middle of the top margin of the figure region, in coordinates of the y-axis.
+#' 
 #' - $y.top.fig.region: top of the top margin of the figure region, in coordinates of the y-axis.
+#' 
 #' - $y.top.plot.region: top of the plot region, in coordinates of the y-axis.
+#' 
 #' - $y.bottom.plot.region: bottom of the plot region, in coordinates of the y-axis.
+#' 
 #' - $y.mid.plot.region: middle of the plot region, in coordinates of the y-axis.
+#' 
 #' - $text: warning text
-#' @details 
-#' REQUIRED PACKAGES
-#' 
-#' cuteDev
-#' 
-#' 
-#' REQUIRED FUNCTIONS FROM THE cute PACKAGE
-#' 
-#' arg_check()
-#'
-#' open() to reinitialize graph parameters if par.reset = TRUE and custom.par = NULL
 #' @examples
 #' \dontrun{
 #' # Screen devices should not be used in examples
@@ -110,7 +122,7 @@
 #' points(y = rep(5, length(x)), x = x, pch = 16, col = "blue") ; 
 #' text(y = rep(5, length(x)), x = x, c("x.mid.left.dev.region", "x.left.dev.region", "x.mid.right.dev.region", "x.right.dev.region", "x.mid.left.fig.region", "x.left.fig.region", "x.mid.right.fig.region", "x.right.fig.region", "x.right.plot.region", "x.left.plot.region", "x.mid.plot.region"), cex = 0.65, srt = 90, col = grey(0.25))
 #' }
-#' @importFrom cuteDev arg_check
+#' @importFrom saferDev arg_check
 #' @importFrom grDevices colors
 #' @importFrom graphics par
 #' @importFrom graphics rect
@@ -155,7 +167,7 @@ post_plot <- function(
     # DEBUGGING
     # x.side = 0 ; x.log.scale = FALSE ; x.categ = NULL ; x.categ.pos = NULL ; x.lab = "" ; x.axis.size = 1.5 ; x.label.size = 1.5 ; x.dist.legend = 1 ; x.nb.inter.tick = 1 ; y.side = 0 ; y.log.scale = FALSE ; y.categ = NULL ; y.categ.pos = NULL ; y.lab = "" ; y.axis.size = 1.5 ; y.label.size = 1.5 ; y.dist.legend = 0.7 ; y.nb.inter.tick = 1 ; text.angle = 90 ; tick.length = 0.5 ; sec.tick.length = 0.3 ; bg.color = NULL ; grid.lwd = NULL ; grid.col = "white" ; corner.text = "" ; corner.text.size = 1 ; just.label.add = FALSE ; par.reset = FALSE ; custom.par = NULL # for function debugging
     # package name
-    package.name <- "cuteGraph"
+    package.name <- "saferGraph"
     # end package name
     # function name
     ini <- match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
@@ -173,7 +185,7 @@ post_plot <- function(
     # check of the required function from the required packages
     .pack_and_function_check(
         fun = c(
-            "cuteDev::arg_check"
+            "saferDev::arg_check"
         ),
         lib.path = NULL,
         external.function.name = function.name
@@ -184,42 +196,42 @@ post_plot <- function(
     # argument primary checking
     # arg with no default values
     # end arg with no default values
-    # argument checking with cuteDev::arg_check()
+    # argument checking with saferDev::arg_check()
     argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- cuteDev::arg_check(data = x.side, options = c(0, 1, 3), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = x.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = x.side, options = c(0, 1, 3), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = x.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(x.categ)){
-        tempo <- cuteDev::arg_check(data = x.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = x.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(x.categ.pos)){
-        tempo <- cuteDev::arg_check(data = x.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = x.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
     }
-    tempo <- cuteDev::arg_check(data = x.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = x.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = x.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = x.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = x.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = y.side, options = c(0, 2, 4), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = y.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = x.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = x.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = x.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = x.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = x.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = y.side, options = c(0, 2, 4), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = y.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(y.categ)){
-        tempo <- cuteDev::arg_check(data = y.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = y.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(y.categ.pos)){
-        tempo <- cuteDev::arg_check(data = y.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = y.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
     }
-    tempo <- cuteDev::arg_check(data = y.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = y.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = y.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = y.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = y.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = text.angle, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = sec.tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = y.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = y.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = y.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = y.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = y.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = text.angle, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = sec.tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
     if( ! is.null(bg.color)){
-        tempo <- cuteDev::arg_check(data = bg.color, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = bg.color, class = "character", length = 1, fun.name = function.name) ; eval(ee)
         if( ! (bg.color %in% grDevices::colors() | grepl(pattern = "^#", bg.color))){ # check color
             tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: bg.color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY colors()")
             text.check <- c(text.check, tempo.cat)
@@ -227,29 +239,29 @@ post_plot <- function(
         }
     }
     if( ! is.null(grid.lwd)){
-        tempo <- cuteDev::arg_check(data = grid.lwd, class = "vector", mode = "numeric", neg.values = FALSE, fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = grid.lwd, class = "vector", mode = "numeric", neg.values = FALSE, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(grid.col)){
-        tempo <- cuteDev::arg_check(data = grid.col, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = grid.col, class = "character", length = 1, fun.name = function.name) ; eval(ee)
         if( ! (grid.col %in% grDevices::colors() | grepl(pattern = "^#", grid.col))){ # check color
             tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: grid.col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY colors()")
             text.check <- c(text.check, tempo.cat)
             argum.check <- c(argum.check, TRUE)
         }
     }
-    tempo <- cuteDev::arg_check(data = corner.text, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = corner.text.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = just.label.add, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = par.reset, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = corner.text, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = corner.text.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = just.label.add, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = par.reset, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(custom.par)){
-        tempo <- cuteDev::arg_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; eval(ee)
     }
     if( ! is.null(argum.check)){
         if(any(argum.check, na.rm = TRUE) == TRUE){
             stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # end argument checking with cuteDev::arg_check()
+    # end argument checking with saferDev::arg_check()
     # check with r_debugging_tools
     # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using arg_check()
     # end check with r_debugging_tools

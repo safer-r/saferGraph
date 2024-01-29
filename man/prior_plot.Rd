@@ -78,16 +78,6 @@ Reinitialize and set the graphic parameters before plotting.
 
 CANNOT be used if no graphic device already opened.
 }
-\details{
-REQUIRED PACKAGES
-
-cuteDev
-
-
-REQUIRED FUNCTIONS FROM THE cute PACKAGE
-
-arg_check()
-}
 \examples{
 \dontrun{
 # Screen devices should not be used in examples

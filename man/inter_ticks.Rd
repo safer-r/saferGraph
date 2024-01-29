@@ -21,22 +21,15 @@ inter_ticks(lim, log = "log10", breaks = NULL, n = NULL, warn.print = TRUE)
 A list containing :
 
 - $log: value of the log argument used.
+
 - $coordinates: the coordinates of the secondary ticks on the axis, between the lim values.
+
 - $values: the corresponding values associated to each coordinate (with log scale, 2^$values or 10^$values is equivalent to the labels of the axis).
+
 - $warn: the potential warning messages. Use cat() for proper display. NULL if no warning.
 }
 \description{
 Define coordinates and values of secondary ticks.
-}
-\details{
-REQUIRED PACKAGES
-
-cuteDev
-
-
-REQUIRED FUNCTIONS FROM THE cute PACKAGE
-
-arg_check()
 }
 \examples{
 # no log scale

@@ -6,25 +6,6 @@
 #' @param kind Single character string. Either "approx" (approximative), "strict" (strict) or "strict.cl" (strict clean). If "approx", use the scales::trans_breaks() function to provide an easy to read scale of approximately n ticks spanning the range of the lim argument. If "strict", cut the range of the lim argument into n + 1 equidistant part and return the n numbers at each boundary. This often generates numbers uneasy to read. If "strict.cl", provide an easy to read scale of exactly n ticks, but sometimes not completely spanning the range of the lim argument.
 #' @param lib.path Character vector specifying the absolute pathways of the directories containing the required packages if not in the default directories. Ignored if NULL.
 #' @returns A vector of numbers.
-#' @details 
-#' REQUIRED PACKAGES
-#' 
-#' cuteDev
-#' 
-#' cuteTool
-#' 
-#' if kind = "approx":
-#' 
-#' ggplot2
-#' 
-#' scales
-#' 
-#' 
-#' REQUIRED FUNCTIONS FROM THE cute PACKAGE
-#' 
-#' arg_check()
-#' 
-#' round()
 #' @examples
 #' # approximate number of main ticks
 #' 
@@ -80,8 +61,8 @@
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 scale_y_continuous
 #' @importFrom scales trans_breaks
-#' @importFrom cuteDev arg_check
-#' @importFrom cuteTool round2
+#' @importFrom saferDev arg_check
+#' @importFrom saferTool round2
 #' @export
 scale <- function(
         n, 
@@ -93,7 +74,7 @@ scale <- function(
     # n = 9 ; lim = c(2, 3.101) ; kind = "approx" ; lib.path = NULL # for function debugging
     # n = 10 ; lim = c(1e-4, 1e6) ; kind = "approx" ; lib.path = NULL # for function debugging
     # package name
-    package.name <- "cuteGraph"
+    package.name <- "saferGraph"
     # end package name
     # function name
     function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
@@ -130,8 +111,8 @@ scale <- function(
             "ggplot2::ggplot",
             "ggplot2::scale_y_continuous",
             "scales::trans_breaks",
-            "cuteDev::arg_check",
-            "cuteTool::round2"
+            "saferDev::arg_check",
+            "saferTool::round2"
         ),
         lib.path = lib.path,
         external.function.name = function.name
@@ -157,13 +138,13 @@ scale <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- expression(argum.check = c(argum.check, tempo$problem) , text.check = c(text.check, tempo$text) , checked.arg.names = c(checked.arg.names, tempo$object.name))
-    tempo <- cuteDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, neg.values = FALSE, fun.name = function.name) ; eval(ee)
     if(tempo$problem == FALSE & isTRUE(all.equal(n, 0))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
         tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: n ARGUMENT MUST BE A NON NULL AND POSITIVE INTEGER")
         text.check <- c(text.check, tempo.cat)
         argum.check <- c(argum.check, TRUE) # 
     }
-    tempo <- cuteDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
     if(tempo$problem == FALSE & all(diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
         tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: lim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES)")
         text.check <- c(text.check, tempo.cat)
@@ -173,9 +154,9 @@ scale <- function(
         text.check <- c(text.check, tempo.cat)
         argum.check <- c(argum.check, TRUE)
     }
-    tempo <- cuteDev::arg_check(data = kind, options = c("approx", "strict", "strict.cl"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = kind, options = c("approx", "strict", "strict.cl"), length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(lib.path)){
-        tempo <- cuteDev::arg_check(data = lib.path, class = "vector", mode = "character", fun.name = function.name) ; eval(ee)
+        tempo <- saferDev::arg_check(data = lib.path, class = "vector", mode = "character", fun.name = function.name) ; eval(ee)
         if(tempo$problem == FALSE){
             if( ! all(dir.exists(lib.path), na.rm = TRUE)){ # separation to avoid the problem of tempo$problem == FALSE and lib.path == NA
                 tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", paste(lib.path, collapse = "\n"))
@@ -191,7 +172,7 @@ scale <- function(
     }
     # end argument checking with arg_check()
     # check with r_debugging_tools
-    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using cuteDev::arg_check()
+    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using saferDev::arg_check()
     # end check with r_debugging_tools
     # end argument primary checking
     
@@ -251,7 +232,7 @@ scale <- function(
         }
         output <- output[ ! is.na(output)]
     }else if(kind == "strict"){
-        output <- cuteTool::round2(seq(lim[1] ,lim[2], length.out = n), 2)
+        output <- saferTool::round2(seq(lim[1] ,lim[2], length.out = n), 2)
     }else if(kind == "strict.cl"){
         tempo.range <- diff(sort(lim))
         tempo.max <- base::max(lim)

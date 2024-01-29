@@ -21,26 +21,6 @@ A vector of numbers.
 \description{
 Attempt to select nice scale numbers when setting n ticks on a lim axis range.
 }
-\details{
-REQUIRED PACKAGES
-
-cuteDev
-
-cuteTool
-
-if kind = "approx":
-
-ggplot2
-
-scales
-
-
-REQUIRED FUNCTIONS FROM THE cute PACKAGE
-
-arg_check()
-
-round()
-}
 \examples{
 # approximate number of main ticks
 

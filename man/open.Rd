@@ -42,8 +42,11 @@ open(
 A list containing:
 
 - $pdf.loc: path of the pdf created.
+
 - $ini.par: initial par() parameters.
+
 - $zone.ini: initial window spliting.
+
 - $dim: dimension of the graphical device (in inches).
 }
 \description{
@@ -64,16 +67,6 @@ post_plot() if prior_plot() has been used # not for ggplot2
 close()
 }
 \details{
-REQUIRED PACKAGES
-
-cuteDev
-
-
-REQUIRED FUNCTIONS FROM THE cute PACKAGE
-
-arg_check()
-
-
 WARNINGS
 
 On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.

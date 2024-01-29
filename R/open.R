@@ -29,20 +29,13 @@
 #' A list containing:
 #' 
 #' - $pdf.loc: path of the pdf created.
+#' 
 #' - $ini.par: initial par() parameters.
+#' 
 #' - $zone.ini: initial window spliting.
+#' 
 #' - $dim: dimension of the graphical device (in inches).
 #' @details 
-#' REQUIRED PACKAGES
-#' 
-#' cuteDev
-#' 
-#' 
-#' REQUIRED FUNCTIONS FROM THE cute PACKAGE
-#' 
-#' arg_check()
-#'
-#'
 #' WARNINGS
 #'
 #' On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
@@ -51,7 +44,7 @@
 #' # Screen devices should not be used in examples
 #' open(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
 #' }
-#' @importFrom cuteDev arg_check
+#' @importFrom saferDev arg_check
 #' @importFrom grDevices dev.off
 #' @importFrom grDevices dev.list
 #' @importFrom grDevices dev.size
@@ -71,7 +64,7 @@ open <- function(
     # DEBUGGING
     # pdf = TRUE ; pdf.path = "C:/Users/Gael/Desktop" ; pdf.name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf.overwrite = FALSE ; rescale = "fixed" ; remove.read.only = TRUE ; return.output = TRUE # for function debugging
     # package name
-    package.name <- "cuteGraph"
+    package.name <- "saferGraph"
     # end package name
     # function name
     function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()")
@@ -83,7 +76,7 @@ open <- function(
     # end check of lib.path
     .pack_and_function_check(
         fun = c(
-            "cuteDev::arg_check"
+            "saferDev::arg_check"
         ),
         lib.path = NULL,
         external.function.name = function.name
@@ -99,24 +92,24 @@ open <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- cuteDev::arg_check(data = pdf, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = pdf.path, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = pdf.name, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = width, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = height, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = paper, options = c("a4", "letter", "legal", "us", "executive", "a4r", "USr", "special", "A4", "LETTER", "LEGAL", "US"), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data =pdf.overwrite, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = rescale, options = c("R", "fit", "fixed"), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = remove.read.only, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- cuteDev::arg_check(data = return.output, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = pdf, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = pdf.path, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = pdf.name, class = "character", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = width, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = height, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = paper, options = c("a4", "letter", "legal", "us", "executive", "a4r", "USr", "special", "A4", "LETTER", "LEGAL", "US"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data =pdf.overwrite, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = rescale, options = c("R", "fit", "fixed"), length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = remove.read.only, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = return.output, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
     if( ! is.null(argum.check)){
         if(any(argum.check, na.rm = TRUE) == TRUE){
             stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
-    # end argument checking with cuteDev::arg_check()
+    # end argument checking with saferDev::arg_check()
     # check with r_debugging_tools
-    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using cuteDev::arg_check()
+    # source("C:/Users/yhan/Documents/Git_projects/debugging_tools_for_r_dev/r_debugging_tools.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using saferDev::arg_check()
     # end check with r_debugging_tools
     # end argument primary checking
     

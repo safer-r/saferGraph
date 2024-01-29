@@ -1,6 +1,6 @@
-Package: cuteGraph
+Package: saferGraph
 Type: Package
-Title: Functions for graphics management
+Title: Classical graphic handling
 Version: 1.0
 Date: 2023-12-15
 Authors@R: c(
@@ -10,12 +10,12 @@ Authors@R: c(
 Encoding: UTF-8
 Author: Yushi Han [aut], Gaël Millot [aut, cre]
 Maintainer: Gaël Millot <gael.millot@pasteur.fr>
-Description: Functions for graphics management.
+Description: Classical graphic handling.
 License: GPL-3
 RoxygenNote: 7.2.3
 Imports: 
-    cuteDev (>= 1.0),
-    cuteTool (>= 1.0),
+    saferDev (>= 1.0),
+    saferTool (>= 1.0),
     ggplot2,
     graphics,
     grDevices,
@@ -23,5 +23,5 @@ Imports:
     stats,
     utils
 Remotes: 
-    yushiHn/cuteDev,
-    yushiHn/cuteTool
+    safer-r/saferDev,
+    safer-r/saferTool
