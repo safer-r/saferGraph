@@ -5,7 +5,7 @@
 #' @param return.text Single logical value. Print text regarding the kind parameter and the devices that were finally closed?
 #' @returns Text regarding the kind parameter and the devices that were finally closed.
 #' @examples
-#' 
+#' \dontrun{
 #' # Screen devices (windows(), quartz() and x11()) should not be used in examples
 #' postscript(NULL) # open a postscript graphic device
 #' pdf(NULL) # open a pdf graphic device
@@ -15,6 +15,7 @@
 #' close2(kind = c("pdf"), return.text = TRUE) ; 
 #' grDevices::dev.list() # only remains the postscript devices
 #' grDevices::graphics.off()
+#' }
 #' @importFrom saferDev arg_check
 #' @importFrom grDevices x11
 #' @importFrom grDevices dev.list

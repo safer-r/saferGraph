@@ -18,7 +18,7 @@ Text regarding the kind parameter and the devices that were finally closed.
 Close only specific graphic windows (devices).
 }
 \examples{
-
+\dontrun{
 # Screen devices (windows(), quartz() and x11()) should not be used in examples
 postscript(NULL) # open a postscript graphic device
 pdf(NULL) # open a pdf graphic device
@@ -28,4 +28,5 @@ grDevices::dev.list() ;
 close2(kind = c("pdf"), return.text = TRUE) ; 
 grDevices::dev.list() # only remains the postscript devices
 grDevices::graphics.off()
+}
 }
