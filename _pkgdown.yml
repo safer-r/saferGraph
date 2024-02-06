@@ -1,0 +1,42 @@
+url: ~
+
+template:
+  bootstrap: 5
+  bslib:
+        primary: "#0054AD"
+        border-radius: 0.5rem
+        btn-border-radius: 0.25rem
+
+authors:
+    Yushi Han:
+        href: https://github.com/yushiHn
+    Gaël Millot:
+        href: https://github.com/gael-millot
+    
+
+reference:
+- title: "close2"
+  contents: 
+  - close2
+- title: "empty_graph"
+  contents: 
+  - empty_graph
+- title: "inter_ticks"
+  contents: 
+  - inter_ticks
+- title: "open2"
+  contents: 
+  - open2
+- title: "post_plot"
+  contents: 
+  - post_plot
+- title: "prior_plot"
+  contents: 
+  - prior_plot
+- title: "scale2"
+  contents: 
+  - scale2
+- title: "width"
+  contents: 
+  - width
+
