@@ -1,4 +1,4 @@
-#' @title scale
+#' @title scale2
 #' @description
 #' Attempt to select nice scale numbers when setting n ticks on a lim axis range.
 #' @param n Single positive and non null integer value indicating the desired number of main ticks on the axis.
@@ -12,7 +12,7 @@
 #' ymin = 2 ; 
 #' ymax = 3.101 ; 
 #' n = 5 ; 
-#' scale <- scale(n = n, lim = c(ymin, ymax), kind = "approx") ; 
+#' scale <- scale2(n = n, lim = c(ymin, ymax), kind = "approx") ; 
 #' scale ; 
 #' par(yaxt = "n", yaxs = "i", las = 1) ; 
 #' plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ;
@@ -25,7 +25,7 @@
 #' ymin = 2 ; 
 #' ymax = 3.101 ; 
 #' n = 5 ; 
-#' scale <- scale(n = n, lim = c(ymin, ymax), kind = "strict") ; 
+#' scale <- scale2(n = n, lim = c(ymin, ymax), kind = "strict") ; 
 #' scale ; 
 #' par(yaxt = "n", yaxs = "i", las = 1) ; 
 #' plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
@@ -38,7 +38,7 @@
 #' ymin = 2 ; 
 #' ymax = 3.101 ; 
 #' n = 5 ; 
-#' scale <- scale(n = n, lim = c(ymin, ymax), kind = "strict.cl") ; 
+#' scale <- scale2(n = n, lim = c(ymin, ymax), kind = "strict.cl") ; 
 #' scale ; 
 #' par(yaxt = "n", yaxs = "i", las = 1) ; 
 #' plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
@@ -51,7 +51,7 @@
 #' ymin = 3.101 ; 
 #' ymax = 2 ; 
 #' n = 5 ; 
-#' scale <- scale(n = n, lim = c(ymin, ymax), kind = "approx") ; 
+#' scale <- scale2(n = n, lim = c(ymin, ymax), kind = "approx") ; 
 #' scale ; 
 #' par(yaxt = "n", yaxs = "i", las = 1) ; 
 #' plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
@@ -64,7 +64,7 @@
 #' @importFrom saferDev arg_check
 #' @importFrom saferTool round2
 #' @export
-scale <- function(
+scale2 <- function(
         n, 
         lim, 
         kind = "approx", 

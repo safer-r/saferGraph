@@ -1,25 +1,26 @@
-#' @title close
+#' @title close2
 #' @description
 #' Close only specific graphic windows (devices).
 #' @param kind Vector, among c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), indicating the kind of graphic windows (devices) to close. BEWARE: either "windows", "quartz", "x11" or "X11" means that all the X11 GUI graphics devices will be closed, whatever the OS used.
 #' @param return.text Single logical value. Print text regarding the kind parameter and the devices that were finally closed?
 #' @returns Text regarding the kind parameter and the devices that were finally closed.
 #' @examples
-#' \dontrun{
-#' # Screen devices should not be used in examples
-#' windows() ; 
-#' windows() ; 
-#' }
-#' pdf() ; 
+#' 
+#' # Screen devices (windows(), quartz() and x11()) should not be used in examples
+#' postscript(NULL) # open a postscript graphic device
+#' pdf(NULL) # open a pdf graphic device
+#' postscript(NULL) # open a postscript graphic device
+#' pdf(NULL) # open a pdf graphic device
 #' grDevices::dev.list() ; 
-#' close(kind = c("pdf", "x11"), return.text = TRUE) ; 
-#' grDevices::dev.list()
+#' close2(kind = c("pdf"), return.text = TRUE) ; 
+#' grDevices::dev.list() # only remains the postscript devices
+#' grDevices::graphics.off()
 #' @importFrom saferDev arg_check
 #' @importFrom grDevices x11
 #' @importFrom grDevices dev.list
 #' @importFrom grDevices dev.off
 #' @export
-close <- function(
+close2 <- function(
         kind = "pdf", 
         return.text = FALSE
 ){

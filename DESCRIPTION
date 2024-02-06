@@ -25,3 +25,7 @@ Imports:
 Remotes: 
     safer-r/saferDev,
     safer-r/saferTool
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

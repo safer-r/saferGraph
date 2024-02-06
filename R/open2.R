@@ -1,4 +1,4 @@
-#' @title open
+#' @title open2
 #' @description
 #' Open a pdf or screen (GUI) graphic window and return initial graphic parameters.
 #' 
@@ -6,7 +6,7 @@
 #' 
 #' width()
 #' 
-#' open()
+#' open2()
 #' 
 #' prior_plot() # not for ggplot2
 #' 
@@ -14,7 +14,7 @@
 #' 
 #' post_plot() if prior_plot() has been used # not for ggplot2
 #' 
-#' close()
+#' close2()
 #' @param pdf Single logical value. Use pdf display? If FALSE, a GUI is opened.
 #' @param pdf.path Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.
 #' @param pdf.name Single character string. Name of the pdf file containing the graphs (the .pdf extension is added by the function, if not detected in the name end). Ignored if pdf == FALSE.
@@ -42,14 +42,14 @@
 #' @examples
 #' \dontrun{
 #' # Screen devices should not be used in examples
-#' open(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
+#' open2(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
 #' }
 #' @importFrom saferDev arg_check
 #' @importFrom grDevices dev.off
 #' @importFrom grDevices dev.list
 #' @importFrom grDevices dev.size
 #' @export
-open <- function(
+open2 <- function(
         pdf = TRUE, 
         pdf.path = "working.dir", 
         pdf.name = "graph", 

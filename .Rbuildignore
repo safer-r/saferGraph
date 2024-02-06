@@ -1,3 +1,4 @@
 ^\.github$
 ^dev$
 ^vignettes$
+^vignettes/articles$
