@@ -5,35 +5,10 @@ title: "post_plot"
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = ">"
 )
 ```
 
 ```{r setup}
 library(saferGraph)
 ```
-
-
-### Example of log axis with log y-axis and unmodified x-axis:
-
-```{r}
-prior.par <- prior_plot(param.reinitial = TRUE, xlog.scale = FALSE, ylog.scale = TRUE, remove.label = TRUE, remove.x.axis = FALSE, remove.y.axis = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 0.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = TRUE) ; 
-plot(1:100, log = "y") ; 
-post_plot(y.side = 2, y.log.scale = prior.par$ylog, x.lab = "Values", y.lab = "TEST", y.axis.size = 1.25, y.label.size = 1.5, y.dist.legend = 0.7, just.label.add = ! prior.par$ann)
-```
-<br>
-
-### Example of log axis with redrawn x-axis and y-axis:
-
-```{r}
-prior.par <- prior_plot(param.reinitial = TRUE) ; 
-plot(1:100) ; 
-post_plot(x.side = 1, x.lab = "Values", y.side = 2, y.lab = "TEST", y.axis.size = 1, y.label.size = 2, y.dist.legend = 0.6)
-```
-<br>
-
-
-
-
-
-
