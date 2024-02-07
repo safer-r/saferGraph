@@ -15,6 +15,7 @@ library(saferGraph)
 
 ### Example of log axis with log y-axis and unmodified x-axis:
 ```{r}
+pdf("file2")
 prior.par <- prior_plot(param.reinitial = TRUE, xlog.scale = FALSE, ylog.scale = TRUE, remove.label = TRUE, remove.x.axis = FALSE, remove.y.axis = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 0.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = TRUE) ; 
 plot(1:100, log = "y") ; 
 post_plot(y.side = 2, y.log.scale = prior.par$ylog, x.lab = "Values", y.lab = "TEST", y.axis.size = 1.25, y.label.size = 1.5, y.dist.legend = 0.7, just.label.add = ! prior.par$ann)
@@ -32,7 +33,7 @@ par(xpd = TRUE) ; text(x = para$x.mid.left.fig.region, y = para$y.mid.top.fig.re
 
 ### example with margins in the device region:
 ```{r}
-windows(5,5) ; 
+pdf("file2") ; 
 prior_plot(box.type = "o") ; 
 graphics::par(mai=c(0.5,0.5,0.5,0.5), omi = c(0.25,0.25,1,0.25), xaxs = "i", yaxs = "i") ; 
 plot(0:10) ; 
