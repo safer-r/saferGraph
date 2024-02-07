@@ -17,8 +17,6 @@ library(saferGraph)
 ### Argument pdf
 ```{r}
 open2(pdf = TRUE, pdf.name = "safer1")
-
-open2(pdf = FALSE, pdf.name = "safer2")
 ```
 <br>
 
@@ -87,6 +85,6 @@ open2(return.output = FALSE, pdf.name = "safer14")
 ```{r}
 open2(pdf = TRUE, pdf.path = ".", pdf.name = "name1", width = 10, height = 8, paper = "a4", pdf.overwrite = TRUE, rescale = "fit", remove.read.only = FALSE, return.output = TRUE)
 
-open2(pdf = FALSE, pdf.path = ".", pdf.name = "graph1", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, rescale = "fixed", remove.read.only = TRUE, return.output = FALSE)
+open2(pdf = TRUE, pdf.path = ".", pdf.name = "graph1", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, rescale = "fixed", remove.read.only = TRUE, return.output = FALSE)
 ```
 <br>
