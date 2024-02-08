@@ -76,7 +76,7 @@ prior_plot <- function(
     arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
-    
+    caca
     # package checking
     # check of lib.path
     # end check of lib.path
