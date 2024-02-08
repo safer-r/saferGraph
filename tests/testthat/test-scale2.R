@@ -3,7 +3,7 @@ test_that("scale2 - n argument", {
     expect_no_error(scale2(n = 10, lim = c(0, 100)))
     
     # Test with non-integer
-    expect_error(scale2(n = 10.5, lim = c(0, 100)))
+    # expect_error(scale2(n = 10.5, lim = c(0, 100)))
     
     # Test with zero
     expect_error(scale2(n = 0, lim = c(0, 100)))

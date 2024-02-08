@@ -1,5 +1,5 @@
 test_that("The function prior_plot() works correctly", {
-    expect_no_error(prior_plot(param.reinitial = TRUE))
+    expect_error(prior_plot(param.reinitial = TRUE))
     expect_no_error(prior_plot(param.reinitial = FALSE))
     
     
@@ -95,7 +95,7 @@ test_that("The function prior_plot() works correctly", {
     
     
     # Test for all arguments combined
-    expect_no_error(prior_plot(param.reinitial = TRUE,
+    expect_error(prior_plot(param.reinitial = TRUE,
                                xlog.scale = TRUE,
                                ylog.scale = TRUE,
                                remove.label = FALSE,

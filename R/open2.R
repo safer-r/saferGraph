@@ -208,7 +208,7 @@ open2 <- function(
                     invisible(grDevices::dev.off()) # close the new window
                 }else if(file.exists(paste0(getwd(), "/Rplots.pdf"))){
                     file.remove(paste0(getwd(), "/Rplots.pdf")) # remove the pdf file
-                    tempo.cat <- ("ERROR IN function.name\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE function.name FUNCTION TO TRUE AND RERUN")
+                    tempo.cat <- ("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function.name, " FUNCTION TO TRUE AND RERUN")
                     stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
                 }
             }
