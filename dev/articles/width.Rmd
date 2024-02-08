@@ -12,3 +12,53 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(saferGraph)
 ```
+<br>
+
+
+### Simple example
+```{r}
+width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1)
+```
+<br>
+
+
+### Argument categ.nb
+```{r}
+width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1,)
+```
+<br>
+
+### Argument inches.per.categ.nb
+```{r}
+width(categ.nb = 10, inches.per.categ.nb = 0.2, inch.left.space = 1, inch.right.space = 1,)
+```
+<br>
+
+### Argument ini.window.width
+```{r}
+width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1, ini.window.width = 7)
+```
+<br>
+
+### Argument inch.left.space
+```{r}
+width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1)
+```
+<br>
+
+### Argument inch.right.space
+```{r}
+width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1)
+```
+<br>
+
+### Argument boundarie.space
+```{r}
+width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1, boundarie.space = 0.5)
+```
+<br>
+
+### All the arguments
+```{r}
+width(categ.nb = 10, inches.per.categ.nb = 0.2, ini.window.width = 7, inch.left.space = 1, inch.right.space = 1, boundarie.space = 0.5)
+```

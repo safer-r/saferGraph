@@ -12,3 +12,41 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(saferGraph)
 ```
+<br>
+
+### Argument lim
+```{r}
+inter_ticks(lim = c(0, 100))
+```
+<br>
+
+### Argument log
+```{r}
+inter_ticks(lim = c(1, 100), log = "log10")
+```
+<br>
+
+### Argument breaks
+```{r}
+inter_ticks(lim = c(0, 100), breaks = c(0, 20, 40, 60, 80, 100))
+```
+<br>
+
+### Argument n
+```{r}
+inter_ticks(lim = c(0, 100), n = 5)
+```
+<br>
+
+### Argument warn.print
+```{r}
+inter_ticks(lim = c(0, 100), warn.print = TRUE)
+inter_ticks(lim = c(0, 100), warn.print = FALSE)
+```
+<br>
+
+### All the arguments
+```{r}
+inter_ticks(lim = c(0, 100), log = "log10", breaks = c(0, 20, 40, 60, 80, 100), n = 5, warn.print = TRUE)
+```
+<br>
