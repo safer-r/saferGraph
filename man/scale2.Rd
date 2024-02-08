@@ -33,43 +33,4 @@ par(yaxt = "n", yaxs = "i", las = 1) ;
 plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ;
 par(yaxt = "s") ; 
 axis(side = 2, at = scale)
-
-
-# strict number of main ticks
-
-ymin = 2 ; 
-ymax = 3.101 ; 
-n = 5 ; 
-scale <- scale2(n = n, lim = c(ymin, ymax), kind = "strict") ; 
-scale ; 
-par(yaxt = "n", yaxs = "i", las = 1) ; 
-plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
-par(yaxt = "s") ; 
-axis(side = 2, at = scale)
-
-
-# strict "clean" number of main ticks
-
-ymin = 2 ; 
-ymax = 3.101 ; 
-n = 5 ; 
-scale <- scale2(n = n, lim = c(ymin, ymax), kind = "strict.cl") ; 
-scale ; 
-par(yaxt = "n", yaxs = "i", las = 1) ; 
-plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
-par(yaxt = "s") ; 
-axis(side = 2, at = scale)
-
-
-# approximate number of main ticks, scale inversion
-
-ymin = 3.101 ; 
-ymax = 2 ; 
-n = 5 ; 
-scale <- scale2(n = n, lim = c(ymin, ymax), kind = "approx") ; 
-scale ; 
-par(yaxt = "n", yaxs = "i", las = 1) ; 
-plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ; 
-par(yaxt = "s") ; 
-axis(side = 2, at = scale)
 }
