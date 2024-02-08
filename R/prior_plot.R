@@ -216,7 +216,7 @@ prior_plot <- function(
                     invisible(grDevices::dev.off()) # close the new window
                     file.remove(paste0(getwd(), "/Rplots.pdf")) # remove the pdf file
                 }else{
-                    tempo.cat <- ("ERROR IN function.name\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN")
+                    tempo.cat <- paste0("ERROR IN ", function.name, " \nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN")
                     stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
                 }
             }

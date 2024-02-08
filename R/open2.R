@@ -238,7 +238,7 @@ open2 <- function(
             grDevices::windows(width = width, height = height, rescale = rescale)
         }else if(Sys.info()["sysname"] == "Linux"){
             if( ! is.null(open.fail)){
-                tempo.cat <- "ERROR IN function.name\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE function.name FUNCTION TO TRUE AND RERUN"
+                tempo.cat <- paste0("ERROR IN ", function.name, " \nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function.name, " FUNCTION TO TRUE AND RERUN")
                 stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }else{
                 grDevices::X11(width = width, height = height)
