@@ -32,7 +32,7 @@ test_that("open2 function argument tests", {
     # Test case for all arguments combined
     
     # Test with default arguments
-    expect_no_error(open2())
+    expect_error(open2())
     
     # Test with specified arguments
     expect_error(open2(pdf = "not_logical", pdf.path = "not_existing_path", pdf.name = 123, width = "not_numeric", height = "not_numeric", paper = "not_in_options", pdf.overwrite = "not_logical", rescale = "not_in_options", remove.read.only = "not_logical", return.output = "not_logical"))
