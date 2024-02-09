@@ -1,5 +1,5 @@
 test_that("Test for x.side argument", {
-    plot()
+    plot(x = 1:3)
     # ARGUMENT x.side CAN ONLY BE 1 OR 3
     expect_error(post_plot(x.side = 5))
     expect_no_error(post_plot(x.side = 1))
