@@ -5,9 +5,7 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/safer-r/saferGraph/workflows/R-CMD-check/badge.svg)](https://github.com/safer-r/saferGraph/actions)
-
-[![Codecov test coverage](https://codecov.io/github/yushiHn/saferGraph/coverage.svg?branch=master)](https://app.codecov.io/github/yushiHn/saferGraph?branch=master)
+[![Codecov test coverage](https://codecov.io/github/safer-r/saferGraph/coverage.svg?branch=master)](https://app.codecov.io/github/safer-r/saferGraph?branch=master)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/saferGraph)](https://cran.r-project.org/package=saferGraph)
 [![downloads](https://cranlogs.r-pkg.org/badges/saferGraph)](https://www.rdocumentation.org/trends)
 [![](https://img.shields.io/badge/license-GPL3.0-green.svg)](https://opensource.org/licenses/MITgpl-3-0)
