@@ -4,10 +4,34 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/articles/close2.html</loc>
+  </url>
+  <url>
+    <loc>/articles/empty_graph.html</loc>
+  </url>
+  <url>
     <loc>/articles/index.html</loc>
   </url>
   <url>
+    <loc>/articles/inter_ticks.html</loc>
+  </url>
+  <url>
+    <loc>/articles/open2.html</loc>
+  </url>
+  <url>
+    <loc>/articles/post_plot.html</loc>
+  </url>
+  <url>
+    <loc>/articles/prior_plot.html</loc>
+  </url>
+  <url>
     <loc>/articles/saferGraph.html</loc>
+  </url>
+  <url>
+    <loc>/articles/scale2.html</loc>
+  </url>
+  <url>
+    <loc>/articles/width.html</loc>
   </url>
   <url>
     <loc>/authors.html</loc>
