@@ -36,7 +36,7 @@ grDevices::graphics.off()
 <br>
 
 ### All the arguments
-```{r}
+```{r, echo = TRUE, error = TRUE}
 postscript("file") # open a postscript graphic device
 pdf("file") # open a pdf graphic device
 postscript("file") # open a postscript graphic device
