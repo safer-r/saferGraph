@@ -1,0 +1,78 @@
+---
+title: "close2"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = ">"
+)
+```
+
+```{r setup}
+library(saferGraph)
+```
+<br>
+
+### Argument kind
+```{r}
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+grDevices::dev.list() ; 
+close2(kind = "pdf")
+grDevices::dev.list() # only remains the postscript devices
+grDevices::graphics.off()
+
+
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+grDevices::dev.list() ; 
+close2(kind = c("pdf", "postscript"))
+grDevices::dev.list()
+grDevices::graphics.off()
+```
+<br>
+
+### All the arguments
+```{r}
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+grDevices::dev.list() ; 
+close2(kind = c("pdf"), return.text = TRUE) ; 
+grDevices::dev.list() # only remains the postscript devices
+grDevices::graphics.off()
+
+
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+grDevices::dev.list() ; 
+close2(kind = c("pdf"), return.text = FALSE) ; 
+grDevices::dev.list() # only remains the postscript devices
+grDevices::graphics.off()
+
+
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+close2(kind = c("pdf", "postscript"), return.text = TRUE)
+grDevices::dev.list() # only remains the postscript devices
+grDevices::graphics.off()
+
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
+close2(kind = c("pdf", "postscript"), return.text = FALSE)
+grDevices::dev.list() # only remains the postscript devices
+grDevices::graphics.off()
+```
+<br>
+
+
