@@ -15,7 +15,7 @@ library(saferGraph)
 <br>
 
 ### Argument kind
-```{r}
+```{r, echo = TRUE, error = TRUE}
 postscript("file") # open a postscript graphic device
 pdf("file") # open a pdf graphic device
 grDevices::dev.list() ; 
