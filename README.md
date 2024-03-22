@@ -35,6 +35,7 @@ Set of R functions for the development of R functions, written according to the 
 
 ## Content
 <br />
+
 | Function | Description |
 | :--- | :--- |
 | **close()** | Close only specific graphic windows (devices). |
