@@ -34,9 +34,9 @@ Set of R functions for the development of R functions, written according to the 
 <br />
 
 ## Content
-
+<br />
 | Function | Description |
-| --- | --- |
+| :--- | :--- |
 | **close()** | Close only specific graphic windows (devices). |
 | **empty_graph()** | Display an empty plot with a text in the middle of the window (for instance to specify that no plot can be drawn). |
 | **inter_ticks()** | Verify that object names in the environment defined by the pos argument are identical or not to object names in the above environments (following R Scope). This can be used to verify that names used for objects inside a function or in the working environment do not override names of objects already present in the above R environments, following the R scope. |
