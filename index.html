@@ -99,50 +99,7 @@
 <div class="section level2">
 <h2 id="content">Content<a class="anchor" aria-label="anchor" href="#content"></a>
 </h2>
-<table class="table">
-<colgroup>
-<col width="50%">
-<col width="50%">
-</colgroup>
-<thead><tr class="header">
-<th>Function</th>
-<th>Description</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td><strong>close()</strong></td>
-<td>Close only specific graphic windows (devices).</td>
-</tr>
-<tr class="even">
-<td><strong>empty_graph()</strong></td>
-<td>Display an empty plot with a text in the middle of the window (for instance to specify that no plot can be drawn).</td>
-</tr>
-<tr class="odd">
-<td><strong>inter_ticks()</strong></td>
-<td>Verify that object names in the environment defined by the pos argument are identical or not to object names in the above environments (following R Scope). This can be used to verify that names used for objects inside a function or in the working environment do not override names of objects already present in the above R environments, following the R scope.</td>
-</tr>
-<tr class="even">
-<td><strong>open()</strong></td>
-<td>Open a pdf or screen (GUI) graphic window and return initial graphic parameters.</td>
-</tr>
-<tr class="odd">
-<td><strong>post_plot()</strong></td>
-<td>Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs. Provide also positions for legend or additional text on the graph. Use prior_plot() before this function for initial inactivation of the axis drawings.</td>
-</tr>
-<tr class="even">
-<td><strong>prior_plot()</strong></td>
-<td>Very convenient to erase the axes for post plot axis redrawing using post_plot(). Reinitialize and set the graphic parameters before plotting. CANNOT be used if no graphic device already opened.</td>
-</tr>
-<tr class="odd">
-<td><strong>scale()</strong></td>
-<td>Attempt to select nice scale numbers when setting n ticks on a lim axis range.</td>
-</tr>
-<tr class="even">
-<td><strong>width()</strong></td>
-<td>Rescale the width of a window to open depending on the number of categories of qualitative variable to plot on the x-axis. Can be used for height, considering that it is as if it was a width.</td>
-</tr>
-</tbody>
-</table>
+<p><br> | Function | Description | | :— | :— | | <strong>close()</strong> | Close only specific graphic windows (devices). | | <strong>empty_graph()</strong> | Display an empty plot with a text in the middle of the window (for instance to specify that no plot can be drawn). | | <strong>inter_ticks()</strong> | Verify that object names in the environment defined by the pos argument are identical or not to object names in the above environments (following R Scope). This can be used to verify that names used for objects inside a function or in the working environment do not override names of objects already present in the above R environments, following the R scope. | | <strong>open()</strong> | Open a pdf or screen (GUI) graphic window and return initial graphic parameters. | | <strong>post_plot()</strong> | Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs. Provide also positions for legend or additional text on the graph. Use prior_plot() before this function for initial inactivation of the axis drawings. | | <strong>prior_plot()</strong> | Very convenient to erase the axes for post plot axis redrawing using post_plot(). Reinitialize and set the graphic parameters before plotting. CANNOT be used if no graphic device already opened. | | <strong>scale()</strong> | Attempt to select nice scale numbers when setting n ticks on a lim axis range. | | <strong>width()</strong> | Rescale the width of a window to open depending on the number of categories of qualitative variable to plot on the x-axis. Can be used for height, considering that it is as if it was a width. |</p>
 <p><br></p>
 <p>Read <code><a href="articles/saferGraph.html">vignette("saferGraph")</a></code> for more details.</p>
 <p><br></p>
