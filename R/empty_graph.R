@@ -50,6 +50,7 @@ empty_graph <- function(
     # check of the required function from the required packages
     .pack_and_function_check(
         fun = base::c(
+            "graphics::text",
             "saferDev::arg_check"
         ),
         lib.path = NULL,
@@ -131,10 +132,10 @@ empty_graph <- function(
     x.left.dev.region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1])
     y.top.dev.region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4]))
     if( ! base::is.null(text)){
-        base::text(x = 1, y = 1, labels = text, cex = text.size)
+        graphics::text(x = 1, y = 1, labels = text, cex = text.size)
     }
     if( ! base::is.null(title)){
-        base::text(x = x.left.dev.region, y = y.top.dev.region, labels = title, adj=base::c(0, 1), cex = title.size)
+        graphics::text(x = x.left.dev.region, y = y.top.dev.region, labels = title, adj=base::c(0, 1), cex = title.size)
     }
     # output
     # warning output
