@@ -31,13 +31,13 @@ close2 <- function(
     package.name <- "saferGraph"
     # end package name
     # function name
-    ini <- match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
-    function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
+    ini <- base::match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
+    function.name <- base::paste0(base::as.list(base::match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
     if(function.name[1] == "::()"){
         function.name <- function.name[3]
     }
-    arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
-    arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
+    arg.names <- base::names(base::formals(fun = base::sys.function(base::sys.parent(n = 2)))) # names of all the arguments
+    arg.user.setting <- base::as.list(base::match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
     
     # package checking
@@ -45,7 +45,7 @@ close2 <- function(
     # end check of lib.path
     # check of the required function from the required packages
     .pack_and_function_check(
-        fun = c(
+        fun = base::c(
             "saferDev::arg_check"
         ),
         lib.path = NULL,
@@ -63,12 +63,12 @@ close2 <- function(
     argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- saferDev::arg_check(data = kind, options = c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = return.text, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(argum.check)){
-        if(any(argum.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    ee <- base::expression(argum.check <- base::c(argum.check, tempo$problem) , text.check <- base::c(text.check, tempo$text) , checked.arg.names <- base::c(checked.arg.names, tempo$object.name))
+    tempo <- saferDev::arg_check(data = kind, options = base::c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = return.text, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    if( ! base::is.null(argum.check)){
+        if(base::any(argum.check, na.rm = TRUE) == TRUE){
+            base::stop(base::paste0("\n\n================\n\n", base::paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
     # end argument checking with arg_check()
@@ -78,26 +78,28 @@ close2 <- function(
     # end argument primary checking
     
     # second round of checking and data preparation
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # management of NA arguments
-    if( ! (all(class(arg.user.setting) == "list", na.rm = TRUE) & length(arg.user.setting) == 0)){
-        tempo.arg <- names(arg.user.setting) # values provided by the user
-        tempo.log <- suppressWarnings(sapply(lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.na), FUN = any)) & lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
-        if(any(tempo.log) == TRUE){ # normally no NA because is.na() used here
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", paste0(tempo.arg[tempo.log], collapse = "\n"))
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    if( ! (base::all(base::class(arg.user.setting) == "list", na.rm = TRUE) & base::length(arg.user.setting) == 0)){
+        tempo.arg <- base::names(arg.user.setting) # values provided by the user
+        tempo.log <- base::suppressWarnings(base::sapply(base::lapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.na), FUN = base::any)) & base::lapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
+        if(base::any(tempo.log) == TRUE){ # normally no NA because is.na() used here
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", base::paste0(tempo.arg[tempo.log], collapse = "\n"))
+            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
     # end management of NA arguments
     
     # management of NULL arguments
-    tempo.arg <-c(
+    tempo.arg <-base::c(
         "kind", 
         "return.text"
     )
-    tempo.log <- sapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.null)
-    if(any(tempo.log) == TRUE){# normally no NA with is.null()
-        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
+    if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end management of NULL arguments
     
@@ -108,43 +110,39 @@ close2 <- function(
     # end warning initiation
     
     # other checkings
-    # end other checkings
-    
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
-    
+    # end other checkings    
     # end second round of checking and data preparation
     
     # main code
-    text <- paste0("THE REQUIRED KIND OF GRAPHIC DEVICES TO CLOSE ARE ", paste(kind, collapse = " "))
-    if(Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
-        if(any(kind %in% c("windows", "quartz", "x11", "X11"))){
-            tempo <- kind %in% c("windows", "quartz", "x11", "X11")
+    text <- base::paste0("THE REQUIRED KIND OF GRAPHIC DEVICES TO CLOSE ARE ", base::paste(kind, collapse = " "))
+    if(base::Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
+        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"))){
+            tempo <- kind %in% base::c("windows", "quartz", "x11", "X11")
             kind[tempo] <- "windows" # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
         }
-    }else if(Sys.info()["sysname"] == "Linux"){
-        if(any(kind %in% c("windows", "quartz", "x11", "X11"))){
-            tempo.device <- suppressWarnings(try(grDevices::X11(), silent = TRUE))[] # open a X11 window to try to recover the X11 system used
-            if( ! is.null(tempo.device)){
-                text <- paste0(text, "\nCANNOT CLOSE GUI GRAPHIC DEVICES AS REQUIRED BECAUSE THIS LINUX SYSTEM DOES NOT HAVE IT")
+    }else if(base::Sys.info()["sysname"] == "Linux"){
+        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"))){
+            tempo.device <- base::suppressWarnings(base::try(grDevices::X11(), silent = TRUE))[] # open a X11 window to try to recover the X11 system used
+            if( ! base::is.null(tempo.device)){
+                text <- base::paste0(text, "\nCANNOT CLOSE GUI GRAPHIC DEVICES AS REQUIRED BECAUSE THIS LINUX SYSTEM DOES NOT HAVE IT")
             }else{
-                tempo <- kind %in% c("windows", "quartz", "x11", "X11")
-                kind[tempo] <- names(grDevices::dev.list()[length(grDevices::dev.list())]) # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
-                invisible(grDevices::dev.off()) # close the X11 opened by tempo
+                tempo <- kind %in% base::c("windows", "quartz", "x11", "X11")
+                kind[tempo] <- base::names(grDevices::dev.list()[base::length(grDevices::dev.list())]) # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
+                base::invisible(grDevices::dev.off()) # close the X11 opened by tempo
             }
         }
     }else{ # for macOS
-        if(any(kind %in% c("windows", "quartz", "x11", "X11"))){
-            tempo <- kind %in% c("windows", "quartz", "x11", "X11")
+        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"))){
+            tempo <- kind %in% base::c("windows", "quartz", "x11", "X11")
             kind[tempo] <- "quartz" # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
         }
     }
-    kind <- unique(kind)
-    if(length(grDevices::dev.list()) != 0){
-        for(i in length(names(grDevices::dev.list())):1){
-            if(names(grDevices::dev.list())[i] %in% kind){
-                text <- paste0(text, "\n", names(grDevices::dev.list())[i], " DEVICE NUMBER ", grDevices::dev.list()[i], " HAS BEEN CLOSED")
-                invisible(grDevices::dev.off(grDevices::dev.list()[i]))
+    kind <- base::unique(kind)
+    if(base::length(grDevices::dev.list()) != 0){
+        for(i in base::length(base::names(grDevices::dev.list())):1){
+            if(base::names(grDevices::dev.list())[i] %in% kind){
+                text <- base::paste0(text, "\n", base::names(grDevices::dev.list())[i], " DEVICE NUMBER ", grDevices::dev.list()[i], " HAS BEEN CLOSED")
+                base::invisible(grDevices::dev.off(grDevices::dev.list()[i]))
             }
         }
     }
@@ -152,7 +150,7 @@ close2 <- function(
     # warning output
     # end warning output
     if(return.text == TRUE){
-        return(text)
+        base::return(text)
     }
     # end output
     # end main code
