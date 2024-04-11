@@ -49,20 +49,20 @@ inter_ticks <- function(
     package.name <- "saferGraph"
     # end package name
     # function name
-    ini <- match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
-    function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
+    ini <- base::match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
+    function.name <- base::paste0(base::as.list(base::match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
     if(function.name[1] == "::()"){
         function.name <- function.name[3]
     }
-    arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
-    arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
+    arg.names <- base::names(base::formals(fun = base::sys.function(base::sys.parent(n = 2)))) # names of all the arguments
+    arg.user.setting <- base::as.list(base::match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
     # package checking
     # check of lib.path
     # end check of lib.path
     # check of the required function from the required packages
     .pack_and_function_check(
-        fun = c(
+        fun = base::c(
             "saferDev::arg_check"
         ),
         lib.path = NULL,
@@ -74,32 +74,32 @@ inter_ticks <- function(
     
     # argument primary checking
     # arg with no default values
-    mandat.args <- c(
+    mandat.args <- base::c(
         "lim"
     )
-    tempo <- eval(parse(text = paste0("c(missing(", paste0(mandat.args, collapse = "),missing("), "))")))
-    if(any(tempo)){ # normally no NA for missing() output
-        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nFOLLOWING ARGUMENT", ifelse(sum(tempo, na.rm = TRUE) > 1, "S HAVE", " HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", paste0(mandat.args, collapse = "\n"))
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    tempo <- base::eval(base::parse(text = base::paste0("base::c(missing(", paste0(mandat.args, collapse = "),missing("), "))")))
+    if(base::any(tempo)){ # normally no NA for missing() output
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nFOLLOWING ARGUMENT", base::ifelse(base::sum(tempo, na.rm = TRUE) > 1, "S HAVE", " HAS"), " NO DEFAULT VALUE AND REQUIRE ONE:\n", base::paste0(mandat.args, collapse = "\n"))
+        base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end arg with no default values
     # argument checking with arg_check()
     argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = log, options = c("no", "log2", "log10"), length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(breaks)){
-        tempo <- saferDev::arg_check(data = breaks, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+    ee <- base::expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
+    tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = log, options = c("no", "log2", "log10"), length = 1, fun.name = function.name) ; base::eval(ee)
+    if( ! base::is.null(breaks)){
+        tempo <- saferDev::arg_check(data = breaks, class = "vector", mode = "numeric", fun.name = function.name) ; base::eval(ee)
     }
-    if( ! is.null(n)){
-        tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
+    if( ! base::is.null(n)){
+        tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; base::eval(ee)
     }
-    tempo <- saferDev::arg_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(argum.check)){
-        if(any(argum.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    tempo <- saferDev::arg_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    if( ! base::is.null(argum.check)){
+        if(base::any(argum.check, na.rm = TRUE) == TRUE){
+            base::stop(base::paste0("\n\n================\n\n", base::paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
     # end argument checking with arg_check()
@@ -109,55 +109,55 @@ inter_ticks <- function(
     # end argument primary checking
     # second round of checking and data preparation
     # management of NA arguments
-    if( ! (all(class(arg.user.setting) == "list", na.rm = TRUE) & length(arg.user.setting) == 0)){
-        tempo.arg <- names(arg.user.setting) # values provided by the user
-        tempo.log <- suppressWarnings(sapply(lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.na), FUN = any)) & lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
-        if(any(tempo.log) == TRUE){ # normally no NA because is.na() used here
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", paste0(tempo.arg[tempo.log], collapse = "\n"))
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    if( ! (base::all(base::class(arg.user.setting) == "list", na.rm = TRUE) & length(arg.user.setting) == 0)){
+        tempo.arg <- base::names(arg.user.setting) # values provided by the user
+        tempo.log <- base::suppressWarnings(base::sapply(base::lapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.na), FUN = base::any)) & lapply(lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
+        if(base::any(tempo.log) == TRUE){ # normally no NA because is.na() used here
+            tempo.cat <-base:: paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", base::paste0(tempo.arg[tempo.log], collapse = "\n"))
+            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
     # end management of NA arguments
     # management of NULL arguments
-    tempo.arg <-c(
+    tempo.arg <-base::c(
         "lim", 
         "log", 
         # "breaks", # inactivated because can be null
         # "n", # inactivated because can be null
         "warn.print" 
     )
-    tempo.log <- sapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.null)
-    if(any(tempo.log) == TRUE){# normally no NA with is.null()
-        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
+    if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end management of NULL arguments
     
-    if(all(diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
-        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nlim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES): ", paste(lim, collapse = " "))
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
-    }else if(any(lim %in% c(Inf, -Inf))){
-        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nlim ARGUMENT CANNOT CONTAIN -Inf OR Inf VALUES")
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    if(base::all(base::diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nlim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES): ", base::paste(lim, collapse = " "))
+        base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    }else if(base::any(lim %in% c(Inf, -Inf))){
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nlim ARGUMENT CANNOT CONTAIN -Inf OR Inf VALUES")
+        base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
-    if(log == "no" & is.null(breaks)){
-        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nbreaks ARGUMENT CANNOT BE NULL IF log ARGUMENT IS \"no\"")
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    if(log == "no" & base::is.null(breaks)){
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nbreaks ARGUMENT CANNOT BE NULL IF log ARGUMENT IS \"no\"")
+        base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
-    if( ! is.null(breaks)){
-        if(length(breaks) < 2){
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nbreaks ARGUMENT MUST HAVE 2 VALUES AT LEAST (OTHERWISE, INTER TICK POSITIONS CANNOT BE COMPUTED): ", paste(breaks, collapse = " "))
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    if( ! base::is.null(breaks)){
+        if(base::length(breaks) < 2){
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nbreaks ARGUMENT MUST HAVE 2 VALUES AT LEAST (OTHERWISE, INTER TICK POSITIONS CANNOT BE COMPUTED): ", base::paste(breaks, collapse = " "))
+            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
-        if( ! isTRUE(all.equal(diff(sort(breaks)), rep(diff(sort(breaks))[1], length(diff(sort(breaks))))))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nbreaks ARGUMENT MUST HAVE EQUIDISTANT VALUES (OTHERWISE, EQUAL NUMBER OF INTER TICK BETWEEN MAIN TICKS CANNOT BE COMPUTED): ", paste(breaks, collapse = " "))
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        if( ! base::isTRUE(base::all.equal(base::diff(base::sort(breaks)), base::rep(base::diff(base::sort(breaks))[1], base::length(base::diff(base::sort(breaks))))))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nbreaks ARGUMENT MUST HAVE EQUIDISTANT VALUES (OTHERWISE, EQUAL NUMBER OF INTER TICK BETWEEN MAIN TICKS CANNOT BE COMPUTED): ", base::paste(breaks, collapse = " "))
+            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
-    if( ! is.null(n)){
+    if( ! base::is.null(n)){
         if(n <= 0){
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nn ARGUMENT MUST BE A POSITIVE AND NON NULL INTEGER: ", paste(n, collapse = " "))
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            tempo.cat <-base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \nn ARGUMENT MUST BE A POSITIVE AND NON NULL INTEGER: ", base::paste(n, collapse = " "))
+            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
     # code that protects set.seed() in the global environment
@@ -173,66 +173,66 @@ inter_ticks <- function(
     # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
     # main code
-    ini.warning.length <- options()$warning.length
-    options(warning.length = 8170)
+    ini.warning.length <- base::options()$warning.length
+    base::options(warning.length = 8170)
     warn <- NULL
     warn.count <- 0
-    lim.rank <- rank(lim) # to deal with inverse axis
+    lim.rank <- base::rank(lim) # to deal with inverse axis
     if(log != "no"){
-        ini.scipen <- options()$scipen
-        options(scipen = -1000) # force scientific format
-        power10.exp <- as.integer(substring(text = 10^lim, first = (regexpr(pattern = "\\+|\\-", text = 10^lim)))) # recover the power of 10, i.e., integer part of lim. Example recover 08 from 1e+08. Works for log2
+        ini.scipen <- base::options()$scipen
+        base::options(scipen = -1000) # force scientific format
+        power10.exp <- base::as.integer(base::substring(text = 10^lim, first = (base::regexpr(pattern = "\\+|\\-", text = 10^lim)))) # recover the power of 10, i.e., integer part of lim. Example recover 08 from 1e+08. Works for log2
         # mantisse <- as.numeric(substr(x = 10^lim, start = 1, stop = (regexpr(pattern = "\\+|\\-", text = 10^lim) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
-        options(scipen = ini.scipen) # restore the initial scientific penalty
-        tick.pos <- unique(as.vector(outer(2:10, ifelse(log == "log2", 2, 10)^((power10.exp[1] - ifelse(diff(lim.rank) > 0, 1, -1)):(power10.exp[2] + ifelse(diff(lim.rank) > 0, 1, -1)))))) # use log10(2:10) even if log2: it is to get log values between 0 and 1
-        tick.pos <- sort(tick.pos, decreasing = ifelse(diff(lim.rank) > 0, FALSE, TRUE))
+        base::options(scipen = ini.scipen) # restore the initial scientific penalty
+        tick.pos <- base::unique(base::as.vector(base::outer(2:10, base::ifelse(log == "log2", 2, 10)^((power10.exp[1] - base::ifelse(base::diff(lim.rank) > 0, 1, -1)):(power10.exp[2] + base::ifelse(base::diff(lim.rank) > 0, 1, -1)))))) # use log10(2:10) even if log2: it is to get log values between 0 and 1
+        tick.pos <- base::sort(tick.pos, decreasing = base::ifelse(base::diff(lim.rank) > 0, FALSE, TRUE))
         if(log == "log2"){
-            tick.values <- tick.pos[tick.pos >= min(2^lim) & tick.pos <= max(2^lim)]
-            tick.pos <- log2(tick.values)
+            tick.values <- tick.pos[tick.pos >= base::min(2^lim) & tick.pos <= base::max(2^lim)]
+            tick.pos <- base::log2(tick.values)
         }else if(log == "log10"){
-            tick.values <- tick.pos[tick.pos >= min(10^lim) & tick.pos <= max(10^lim)]
-            tick.pos <- log10(tick.values)
+            tick.values <- tick.pos[tick.pos >= base::min(10^lim) & tick.pos <= base::max(10^lim)]
+            tick.pos <- base::log10(tick.values)
         }
     }else{
         # if(length(breaks) > 1){ # not required because already checked above
-        breaks.rank <- rank(c(breaks[1], breaks[length(breaks)]))
-        if(diff(breaks.rank) != diff(lim.rank)){
-            breaks <- sort(breaks, decreasing = ifelse(diff(lim.rank) < 0, TRUE, FALSE))
+        breaks.rank <- base::rank(base::c(breaks[1], breaks[base::length(breaks)]))
+        if(base::diff(breaks.rank) != base::diff(lim.rank)){
+            breaks <- base::sort(breaks, decreasing = base::ifelse(base::diff(lim.rank) < 0, TRUE, FALSE))
             warn.count <- warn.count + 1
-            tempo.warn <- paste0("(", warn.count,") VALUES IN breaks ARGUMENT NOT IN THE SAME ORDER AS IN lim ARGUMENT -> VALUES REORDERED AS IN lim: ", paste(breaks, collapse = " "))
-            warn <- paste0(ifelse(is.null(warn), tempo.warn, paste0(warn, "\n\n", tempo.warn)))
-            breaks.rank <- rank(c(breaks[1], breaks[length(breaks)]))
+            tempo.warn <- base::paste0("(", warn.count,") VALUES IN breaks ARGUMENT NOT IN THE SAME ORDER AS IN lim ARGUMENT -> VALUES REORDERED AS IN lim: ", base::paste(breaks, collapse = " "))
+            warn <- base::paste0(base::ifelse(base::is.null(warn), tempo.warn, base::paste0(warn, "\n\n", tempo.warn)))
+            breaks.rank <- base::rank(base::c(breaks[1], breaks[base::length(breaks)]))
         }
         # }
-        main.tick.dist <- mean(diff(breaks), na.rm = TRUE)
+        main.tick.dist <- base::mean(base::diff(breaks), na.rm = TRUE)
         tick.dist <- main.tick.dist / (n + 1)
-        tempo.extra.margin <- max(abs(diff(breaks)), na.rm = TRUE)
-        tick.pos <- seq(
-            if(diff(breaks.rank) > 0){breaks[1] - tempo.extra.margin}else{breaks[1] + tempo.extra.margin}, 
-            if(diff(breaks.rank) > 0){breaks[length(breaks)] + tempo.extra.margin}else{breaks[length(breaks)] - tempo.extra.margin}, 
+        tempo.extra.margin <- base::max(base::abs(base::diff(breaks)), na.rm = TRUE)
+        tick.pos <- base::seq(
+            if(base::diff(breaks.rank) > 0){breaks[1] - tempo.extra.margin}else{breaks[1] + tempo.extra.margin}, 
+            if(base::diff(breaks.rank) > 0){breaks[base::length(breaks)] + tempo.extra.margin}else{breaks[base::length(breaks)] - tempo.extra.margin}, 
             by = tick.dist
         )
-        tick.pos <- tick.pos[tick.pos >= min(lim) & tick.pos <= max(lim)]
+        tick.pos <- tick.pos[tick.pos >= base::min(lim) & tick.pos <= base::max(lim)]
         tick.values <- tick.pos
     }
-    if(any(is.na(tick.pos) | ! is.finite(tick.pos), na.rm = TRUE)){ 
-        tempo.cat <- paste0("INTERNAL CODE ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: NA or Inf GENERATED FOR THE INTER TICK POSITIONS: ", paste(tick.pos, collapse = " "))
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n", ifelse(is.null(warn), "", paste0("IN ADDITION\nWARNING", ifelse(warn.count > 1, "S", ""), ":\n\n", warn))), call. = FALSE) # == in stop() to be able to add several messages between ==
+    if(base::any(base::is.na(tick.pos) | ! base::is.finite(tick.pos), na.rm = TRUE)){ 
+        tempo.cat <- base::paste0("INTERNAL CODE ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: NA or Inf GENERATED FOR THE INTER TICK POSITIONS: ", base::paste(tick.pos, collapse = " "))
+        base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n", base::ifelse(base::is.null(warn), "", base::paste0("IN ADDITION\nWARNING", base::ifelse(warn.count > 1, "S", ""), ":\n\n", warn))), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
-    if(length(tick.pos) == 0L){
+    if(base::length(tick.pos) == 0L){
         warn.count <- warn.count + 1
-        tempo.warn <- paste0("(", warn.count,") NO INTER TICKS COMPUTED BETWEEN THE LIMITS INDICATED: ", paste(lim, collapse = " "))
-        warn <- paste0(ifelse(is.null(warn), tempo.warn, paste0(warn, "\n\n", tempo.warn)))
+        tempo.warn <- base::paste0("(", warn.count,") NO INTER TICKS COMPUTED BETWEEN THE LIMITS INDICATED: ", base::paste(lim, collapse = " "))
+        warn <- base::paste0(base::ifelse(base::is.null(warn), tempo.warn, base::paste0(warn, "\n\n", tempo.warn)))
     }
     # output
     # warning output
     # end warning output
-    output <- list(log = log, coordinates = tick.pos, values = tick.values, warn = warn)
-    if(warn.print == TRUE & ! is.null(warn)){
-        on.exit(warning(paste0("FROM ", function.name, ":\n\n", warn), call. = FALSE)) # to recover the warning messages, see $warn
+    output <- base::list(log = log, coordinates = tick.pos, values = tick.values, warn = warn)
+    if(warn.print == TRUE & ! base::is.null(warn)){
+        base::on.exit(base::warning(base::paste0("FROM ", function.name, ":\n\n", warn), call. = FALSE)) # to recover the warning messages, see $warn
     }
-    on.exit(expr = options(warning.length = ini.warning.length), add = TRUE)
-    return(output)
+    base::on.exit(expr = base::options(warning.length = ini.warning.length), add = TRUE)
+    base::return(output)
     # end output
     # end main code
 }
