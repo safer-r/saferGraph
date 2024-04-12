@@ -140,13 +140,13 @@ post_plot <- function(
     package.name <- "saferGraph"
     # end package name
     # function name
-    ini <- match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
-    function.name <- paste0(as.list(match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
+    ini <- base::match.call(expand.dots = FALSE) # initial parameters (specific of arg_test())
+    function.name <- base::paste0(base::as.list(base::match.call(expand.dots = FALSE))[[1]], "()") # function name with "()" paste, which split into a vector of three: c("::()", "package()", "function()") if "package::function()" is used.
     if(function.name[1] == "::()"){
         function.name <- function.name[3]
     }
-    arg.names <- names(formals(fun = sys.function(sys.parent(n = 2)))) # names of all the arguments
-    arg.user.setting <- as.list(match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
+    arg.names <- base::names(base::formals(fun = base::sys.function(base::sys.parent(n = 2)))) # names of all the arguments
+    arg.user.setting <- base::as.list(base::match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
     # package checking
     # check of lib.path
@@ -154,7 +154,15 @@ post_plot <- function(
 
     # check of the required function from the required packages
     .pack_and_function_check(
-        fun = c(
+        fun = base::c(
+            "graphics::axis",
+            "graphics::grid",
+            "graphics::par",
+            "graphics::mtext",
+            "graphics::rug",
+            "graphics::text",
+            "grDevices::colors",
+            "grDevices::dev.off",
             "saferDev::arg_check"
         ),
         lib.path = NULL,
@@ -170,65 +178,65 @@ post_plot <- function(
     argum.check <- NULL #
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
-    ee <- expression(argum.check <- c(argum.check, tempo$problem) , text.check <- c(text.check, tempo$text) , checked.arg.names <- c(checked.arg.names, tempo$object.name))
-    tempo <- saferDev::arg_check(data = x.side, options = c(0, 1, 3), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = x.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(x.categ)){
-        tempo <- saferDev::arg_check(data = x.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
+    ee <- base::expression(argum.check <- base::c(argum.check, tempo$problem) , text.check <- base::c(text.check, tempo$text) , checked.arg.names <- base::c(checked.arg.names, tempo$object.name))
+    tempo <- saferDev::arg_check(data = x.side, options = base::c(0, 1, 3), length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = x.log.scale, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    if( ! base::is.null(x.categ)){
+        tempo <- saferDev::arg_check(data = x.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; base::eval(ee)
     }
-    if( ! is.null(x.categ.pos)){
-        tempo <- saferDev::arg_check(data = x.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+    if( ! base::is.null(x.categ.pos)){
+        tempo <- saferDev::arg_check(data = x.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; base::eval(ee)
     }
-    tempo <- saferDev::arg_check(data = x.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = x.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = x.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = x.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = x.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = y.side, options = c(0, 2, 4), length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = y.log.scale, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(y.categ)){
-        tempo <- saferDev::arg_check(data = y.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = x.lab, class = "character", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = x.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = x.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = x.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = x.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = y.side, options = base::c(0, 2, 4), length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = y.log.scale, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    if( ! base::is.null(y.categ)){
+        tempo <- saferDev::arg_check(data = y.categ, class = "character", na.contain = TRUE, fun.name = function.name) ; base::eval(ee)
     }
-    if( ! is.null(y.categ.pos)){
-        tempo <- saferDev::arg_check(data = y.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; eval(ee)
+    if( ! base::is.null(y.categ.pos)){
+        tempo <- saferDev::arg_check(data = y.categ.pos, class = "vector", mode = "numeric", fun.name = function.name) ; base::eval(ee)
     }
-    tempo <- saferDev::arg_check(data = y.lab, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = y.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = y.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = y.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = y.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = text.angle, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = sec.tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; eval(ee)
-    if( ! is.null(bg.color)){
-        tempo <- saferDev::arg_check(data = bg.color, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-        if( ! (bg.color %in% grDevices::colors() | grepl(pattern = "^#", bg.color))){ # check color
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: bg.color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY colors()")
-            text.check <- c(text.check, tempo.cat)
-            argum.check <- c(argum.check, TRUE)
+    tempo <- saferDev::arg_check(data = y.lab, class = "character", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = y.axis.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = y.label.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = y.dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = y.nb.inter.tick, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = text.angle, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = sec.tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; base::eval(ee)
+    if( ! base::is.null(bg.color)){
+        tempo <- saferDev::arg_check(data = bg.color, class = "character", length = 1, fun.name = function.name) ; base::eval(ee)
+        if( ! (bg.color %in% grDevices::colors() | base::grepl(pattern = "^#", bg.color))){ # check color
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: bg.color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
+            text.check <- base::c(text.check, tempo.cat)
+            argum.check <- base::c(argum.check, TRUE)
         }
     }
-    if( ! is.null(grid.lwd)){
-        tempo <- saferDev::arg_check(data = grid.lwd, class = "vector", mode = "numeric", neg.values = FALSE, fun.name = function.name) ; eval(ee)
+    if( ! base::is.null(grid.lwd)){
+        tempo <- saferDev::arg_check(data = grid.lwd, class = "vector", mode = "numeric", neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
     }
-    if( ! is.null(grid.col)){
-        tempo <- saferDev::arg_check(data = grid.col, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-        if( ! (grid.col %in% grDevices::colors() | grepl(pattern = "^#", grid.col))){ # check color
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: grid.col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY colors()")
-            text.check <- c(text.check, tempo.cat)
-            argum.check <- c(argum.check, TRUE)
+    if( ! base::is.null(grid.col)){
+        tempo <- saferDev::arg_check(data = grid.col, class = "character", length = 1, fun.name = function.name) ; base::eval(ee)
+        if( ! (grid.col %in% grDevices::colors() | base::grepl(pattern = "^#", grid.col))){ # check color
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: grid.col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
+            text.check <- base::c(text.check, tempo.cat)
+            argum.check <- base::c(argum.check, TRUE)
         }
     }
-    tempo <- saferDev::arg_check(data = corner.text, class = "character", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = corner.text.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = just.label.add, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    tempo <- saferDev::arg_check(data = par.reset, class = "logical", length = 1, fun.name = function.name) ; eval(ee)
-    if( ! is.null(custom.par)){
-        tempo <- saferDev::arg_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; eval(ee)
+    tempo <- saferDev::arg_check(data = corner.text, class = "character", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = corner.text.size, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = just.label.add, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = par.reset, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    if( ! base::is.null(custom.par)){
+        tempo <- saferDev::arg_check(data = custom.par, typeof = "list", length = 1, fun.name = function.name) ; base::eval(ee)
     }
-    if( ! is.null(argum.check)){
-        if(any(argum.check, na.rm = TRUE) == TRUE){
-            stop(paste0("\n\n================\n\n", paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
+    if( ! base::is.null(argum.check)){
+        if(base::any(argum.check, na.rm = TRUE) == TRUE){
+            base::stop(base::paste0("\n\n================\n\n", base::paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
         }
     }
     # end argument checking with saferDev::arg_check()
@@ -238,19 +246,21 @@ post_plot <- function(
     # end argument primary checking
     
     # second round of checking and data preparation
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # management of NA arguments
-    if( ! (all(class(arg.user.setting) == "list", na.rm = TRUE) & length(arg.user.setting) == 0)){
-        tempo.arg <- names(arg.user.setting) # values provided by the user
-        tempo.log <- suppressWarnings(sapply(lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.na), FUN = any)) & lapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
-        if(any(tempo.log) == TRUE){ # normally no NA because is.na() used here
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", paste0(tempo.arg[tempo.log], collapse = "\n"))
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    if( ! (base::all(base::class(arg.user.setting) == "list", na.rm = TRUE) & base::length(arg.user.setting) == 0)){
+        tempo.arg <- base::names(arg.user.setting) # values provided by the user
+        tempo.log <- base::suppressWarnings(base::sapply(base::lapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.na), FUN = base::any)) & base::lapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::length) == 1L # no argument provided by the user can be just NA
+        if(base::any(tempo.log) == TRUE){ # normally no NA because is.na() used here
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", base::paste0(tempo.arg[tempo.log], collapse = "\n"))
+            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
     # end management of NA arguments
     
     # management of NULL arguments
-    tempo.arg <- c(
+    tempo.arg <- base::c(
         "x.side", 
         "x.log.scale", 
         # "x.categ", # inactivated because can be null
@@ -281,10 +291,10 @@ post_plot <- function(
         "par.reset"
         # "custom.par" # inactivated because can be null
     )
-    tempo.log <- sapply(lapply(tempo.arg, FUN = get, env = sys.nframe(), inherit = FALSE), FUN = is.null)
-    if(any(tempo.log) == TRUE){# normally no NA with is.null()
-        tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", ifelse(sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
-        stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+    tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
+    if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end management of NULL arguments
     
@@ -296,28 +306,25 @@ post_plot <- function(
     
     # other checkings
     # end other checkings
-    
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
     
     # main code
     text <- NULL
     graphics::par(tcl = -graphics::par()$mgp[2] * tick.length)
     if(x.log.scale == TRUE){
-        grid.coord.x <- c(10^graphics::par("usr")[1], 10^graphics::par("usr")[2])
+        grid.coord.x <- base::c(10^graphics::par("usr")[1], 10^graphics::par("usr")[2])
     }else{
-        grid.coord.x <- c(graphics::par("usr")[1], graphics::par("usr")[2])
+        grid.coord.x <- base::c(graphics::par("usr")[1], graphics::par("usr")[2])
     }
     if(y.log.scale == TRUE){
-        grid.coord.y <- c(10^graphics::par("usr")[3], 10^graphics::par("usr")[4])
+        grid.coord.y <- base::c(10^graphics::par("usr")[3], 10^graphics::par("usr")[4])
     }else{
-        grid.coord.y <- c(graphics::par("usr")[3], graphics::par("usr")[4])
+        grid.coord.y <- base::c(graphics::par("usr")[3], graphics::par("usr")[4])
     }
-    if( ! is.null(bg.color)){
+    if( ! base::is.null(bg.color)){
         graphics::rect(grid.coord.x[1], grid.coord.y[1], grid.coord.x[2], grid.coord.y[2], col = bg.color, border = NA)
     }
-    if( ! is.null(grid.lwd)){
+    if( ! base::is.null(grid.lwd)){
         graphics::grid(nx = NA, ny = NULL, col = grid.col, lty = 1, lwd = grid.lwd)
     }
     if(x.log.scale == TRUE){
@@ -370,146 +377,146 @@ post_plot <- function(
         y.bottom.plot.region <- graphics::par("usr")[3] # in y coordinates, bottom of the plot region (according to y scale)
         y.mid.plot.region <- ((graphics::par("usr")[3] + graphics::par("usr")[4]) / 2) # in x coordinates, right of the plot region (according to x scale)
     }
-    if(any(sapply(FUN = all.equal, c(1, 3), x.side) == TRUE, na.rm = TRUE)){
+    if(base::any(base::sapply(FUN = all.equal, base::c(1, 3), x.side) == TRUE, na.rm = TRUE)){
         graphics::par(xpd=FALSE, xaxt="s")
-        if(is.null(x.categ) & x.log.scale == TRUE){
-            if(any(graphics::par()$xaxp[1:2] == 0L, na.rm = TRUE)){ # any(sapply(FUN = all.equal, graphics::par()$xaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
+        if(base::is.null(x.categ) & x.log.scale == TRUE){
+            if(base::any(graphics::par()$xaxp[1:2] == 0L, na.rm = TRUE)){ # any(sapply(FUN = all.equal, graphics::par()$xaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
                 if(graphics::par()$xaxp[1] == 0L){ # isTRUE(all.equal(graphics::par()$xaxp[1], 0)) not used because we strictly need zero as a result
-                    graphics::par(xaxp = c(10^-30, graphics::par()$xaxp[2:3])) # because log10(graphics::par()$xaxp[1] == 0) == -Inf
+                    graphics::par(xaxp = base::c(10^-30, graphics::par()$xaxp[2:3])) # because log10(graphics::par()$xaxp[1] == 0) == -Inf
                 }
                 if(graphics::par()$xaxp[2] == 0L){ # isTRUE(all.equal(graphics::par()$xaxp[1], 0)) not used because we strictly need zero as a result
-                    graphics::par(xaxp = c(graphics::par()$xaxp[1], 10^-30, graphics::par()$xaxp[3])) # because log10(graphics::par()$xaxp[2] == 0) == -Inf
+                    graphics::par(xaxp = base::c(graphics::par()$xaxp[1], 10^-30, graphics::par()$xaxp[3])) # because log10(graphics::par()$xaxp[2] == 0) == -Inf
                 }
             }
-            graphics::axis(side = x.side, at = c(10^graphics::par()$usr[1], 10^graphics::par()$usr[2]), labels=rep("", 2), lwd=1, lwd.ticks = 0) # draw the axis line
+            graphics::axis(side = x.side, at = base::c(10^graphics::par()$usr[1], 10^graphics::par()$usr[2]), labels=base::rep("", 2), lwd=1, lwd.ticks = 0) # draw the axis line
             graphics::mtext(side = x.side, text = x.lab, line = x.dist.legend / 0.2, las = 0, cex = x.label.size)
             graphics::par(tcl = -graphics::par()$mgp[2] * sec.tick.length) # length of the secondary ticks are reduced
-            suppressWarnings(graphics::rug(10^outer(c((log10(graphics::par("xaxp")[1]) -1):log10(graphics::par("xaxp")[2])), log10(1:10), "+"), ticksize = NA, side = x.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+            base::suppressWarnings(graphics::rug(10^base::outer(base::c((base::log10(graphics::par("xaxp")[1]) -1):base::log10(graphics::par("xaxp")[2])), base::log10(1:10), "+"), ticksize = NA, side = x.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
             graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # back to main ticks
-            graphics::axis(side = x.side, at = c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = x.axis.size)
+            graphics::axis(side = x.side, at = base::c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = base::expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = x.axis.size)
             x.text <- 10^graphics::par("usr")[2]
-        }else if(is.null(x.categ) & x.log.scale == FALSE){
-            graphics::axis(side=x.side, at=c(graphics::par()$usr[1], graphics::par()$usr[2]), labels=rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
-            graphics::axis(side=x.side, at=round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), cex.axis = x.axis.size) # axis(side=x.side, at=round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), labels = format(round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), big.mark=','), cex.axis = x.axis.size) # to get the 1000 comma separator
+        }else if(base::is.null(x.categ) & x.log.scale == FALSE){
+            graphics::axis(side=x.side, at=base::c(graphics::par()$usr[1], graphics::par()$usr[2]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
+            graphics::axis(side=x.side, at=base::round(base::seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), cex.axis = x.axis.size) # axis(side=x.side, at=round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), labels = format(round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), big.mark=','), cex.axis = x.axis.size) # to get the 1000 comma separator
             graphics::mtext(side = x.side, text = x.lab, line = x.dist.legend / 0.2, las = 0, cex = x.label.size)
             if(x.nb.inter.tick > 0){
                 inter.tick.unit <- (graphics::par("xaxp")[2] - graphics::par("xaxp")[1]) / graphics::par("xaxp")[3]
                 graphics::par(tcl = -graphics::par()$mgp[2] * sec.tick.length) # length of the ticks are reduced
-                suppressWarnings(graphics::rug(seq(graphics::par("xaxp")[1] - 10 * inter.tick.unit, graphics::par("xaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + x.nb.inter.tick)), ticksize = NA, x.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+                base::suppressWarnings(graphics::rug(base::seq(graphics::par("xaxp")[1] - 10 * inter.tick.unit, graphics::par("xaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + x.nb.inter.tick)), ticksize = NA, x.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
                 graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # back to main ticks
             }
             x.text <- graphics::par("usr")[2]
-        }else if(( ! is.null(x.categ)) & x.log.scale == FALSE){
-            if(is.null(x.categ.pos)){
-                x.categ.pos <- 1:length(x.categ)
-            }else if(length(x.categ.pos) != length(x.categ)){
-                tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: x.categ.pos MUST BE THE SAME LENGTH AS x.categ")
-                stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        }else if(( ! base::is.null(x.categ)) & x.log.scale == FALSE){
+            if(base::is.null(x.categ.pos)){
+                x.categ.pos <- 1:base::length(x.categ)
+            }else if(base::length(x.categ.pos) != base::length(x.categ)){
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: x.categ.pos MUST BE THE SAME LENGTH AS x.categ")
+                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::par(xpd = TRUE)
-            if(isTRUE(all.equal(x.side, 1))){ #isTRUE(all.equal(x.side, 1)) is similar to x.side == 1L but deals with float
+            if(base::isTRUE(base::all.equal(x.side, 1))){ #isTRUE(all.equal(x.side, 1)) is similar to x.side == 1L but deals with float
                 graphics::segments(x0 = x.left.plot.region, x1 = x.right.plot.region, y0 = y.bottom.plot.region, y1 = y.bottom.plot.region) # draw the line of the axis
-                text(x = x.categ.pos, y = y.mid.bottom.fig.region, labels = x.categ, srt = text.angle, cex = x.axis.size)
-            }else if(isTRUE(all.equal(x.side, 3))){ #isTRUE(all.equal(x.side, 1)) is similar to x.side == 3L but deals with float
+                graphics::text(x = x.categ.pos, y = y.mid.bottom.fig.region, labels = x.categ, srt = text.angle, cex = x.axis.size)
+            }else if(base::isTRUE(base::all.equal(x.side, 3))){ #isTRUE(all.equal(x.side, 1)) is similar to x.side == 3L but deals with float
                 graphics::segments(x0 = x.left.plot.region, x1 = x.right.plot.region, y0 = y.top.plot.region, y1 = y.top.plot.region) # draw the line of the axis
-                text(x = x.categ.pos, y = y.mid.top.fig.region, labels = x.categ, srt = text.angle, cex = x.axis.size)
+                graphics::text(x = x.categ.pos, y = y.mid.top.fig.region, labels = x.categ, srt = text.angle, cex = x.axis.size)
             }else{
-                tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: ARGUMENT x.side CAN ONLY BE 1 OR 3")
-                stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: ARGUMENT x.side CAN ONLY BE 1 OR 3")
+                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::par(xpd = FALSE)
             x.text <- graphics::par("usr")[2]
         }else{
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: PROBLEM WITH THE x.side (", x.side ,") OR x.log.scale (", x.log.scale,") ARGUMENTS")
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: PROBLEM WITH THE x.side (", x.side ,") OR x.log.scale (", x.log.scale,") ARGUMENTS")
+            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }else{
         x.text <- graphics::par("usr")[2]
     }
-    if(any(sapply(FUN = all.equal, c(2, 4), y.side) == TRUE, na.rm = TRUE)){
+    if(base::any(base::sapply(FUN = all.equal, base::c(2, 4), y.side) == TRUE, na.rm = TRUE)){
         graphics::par(xpd=FALSE, yaxt="s")
-        if(is.null(y.categ) & y.log.scale == TRUE){
-            if(any(graphics::par()$yaxp[1:2] == 0L, na.rm = TRUE)){ # any(sapply(FUN = all.equal, graphics::par()$yaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
+        if(base::is.null(y.categ) & y.log.scale == TRUE){
+            if(base::any(graphics::par()$yaxp[1:2] == 0L, na.rm = TRUE)){ # any(sapply(FUN = all.equal, graphics::par()$yaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
                 if(graphics::par()$yaxp[1] == 0L){ # strict zero needed
-                    graphics::par(yaxp = c(10^-30, graphics::par()$yaxp[2:3])) # because log10(graphics::par()$yaxp[1] == 0) == -Inf
+                    graphics::par(yaxp = base::c(10^-30, graphics::par()$yaxp[2:3])) # because log10(graphics::par()$yaxp[1] == 0) == -Inf
                 }
                 if(graphics::par()$yaxp[2] == 0L){ # strict zero needed
-                    graphics::par(yaxp = c(graphics::par()$yaxp[1], 10^-30, graphics::par()$yaxp[3])) # because log10(graphics::par()$yaxp[2] == 0) == -Inf
+                    graphics::par(yaxp = base::c(graphics::par()$yaxp[1], 10^-30, graphics::par()$yaxp[3])) # because log10(graphics::par()$yaxp[2] == 0) == -Inf
                 }
             }
-            graphics::axis(side=y.side, at=c(10^graphics::par()$usr[3], 10^graphics::par()$usr[4]), labels=rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
+            graphics::axis(side=y.side, at=base::c(10^graphics::par()$usr[3], 10^graphics::par()$usr[4]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
             graphics::par(tcl = -graphics::par()$mgp[2] * sec.tick.length) # length of the ticks are reduced
-            suppressWarnings(graphics::rug(10^outer(c((log10(graphics::par("yaxp")[1])-1):log10(graphics::par("yaxp")[2])), log10(1:10), "+"), ticksize = NA, side = y.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+            base::suppressWarnings(graphics::rug(10^base::outer(base::c((base::log10(graphics::par("yaxp")[1])-1):base::log10(graphics::par("yaxp")[2])), base::log10(1:10), "+"), ticksize = NA, side = y.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
             graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # back to main tick length
-            graphics::axis(side = y.side, at = c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = y.axis.size)
+            graphics::axis(side = y.side, at = base::c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = base::expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = y.axis.size)
             y.text <- 10^(graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
             graphics::mtext(side = y.side, text = y.lab, line = y.dist.legend / 0.2, las = 0, cex = y.label.size)
-        }else if(is.null(y.categ) & y.log.scale == FALSE){
-            graphics::axis(side=y.side, at=c(graphics::par()$usr[3], graphics::par()$usr[4]), labels=rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
-            graphics::axis(side=y.side, at=round(seq(graphics::par()$yaxp[1], graphics::par()$yaxp[2], length.out=graphics::par()$yaxp[3]+1), 2), cex.axis = y.axis.size)
+        }else if(base::is.null(y.categ) & y.log.scale == FALSE){
+            graphics::axis(side=y.side, at=base::c(graphics::par()$usr[3], graphics::par()$usr[4]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
+            graphics::axis(side=y.side, at=base::round(base::seq(graphics::par()$yaxp[1], graphics::par()$yaxp[2], length.out=graphics::par()$yaxp[3]+1), 2), cex.axis = y.axis.size)
             graphics::mtext(side = y.side, text = y.lab, line = y.dist.legend / 0.2, las = 0, cex = y.label.size)
             if(y.nb.inter.tick > 0){
                 inter.tick.unit <- (graphics::par("yaxp")[2] - graphics::par("yaxp")[1]) / graphics::par("yaxp")[3]
                 graphics::par(tcl = -graphics::par()$mgp[2] * sec.tick.length) # length of the ticks are reduced
-                suppressWarnings(graphics::rug(seq(graphics::par("yaxp")[1] - 10 * inter.tick.unit, graphics::par("yaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + y.nb.inter.tick)), ticksize = NA, side=y.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+                base::suppressWarnings(graphics::rug(base::seq(graphics::par("yaxp")[1] - 10 * inter.tick.unit, graphics::par("yaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + y.nb.inter.tick)), ticksize = NA, side=y.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
                 graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # back to main tick length
             }
             y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
-        }else if(( ! is.null(y.categ)) & y.log.scale == FALSE){
-            if(is.null(y.categ.pos)){
-                y.categ.pos <- 1:length(y.categ)
-            }else if(length(y.categ.pos) != length(y.categ)){
-                tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: y.categ.pos MUST BE THE SAME LENGTH AS y.categ")
-                stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        }else if(( ! base::is.null(y.categ)) & y.log.scale == FALSE){
+            if(base::is.null(y.categ.pos)){
+                y.categ.pos <- 1:base::length(y.categ)
+            }else if(base::length(y.categ.pos) != base::length(y.categ)){
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: y.categ.pos MUST BE THE SAME LENGTH AS y.categ")
+                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
-            graphics::axis(side = y.side, at = y.categ.pos, labels = rep("", length(y.categ)), lwd=0, lwd.ticks=1) # draw the line of the axis
+            graphics::axis(side = y.side, at = y.categ.pos, labels = base::rep("", base::length(y.categ)), lwd=0, lwd.ticks=1) # draw the line of the axis
             graphics::par(xpd = TRUE)
-            if(isTRUE(all.equal(y.side, 2))){ #isTRUE(all.equal(y.side, 2)) is similar to y.side == 2L but deals with float
-                text(x = x.mid.left.fig.region, y = y.categ.pos, labels = y.categ, srt = text.angle, cex = y.axis.size)
-            }else if(isTRUE(all.equal(y.side, 4))){ # idem
-                text(x = x.mid.right.fig.region, y = y.categ.pos, labels = y.categ, srt = text.angle, cex = y.axis.size)
+            if(base::isTRUE(base::all.equal(y.side, 2))){ #isTRUE(all.equal(y.side, 2)) is similar to y.side == 2L but deals with float
+                graphics::text(x = x.mid.left.fig.region, y = y.categ.pos, labels = y.categ, srt = text.angle, cex = y.axis.size)
+            }else if(base::isTRUE(base::all.equal(y.side, 4))){ # idem
+                graphics::text(x = x.mid.right.fig.region, y = y.categ.pos, labels = y.categ, srt = text.angle, cex = y.axis.size)
             }else{
-                tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: ARGUMENT y.side CAN ONLY BE 2 OR 4")
-                stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: ARGUMENT y.side CAN ONLY BE 2 OR 4")
+                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::par(xpd = FALSE)
             y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
         }else{
-            tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: PROBLEM WITH THE y.side (", y.side ,") OR y.log.scale (", y.log.scale,") ARGUMENTS")
-            stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: PROBLEM WITH THE y.side (", y.side ,") OR y.log.scale (", y.log.scale,") ARGUMENTS")
+            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }else{
         y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
     }
     graphics::par(xpd=NA)
-    text(x = x.mid.right.fig.region, y = y.text, corner.text, adj=c(1, 1.1), cex = corner.text.size) # text at the topright corner. Replace x.right.fig.region by x.text if text at the right edge of the plot region
-    if(just.label.add == TRUE & isTRUE(all.equal(x.side, 0)) & x.lab != ""){
-        text(x = x.mid.plot.region, y = y.mid.bottom.fig.region, x.lab, adj=c(0.5, 0.5), cex = x.label.size) # x label
+    graphics::text(x = x.mid.right.fig.region, y = y.text, corner.text, adj=base::c(1, 1.1), cex = corner.text.size) # text at the topright corner. Replace x.right.fig.region by x.text if text at the right edge of the plot region
+    if(just.label.add == TRUE & base::isTRUE(base::all.equal(x.side, 0)) & x.lab != ""){
+        graphics::text(x = x.mid.plot.region, y = y.mid.bottom.fig.region, x.lab, adj=base::c(0.5, 0.5), cex = x.label.size) # x label
     }
-    if(just.label.add == TRUE & isTRUE(all.equal(y.side, 0)) & y.lab != ""){
-        text(x = y.mid.plot.region, y = x.mid.left.fig.region, y.lab, adj=c(0.5, 0.5), cex = y.label.size) # x label
+    if(just.label.add == TRUE & base::isTRUE(base::all.equal(y.side, 0)) & y.lab != ""){
+        graphics::text(x = y.mid.plot.region, y = x.mid.left.fig.region, y.lab, adj=base::c(0.5, 0.5), cex = y.label.size) # x label
     }
     graphics::par(xpd=FALSE)
     if(par.reset == TRUE){
-        tempo.par <- open(pdf = FALSE, return.output = TRUE)
-        invisible(grDevices::dev.off()) # close the new window
-        if( ! is.null(custom.par)){
-            if( ! names(custom.par) %in% names(tempo.par$ini.par)){
-                tempo.cat <- paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: custom.par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE par() LIST")
-                stop(paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+        tempo.par <- base::open(pdf = FALSE, return.output = TRUE)
+        base::invisible(grDevices::dev.off()) # close the new window
+        if( ! base::is.null(custom.par)){
+            if( ! base::names(custom.par) %in% base::names(tempo.par$ini.par)){
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: custom.par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
+                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             grDevices::colors(custom.par)
-            text <- c(text, "\nGRAPH PARAMETERS SET TO VALUES DEFINED BY custom.par ARGUMENT\n")
+            text <- base::c(text, "\nGRAPH PARAMETERS SET TO VALUES DEFINED BY custom.par ARGUMENT\n")
         }else{
             grDevices::colors(tempo.par$ini.par)
-            text <- c(text, "\nGRAPH PARAMETERS RESET TO par() DEFAULT VALUES\n")
+            text <- base::c(text, "\nGRAPH PARAMETERS RESET TO graphics::par() DEFAULT VALUES\n")
         }
     }
-    output <- list(x.mid.left.dev.region = x.mid.left.dev.region, x.left.dev.region = x.left.dev.region, x.mid.right.dev.region = x.mid.right.dev.region, x.right.dev.region = x.right.dev.region, x.mid.left.fig.region = x.mid.left.fig.region, x.left.fig.region = x.left.fig.region, x.mid.right.fig.region = x.mid.right.fig.region, x.right.fig.region = x.right.fig.region, x.left.plot.region = x.left.plot.region, x.right.plot.region = x.right.plot.region, x.mid.plot.region = x.mid.plot.region, y.mid.bottom.dev.region = y.mid.bottom.dev.region, y.bottom.dev.region = y.bottom.dev.region, y.mid.top.dev.region = y.mid.top.dev.region, y.top.dev.region = y.top.dev.region, y.mid.bottom.fig.region = y.mid.bottom.fig.region, y.bottom.fig.region = y.bottom.fig.region, y.mid.top.fig.region = y.mid.top.fig.region, y.top.fig.region = y.top.fig.region, y.top.plot.region = y.top.plot.region, y.bottom.plot.region = y.bottom.plot.region, y.mid.plot.region = y.mid.plot.region, text = text)
+    output <- base::list(x.mid.left.dev.region = x.mid.left.dev.region, x.left.dev.region = x.left.dev.region, x.mid.right.dev.region = x.mid.right.dev.region, x.right.dev.region = x.right.dev.region, x.mid.left.fig.region = x.mid.left.fig.region, x.left.fig.region = x.left.fig.region, x.mid.right.fig.region = x.mid.right.fig.region, x.right.fig.region = x.right.fig.region, x.left.plot.region = x.left.plot.region, x.right.plot.region = x.right.plot.region, x.mid.plot.region = x.mid.plot.region, y.mid.bottom.dev.region = y.mid.bottom.dev.region, y.bottom.dev.region = y.bottom.dev.region, y.mid.top.dev.region = y.mid.top.dev.region, y.top.dev.region = y.top.dev.region, y.mid.bottom.fig.region = y.mid.bottom.fig.region, y.bottom.fig.region = y.bottom.fig.region, y.mid.top.fig.region = y.mid.top.fig.region, y.top.fig.region = y.top.fig.region, y.top.plot.region = y.top.plot.region, y.bottom.plot.region = y.bottom.plot.region, y.mid.plot.region = y.mid.plot.region, text = text)
     # output
     # warning output
     # end warning output
-    return(output)
+    base::return(output)
     # end output
     # end main code
 }
