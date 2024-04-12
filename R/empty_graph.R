@@ -5,6 +5,7 @@
 #' @param text.size Single numeric value of the text size.
 #' @param title Single character string of the graph title.
 #' @param title.size Single numeric value of the title size (in points).
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns An empty plot.
 #' @examples
 #' # simple example
@@ -27,10 +28,11 @@ empty_graph <- function(
         text = NULL, 
         text.size = 1, 
         title = NULL, 
-        title.size = 1.5
+        title.size = 1.5,
+        safer_check = TRUE
 ){
     # DEBUGGING
-    # text = "NO GRAPH" ; title = "GRAPH1" ; text.size = 1
+    # text = "NO GRAPH" ; title = "GRAPH1" ; text.size = 1 ; safer_check = TRUE
     # package name
     package.name <- "saferGraph"
     # end package name
@@ -48,7 +50,8 @@ empty_graph <- function(
     # end check of lib.path
 
     # check of the required function from the required packages
-    .pack_and_function_check(
+    if(safer_check == TRUE){
+        .pack_and_function_check(
         fun = base::c(
             "graphics::text",
             "saferDev::arg_check"
@@ -56,6 +59,7 @@ empty_graph <- function(
         lib.path = NULL,
         external.function.name = function.name
     )
+    }
     # end check of the required function from the required packages
     # end package checking
 
@@ -68,13 +72,13 @@ empty_graph <- function(
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- base::expression(argum.check <- base::c(argum.check, tempo$problem) , text.check <- base::c(text.check, tempo$text) , checked.arg.names <- base::c(checked.arg.names, tempo$object.name))
     if( ! base::is.null(text)){
-        tempo <- saferDev::arg_check(data = text, class = "vector", mode = "character", length = 1, fun.name = function.name) ; base::eval(ee)
+        tempo <- saferDev::arg_check(data = text, class = "vector", mode = "character", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     }
-    tempo <- saferDev::arg_check(data = text.size, class = "vector", mode = "numeric", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = text.size, class = "vector", mode = "numeric", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if( ! base::is.null(title)){
-        tempo <- saferDev::arg_check(data = title, class = "vector", mode = "character", length = 1, fun.name = function.name) ; base::eval(ee)
+        tempo <- saferDev::arg_check(data = title, class = "vector", mode = "character", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     }
-    tempo <- saferDev::arg_check(data = title.size, class = "vector", mode = "numeric", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = title.size, class = "vector", mode = "numeric", length = 1, fun.name = function.name , safer_check = FALSE) ; base::eval(ee)
     if( ! base::is.null(argum.check)){
         if(base::any(argum.check, na.rm = TRUE) == TRUE){
             base::stop(base::paste0("\n\n================\n\n", base::paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
@@ -87,6 +91,8 @@ empty_graph <- function(
     # end argument primary checking
     
     # second round of checking and data preparation
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # management of NA arguments
     if( ! (base::all(base::class(arg.user.setting) == "list", na.rm = TRUE) & base::length(arg.user.setting) == 0)){
         tempo.arg <- base::names(arg.user.setting) # values provided by the user
@@ -120,9 +126,6 @@ empty_graph <- function(
     
     # other checkings
     # end other checkings
-    
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
     
     # main code
