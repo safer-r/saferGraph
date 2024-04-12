@@ -3,6 +3,7 @@
 #' Close only specific graphic windows (devices).
 #' @param kind Vector, among c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), indicating the kind of graphic windows (devices) to close. BEWARE: either "windows", "quartz", "x11" or "X11" means that all the X11 GUI graphics devices will be closed, whatever the OS used.
 #' @param return.text Single logical value. Print text regarding the kind parameter and the devices that were finally closed?
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns Text regarding the kind parameter and the devices that were finally closed.
 #' @examples
 #' \dontrun{
@@ -23,10 +24,11 @@
 #' @export
 close2 <- function(
         kind = "pdf", 
-        return.text = FALSE
+        return.text = FALSE,
+        safer_check = TRUE
 ){
     # DEBUGGING
-    # kind = c("windows", "pdf") ; return.text = FALSE # for function debugging
+    # kind = c("windows", "pdf") ; return.text = FALSE ; safer_check = TRUE # for function debugging
     # package name
     package.name <- "saferGraph"
     # end package name
@@ -44,13 +46,17 @@ close2 <- function(
     # check of lib.path
     # end check of lib.path
     # check of the required function from the required packages
-    .pack_and_function_check(
+    if(safer_check == TRUE){
+        .pack_and_function_check(
         fun = base::c(
+            "grDevices::dev.list",
+            "grDevices::X11",
             "saferDev::arg_check"
         ),
         lib.path = NULL,
         external.function.name = function.name
     )
+    }
     
     # end check of the required function from the required packages
     # end package checking
@@ -64,8 +70,8 @@ close2 <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- base::expression(argum.check <- base::c(argum.check, tempo$problem) , text.check <- base::c(text.check, tempo$text) , checked.arg.names <- base::c(checked.arg.names, tempo$object.name))
-    tempo <- saferDev::arg_check(data = kind, options = base::c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = return.text, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = kind, options = base::c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = return.text, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if( ! base::is.null(argum.check)){
         if(base::any(argum.check, na.rm = TRUE) == TRUE){
             base::stop(base::paste0("\n\n================\n\n", base::paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
@@ -94,7 +100,8 @@ close2 <- function(
     # management of NULL arguments
     tempo.arg <-base::c(
         "kind", 
-        "return.text"
+        "return.text",
+        "safer_check"
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
