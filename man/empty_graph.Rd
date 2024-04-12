@@ -4,7 +4,13 @@
 \alias{empty_graph}
 \title{empty_graph}
 \usage{
-empty_graph(text = NULL, text.size = 1, title = NULL, title.size = 1.5)
+empty_graph(
+  text = NULL,
+  text.size = 1,
+  title = NULL,
+  title.size = 1.5,
+  safer_check = TRUE
+)
 }
 \arguments{
 \item{text}{Single character string of the message to display.}
@@ -14,6 +20,8 @@ empty_graph(text = NULL, text.size = 1, title = NULL, title.size = 1.5)
 \item{title}{Single character string of the graph title.}
 
 \item{title.size}{Single numeric value of the title size (in points).}
+
+\item{safer_check}{Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
 }
 \value{
 An empty plot.
