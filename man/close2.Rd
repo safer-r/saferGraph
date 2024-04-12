@@ -4,12 +4,14 @@
 \alias{close2}
 \title{close2}
 \usage{
-close2(kind = "pdf", return.text = FALSE)
+close2(kind = "pdf", return.text = FALSE, safer_check = TRUE)
 }
 \arguments{
 \item{kind}{Vector, among c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), indicating the kind of graphic windows (devices) to close. BEWARE: either "windows", "quartz", "x11" or "X11" means that all the X11 GUI graphics devices will be closed, whatever the OS used.}
 
 \item{return.text}{Single logical value. Print text regarding the kind parameter and the devices that were finally closed?}
+
+\item{safer_check}{Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
 }
 \value{
 Text regarding the kind parameter and the devices that were finally closed.
