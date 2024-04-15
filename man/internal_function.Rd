@@ -4,7 +4,12 @@
 \alias{.pack_and_function_check}
 \title{.pack_and_function_check}
 \usage{
-.pack_and_function_check(fun, lib.path, external.function.name)
+.pack_and_function_check(
+  fun,
+  lib.path,
+  external.function.name,
+  external.package.name
+)
 }
 \arguments{
 \item{fun}{Character vector of the names of the required functions, preceded by the name of the package they belong to and a double colon. Example: c("ggplot2::geom_point", "grid::gpar").}
@@ -12,6 +17,8 @@
 \item{lib.path}{Character vector specifying the absolute pathways of the directories containing the listed packages in the fun argument, if not in the default directories. If NULL, the function checks only in the .libPaths() default R library folders.}
 
 \item{external.function.name}{Name of the function using the .pack_and_function_check() function.}
+
+\item{external.package.name}{Name of the package of the function using the .pack_and_function_check() function.}
 }
 \value{
 An error message if at least one of the checked packages is missing in lib.path, or if at least one of the checked functions is missing in the required package, nothing otherwise.
