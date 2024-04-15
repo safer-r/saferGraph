@@ -14,7 +14,8 @@ open2(
   pdf.overwrite = FALSE,
   rescale = "fixed",
   remove.read.only = TRUE,
-  return.output = FALSE
+  return.output = FALSE,
+  safer_check = TRUE
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ open2(
 \item{remove.read.only}{Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return.output == FALSE.}
 
 \item{return.output}{Single logical value. Return output ? If TRUE the output list is displayed.}
+
+\item{safer_check}{Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
 }
 \value{
 A list containing:
