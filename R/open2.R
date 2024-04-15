@@ -25,6 +25,7 @@
 #' @param rescale Kind of GUI. Either "R", "fit", or "fixed". Ignored on Mac and Linux OS. See ?windows for details.
 #' @param remove.read.only Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return.output == FALSE. 
 #' @param return.output Single logical value. Return output ? If TRUE the output list is displayed.
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns
 #' A list containing:
 #' 
@@ -44,10 +45,13 @@
 #' # Screen devices should not be used in examples
 #' open2(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
 #' }
-#' @importFrom saferDev arg_check
+#' @importFrom graphics par
 #' @importFrom grDevices dev.off
-#' @importFrom grDevices dev.list
 #' @importFrom grDevices dev.size
+#' @importFrom grDevices quartz
+#' @importFrom grDevices windows
+#' @importFrom grDevices X11
+#' @importFrom saferDev arg_check
 #' @export
 open2 <- function(
         pdf = TRUE, 
@@ -59,10 +63,11 @@ open2 <- function(
         pdf.overwrite = FALSE, 
         rescale = "fixed", 
         remove.read.only = TRUE, 
-        return.output = FALSE
+        return.output = FALSE,
+        safer_check = TRUE
 ){
     # DEBUGGING
-    # pdf = TRUE ; pdf.path = "C:/Users/Gael/Desktop" ; pdf.name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf.overwrite = FALSE ; rescale = "fixed" ; remove.read.only = TRUE ; return.output = TRUE # for function debugging
+    # pdf = TRUE ; pdf.path = "C:/Users/Gael/Desktop" ; pdf.name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf.overwrite = FALSE ; rescale = "fixed" ; remove.read.only = TRUE ; return.output = TRUE ; safer_check = TRUE # for function debugging
     # package name
     package.name <- "saferGraph"
     # end package name
@@ -77,7 +82,8 @@ open2 <- function(
     # package checking
     # check of lib.path
     # end check of lib.path
-    .pack_and_function_check(
+    if(safer_check == TRUE){
+        .pack_and_function_check(
         fun = base::c(
             "graphics::par",
             "grDevices::dev.off",
@@ -91,6 +97,7 @@ open2 <- function(
         lib.path = NULL,
         external.function.name = function.name
     )
+    }
     # end check of the required function from the required packages
     # end package checking
 
@@ -124,6 +131,8 @@ open2 <- function(
     # end argument primary checking
     
     # second round of checking and data preparation
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # management of NA arguments
     if( ! (base::all(base::class(arg.user.setting) == "list", na.rm = TRUE) & base::length(arg.user.setting) == 0)){
         tempo.arg <- base::names(arg.user.setting) # values provided by the user
@@ -146,7 +155,8 @@ open2 <- function(
         "pdf.overwrite", 
         "rescale", 
         "remove.read.only", 
-        "return.output"
+        "return.output",
+        "safer_check"
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
@@ -163,9 +173,6 @@ open2 <- function(
     
     # other checkings
     # end other checkings
-    
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
    
     # main code
