@@ -34,6 +34,7 @@
 #' @param par.reset Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.
 #' @param just.label.add Single logical value that just add axis labels (legend). If TRUE, at least (x.side == 0 & x.lab != "") or (y.side == 0 & y.lab != "") must be set to display the corresponding x.lab or y.lab.
 #' @param custom.par List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par.reset == TRUE, the default par() parameters are used.
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns 
 #' A list containing: 
 #' 
@@ -99,6 +100,7 @@
 #' @importFrom graphics grid
 #' @importFrom graphics axis
 #' @importFrom graphics mtext
+#' @importFrom graphics text
 #' @importFrom graphics rug
 #' @importFrom graphics segments
 #' @importFrom grDevices dev.off
@@ -160,6 +162,7 @@ post_plot <- function(
             "graphics::par",
             "graphics::mtext",
             "graphics::rug",
+            "graphics::rect",
             "graphics::text",
             "grDevices::colors",
             "grDevices::dev.off",
