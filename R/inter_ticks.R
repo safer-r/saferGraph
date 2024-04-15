@@ -6,6 +6,7 @@
 #' @param breaks Mandatory vector of numbers indicating the main ticks values/positions when log argument is "no". Ignored when log argument is "log2" or "log10".
 #' @param n Single numeric value indicating the number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".
 #' @param warn.print Single logical value. Print potential warning messages at the end of the execution? If FALSE, warning messages are never printed, but can still be recovered in the returned list.
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns 
 #' A list containing :
 #' 
@@ -38,13 +39,14 @@ inter_ticks <- function(
         log = "log10", 
         breaks = NULL, 
         n = NULL, 
-        warn.print = TRUE
+        warn.print = TRUE,
+        safer_check = TRUE
 ){
     # DEBUGGING
-    # lim = c(2, 3.101) ; log = "no" ; breaks = NULL ; n = NULL ; warn.print = TRUE # for function debugging
-    # lim = c(0, 26.5) ; log = "no" ; breaks = c(0, 10, 20) ; n = 3 # for function debugging
-    # lim = c(10, 0); log = "no"; breaks = c(10, 8, 6, 4, 2, 0); n = 4 # for function debugging
-    # lim = c(-10, -20); log = "no"; breaks = c(-20, -15, -10); n = 4 # for function debugging
+    # lim = c(2, 3.101) ; log = "no" ; breaks = NULL ; n = NULL ; warn.print = TRUE ; safer_check = TRUE# for function debugging
+    # lim = c(0, 26.5) ; log = "no" ; breaks = c(0, 10, 20) ; n = 3 ; safer_check = TRUE # for function debugging
+    # lim = c(10, 0); log = "no"; breaks = c(10, 8, 6, 4, 2, 0); n = 4 ; safer_check = TRUE # for function debugging
+    # lim = c(-10, -20); log = "no"; breaks = c(-20, -15, -10); n = 4 ; safer_check = TRUE# for function debugging
     # package name
     package.name <- "saferGraph"
     # end package name
@@ -61,13 +63,15 @@ inter_ticks <- function(
     # check of lib.path
     # end check of lib.path
     # check of the required function from the required packages
-    .pack_and_function_check(
+    if(safer_check == TRUE){
+        .pack_and_function_check(
         fun = base::c(
             "saferDev::arg_check"
         ),
         lib.path = NULL,
         external.function.name = function.name
     )
+    }
     # end check of the required function from the required packages
     # end package checking
 
@@ -88,15 +92,15 @@ inter_ticks <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- base::expression(argum.check <- base::c(argum.check, tempo$problem) , text.check <- base::c(text.check, tempo$text) , checked.arg.names <- base::c(checked.arg.names, tempo$object.name))
-    tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = log, options = base::c("no", "log2", "log10"), length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = log, options = base::c("no", "log2", "log10"), length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if( ! base::is.null(breaks)){
-        tempo <- saferDev::arg_check(data = breaks, class = "vector", mode = "numeric", fun.name = function.name) ; base::eval(ee)
+        tempo <- saferDev::arg_check(data = breaks, class = "vector", mode = "numeric", fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     }
     if( ! base::is.null(n)){
-        tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name) ; base::eval(ee)
+        tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     }
-    tempo <- saferDev::arg_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = warn.print, class = "vector", mode = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if( ! base::is.null(argum.check)){
         if(base::any(argum.check, na.rm = TRUE) == TRUE){
             base::stop(base::paste0("\n\n================\n\n", base::paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
@@ -107,7 +111,10 @@ inter_ticks <- function(
     # source("C:/Users/Gael/Documents/Git_versions_to_use/debugging_tools_for_r_dev-v1.7/r_debugging_tools-v1.7.R") ; eval(parse(text = str_basic_arg_check_dev)) ; eval(parse(text = str_arg_check_with_fun_check_dev)) # activate this line and use the function (with no arguments left as NULL) to check arguments status and if they have been checked using arg_check()
     # end check with r_debugging_tools
     # end argument primary checking
+
     # second round of checking and data preparation
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # management of NA arguments
     if( ! (base::all(base::class(arg.user.setting) == "list", na.rm = TRUE) & base::length(arg.user.setting) == 0)){
         tempo.arg <- base::names(arg.user.setting) # values provided by the user
@@ -124,7 +131,8 @@ inter_ticks <- function(
         "log", 
         # "breaks", # inactivated because can be null
         # "n", # inactivated because can be null
-        "warn.print" 
+        "warn.print" ,
+        "safer_check"
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
@@ -168,9 +176,6 @@ inter_ticks <- function(
     
     # other checkings
     # end other checkings
-    
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
     # main code
     ini.warning.length <- base::options()$warning.length
