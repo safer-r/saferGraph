@@ -112,7 +112,8 @@ empty_graph <- function(
         # "text", # inactivated because can be null
         "text.size",
         # "title", # inactivated because can be null
-        "title.size"
+        "title.size",
+        "safer_check"
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
