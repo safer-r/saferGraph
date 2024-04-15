@@ -4,7 +4,14 @@
 \alias{inter_ticks}
 \title{inter_ticks}
 \usage{
-inter_ticks(lim, log = "log10", breaks = NULL, n = NULL, warn.print = TRUE)
+inter_ticks(
+  lim,
+  log = "log10",
+  breaks = NULL,
+  n = NULL,
+  warn.print = TRUE,
+  safer_check = TRUE
+)
 }
 \arguments{
 \item{lim}{Vector of 2 numbers indicating the limit range of the axis. Order of the 2 values matters (for inverted axis). If log argument is "log2" or "log10", values in lim must be already log transformed. Thus, negative or zero values are allowed.}
@@ -16,6 +23,8 @@ inter_ticks(lim, log = "log10", breaks = NULL, n = NULL, warn.print = TRUE)
 \item{n}{Single numeric value indicating the number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".}
 
 \item{warn.print}{Single logical value. Print potential warning messages at the end of the execution? If FALSE, warning messages are never printed, but can still be recovered in the returned list.}
+
+\item{safer_check}{Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
 }
 \value{
 A list containing :
