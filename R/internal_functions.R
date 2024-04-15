@@ -5,6 +5,7 @@
 #' @param fun Character vector of the names of the required functions, preceded by the name of the package they belong to and a double colon. Example: c("ggplot2::geom_point", "grid::gpar").
 #' @param lib.path Character vector specifying the absolute pathways of the directories containing the listed packages in the fun argument, if not in the default directories. If NULL, the function checks only in the .libPaths() default R library folders.
 #' @param external.function.name Name of the function using the .pack_and_function_check() function.
+#' @param external.package.name Name of the package of the function using the .pack_and_function_check() function.
 #' @returns An error message if at least one of the checked packages is missing in lib.path, or if at least one of the checked functions is missing in the required package, nothing otherwise.
 #' @examples
 #' # .pack_and_function_check(fun = "ggplot2::notgood") # commented because this example returns an error
@@ -19,7 +20,8 @@
 .pack_and_function_check <- function(
         fun, 
         lib.path,
-        external.function.name
+        external.function.name,
+        external.package.name
 ){
     # WARNING
     # arguments of the .pack_and_function_check() function are not checked, so use carefully inside other functions
@@ -28,7 +30,7 @@
     # check of lib.path
     # already done in the main function
     if(base::is.null(lib.path)){
-        lib.path <- .libPaths() # .libPaths(new = lib.path) # or .libPaths(new = c(.libPaths(), lib.path))
+        lib.path <- base::.libPaths() # .libPaths(new = lib.path) # or .libPaths(new = c(.libPaths(), lib.path))
     }
     # end check of lib.path
     # main code
