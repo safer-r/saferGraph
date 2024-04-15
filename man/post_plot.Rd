@@ -33,7 +33,8 @@ post_plot(
   corner.text.size = 1,
   just.label.add = FALSE,
   par.reset = FALSE,
-  custom.par = NULL
+  custom.par = NULL,
+  safer_check = TRUE
 )
 }
 \arguments{
