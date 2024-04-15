@@ -26,6 +26,7 @@
 #' @param amplif.axis Single positive numeric value to increase or decrease the size of the scale numbers in axis.
 #' @param display.extend Single logical value. Extend display beyond plotting region? Either TRUE or FALSE (xpd argument of par() without NA).
 #' @param return.par Single logical value. Return graphic parameter modification?
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns 
 #' Graphic parameter modification.
 #' @examples
@@ -60,10 +61,11 @@ prior_plot <- function(
         amplif.label = 1, 
         amplif.axis = 1, 
         display.extend = FALSE, 
-        return.par = FALSE
+        return.par = FALSE,
+        safer_check = TRUE
 ){
     # DEBUGGING
-    # param.reinitial = FALSE ; xlog.scale = FALSE ; ylog.scale = FALSE ; remove.label = TRUE ; remove.x.axis = TRUE ; remove.y.axis = TRUE ; std.x.range = TRUE ; std.y.range = TRUE ; down.space = 1 ; left.space = 1 ; up.space = 1 ; right.space = 1 ; orient = 1 ; dist.legend = 4.5 ; tick.length = 0.5 ; box.type = "n" ; amplif.label = 1 ; amplif.axis = 1 ; display.extend = FALSE ; return.par = FALSE # for function debugging
+    # param.reinitial = FALSE ; xlog.scale = FALSE ; ylog.scale = FALSE ; remove.label = TRUE ; remove.x.axis = TRUE ; remove.y.axis = TRUE ; std.x.range = TRUE ; std.y.range = TRUE ; down.space = 1 ; left.space = 1 ; up.space = 1 ; right.space = 1 ; orient = 1 ; dist.legend = 4.5 ; tick.length = 0.5 ; box.type = "n" ; amplif.label = 1 ; amplif.axis = 1 ; display.extend = FALSE ; return.par = FALSE ; safer_check = TRUE # for function debugging
     # package name
     package.name <- "saferGraph"
     # end package name
@@ -81,7 +83,8 @@ prior_plot <- function(
     # check of lib.path
     # end check of lib.path
     # check of the required function from the required packages
-    .pack_and_function_check(
+    if(safer_check == TRUE){
+        .pack_and_function_check(
         fun = base::c(
             "graphics::par",
             "grDevices::dev.cur",
@@ -96,6 +99,7 @@ prior_plot <- function(
         lib.path = NULL,
         external.function.name = function.name
     )
+    }
     # end check of the required function from the required packages
     # end package checking
 
@@ -107,26 +111,26 @@ prior_plot <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- base::expression(argum.check <- base::c(argum.check, tempo$problem) , text.check <- base::c(text.check, tempo$text) , checked.arg.names <- base::c(checked.arg.names, tempo$object.name))
-    tempo <- saferDev::arg_check(data = param.reinitial, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = xlog.scale, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = ylog.scale, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = remove.label, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = remove.x.axis, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = remove.y.axis, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = std.x.range, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = std.y.range, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = down.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = left.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = up.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = right.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = orient, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = box.type, options = base::c("o", "l", "7", "c", "u", "]", "n"), length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = amplif.label, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = amplif.axis, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = display.extend, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
-    tempo <- saferDev::arg_check(data = return.par, class = "logical", length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = param.reinitial, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = xlog.scale, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = ylog.scale, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = remove.label, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = remove.x.axis, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = remove.y.axis, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = std.x.range, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = std.y.range, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = down.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = left.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = up.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = right.space, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = orient, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = dist.legend, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = tick.length, class = "vector", mode = "numeric", length = 1, prop = TRUE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = box.type, options = base::c("o", "l", "7", "c", "u", "]", "n"), length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = amplif.label, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = amplif.axis, class = "vector", mode = "numeric", length = 1, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = display.extend, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = return.par, class = "logical", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if( ! base::is.null(argum.check)){
         if(base::any(argum.check, na.rm = TRUE) == TRUE){
             base::stop(base::paste0("\n\n================\n\n", base::paste(text.check[argum.check], collapse = "\n"), "\n\n================\n\n"), call. = FALSE) #
@@ -139,6 +143,8 @@ prior_plot <- function(
     # end argument primary checking
     
     # second round of checking and data preparation
+    # reserved words (to avoid bugs)
+    # end reserved words (to avoid bugs)
     # management of NA arguments
     if( ! (base::all(base::class(arg.user.setting) == "list", na.rm = TRUE) & base::length(arg.user.setting) == 0)){
         tempo.arg <- base::names(arg.user.setting) # values provided by the user
@@ -171,7 +177,8 @@ prior_plot <- function(
         "amplif.label", 
         "amplif.axis", 
         "display.extend", 
-        "return.par"
+        "return.par",
+        "safer_check"
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
@@ -188,9 +195,6 @@ prior_plot <- function(
     
     # other checkings
     # end other checkings
-    
-    # reserved words (to avoid bugs)
-    # end reserved words (to avoid bugs)
     # end second round of checking and data preparation
 
     # main code
