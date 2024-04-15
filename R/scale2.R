@@ -5,6 +5,7 @@
 #' @param lim Vector of 2 numbers indicating the limit range of the axis. Order of the 2 values matters (for inverted axis). Can be log transformed values.
 #' @param kind Single character string. Either "approx" (approximative), "strict" (strict) or "strict.cl" (strict clean). If "approx", use the scales::trans_breaks() function to provide an easy to read scale of approximately n ticks spanning the range of the lim argument. If "strict", cut the range of the lim argument into n + 1 equidistant part and return the n numbers at each boundary. This often generates numbers uneasy to read. If "strict.cl", provide an easy to read scale of exactly n ticks, but sometimes not completely spanning the range of the lim argument.
 #' @param lib.path Character vector specifying the absolute pathways of the directories containing the required packages if not in the default directories. Ignored if NULL.
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns A vector of numbers.
 #' @examples
 #' # approximate number of main ticks
@@ -29,11 +30,12 @@ scale2 <- function(
         n, 
         lim, 
         kind = "approx", 
-        lib.path = NULL
+        lib.path = NULL,
+        safer_check = TRUE
 ){
     # DEBUGGING
-    # n = 9 ; lim = c(2, 3.101) ; kind = "approx" ; lib.path = NULL # for function debugging
-    # n = 10 ; lim = c(1e-4, 1e6) ; kind = "approx" ; lib.path = NULL # for function debugging
+    # n = 9 ; lim = c(2, 3.101) ; kind = "approx" ; lib.path = NULL ; safer_check = TRUE # for function debugging
+    # n = 10 ; lim = c(1e-4, 1e6) ; kind = "approx" ; lib.path = NULL ; safer_check = TRUE # for function debugging
     # package name
     package.name <- "saferGraph"
     # end package name
@@ -66,7 +68,8 @@ scale2 <- function(
     # end check of lib.path
     
     # check of the required function from the required packages
-    .pack_and_function_check(
+    if(safer_check == TRUE){
+        .pack_and_function_check(
         fun = base::c(
             "ggplot2::ggplot_build",
             "ggplot2::ggplot",
@@ -78,6 +81,7 @@ scale2 <- function(
         lib.path = lib.path,
         external.function.name = function.name
     )
+    }
     # end check of the required function from the required packages
     # end package checking
     
@@ -99,13 +103,13 @@ scale2 <- function(
     text.check <- NULL #
     checked.arg.names <- NULL # for function debbuging: used by r_debugging_tools
     ee <- base::expression(argum.check <- base::c(argum.check, tempo$problem) , text.check <- base::c(text.check, tempo$text) , checked.arg.names <- base::c(checked.arg.names, tempo$object.name))
-    tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, neg.values = FALSE, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if(tempo$problem == FALSE & base::isTRUE(base::all.equal(n, 0))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
         tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: n ARGUMENT MUST BE A NON NULL AND POSITIVE INTEGER")
         text.check <- base::c(text.check, tempo.cat)
         argum.check <- base::c(argum.check, TRUE) # 
     }
-    tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if(tempo$problem == FALSE & base::all(base::diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
         tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: lim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES)")
         text.check <- base::c(text.check, tempo.cat)
@@ -115,9 +119,9 @@ scale2 <- function(
         text.check <- base::c(text.check, tempo.cat)
         argum.check <- base::c(argum.check, TRUE)
     }
-    tempo <- saferDev::arg_check(data = kind, options = base::c("approx", "strict", "strict.cl"), length = 1, fun.name = function.name) ; base::eval(ee)
+    tempo <- saferDev::arg_check(data = kind, options = base::c("approx", "strict", "strict.cl"), length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if( ! base::is.null(lib.path)){
-        tempo <- saferDev::arg_check(data = lib.path, class = "vector", mode = "character", fun.name = function.name) ; base::eval(ee)
+        tempo <- saferDev::arg_check(data = lib.path, class = "vector", mode = "character", fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
         if(tempo$problem == FALSE){
             if( ! base::all(base::dir.exists(lib.path), na.rm = TRUE)){ # separation to avoid the problem of tempo$problem == FALSE and lib.path == NA
                 tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", base::paste(lib.path, collapse = "\n"))
@@ -153,8 +157,9 @@ scale2 <- function(
     tempo.arg <-base::c(
         "n", 
         "lim", 
-        "kind"
-        # "lib.path" = NULL # inactivated because can be null
+        "kind",
+        # "lib.path" = NULL, # inactivated because can be null
+        "safer_check"
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
@@ -193,7 +198,7 @@ scale2 <- function(
         }
         output <- output[ ! base::is.na(output)]
     }else if(kind == "strict"){
-        output <- saferTool::round2(base::seq(lim[1] ,lim[2], length.out = n), 2)
+        output <- saferTool::round2(base::seq(lim[1] ,lim[2], length.out = n), 2, safer_check = FALSE)
     }else if(kind == "strict.cl"){
         tempo.range <- base::diff(base::sort(lim))
         tempo.max <- base::max(lim)
