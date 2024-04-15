@@ -23,6 +23,8 @@
 #' empty_graph(text = "NO GRAPH", text.size = 2, title = "GRAPH1", title.size = 1)
 #'
 #' @importFrom graphics par
+#' @importFrom graphics text
+#' @importFrom saferDev arg_check
 #' @export
 empty_graph <- function(
         text = NULL, 
@@ -53,6 +55,7 @@ empty_graph <- function(
     if(safer_check == TRUE){
         .pack_and_function_check(
         fun = base::c(
+            "graphics::par",
             "graphics::text",
             "saferDev::arg_check"
         ),
