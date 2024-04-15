@@ -2,6 +2,7 @@
 % Please edit documentation in R/internal_functions.R
 \name{.pack_and_function_check}
 \alias{.pack_and_function_check}
+\alias{.base_op_check}
 \title{.pack_and_function_check}
 \usage{
 .pack_and_function_check(
@@ -10,6 +11,8 @@
   external.function.name,
   external.package.name
 )
+
+.base_op_check(external.function.name, external.package.name)
 }
 \arguments{
 \item{fun}{Character vector of the names of the required functions, preceded by the name of the package they belong to and a double colon. Example: c("ggplot2::geom_point", "grid::gpar").}
@@ -22,16 +25,25 @@
 }
 \value{
 An error message if at least one of the checked packages is missing in lib.path, or if at least one of the checked functions is missing in the required package, nothing otherwise.
+
+An error message if at least one of the checked operator is present in the R scope, nothing otherwise.
 }
 \description{
 Check if 1) required functions are present in required packages and 2) required packages are installed locally.
 Simplified version of saferDev::is_function_here(), used as internal function for the other functions of the package.
+
+Check if critical operators of R are not present in other packages or in the global env.
+Others functions of the R scope can be overwritten because safer functions always use :: when using any function.
 }
 \examples{
 # .pack_and_function_check(fun = "ggplot2::notgood") # commented because this example returns an error
 \dontrun{
 # Example that shouldn't be run because this is an internal function
 .pack_and_function_check(fun = c("ggplot2::geom_point", "grid::gpar"))
+}
+\dontrun{
+# Example that shouldn't be run because this is an internal function
+assign("!", 1) ; .base_op_check(external.function.name = "fun1") # commented because this example returns an error
 }
 }
 \keyword{internal}
