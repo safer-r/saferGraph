@@ -24,7 +24,8 @@ prior_plot(
   amplif.label = 1,
   amplif.axis = 1,
   display.extend = FALSE,
-  return.par = FALSE
+  return.par = FALSE,
+  safer_check = TRUE
 )
 }
 \arguments{
@@ -67,6 +68,8 @@ prior_plot(
 \item{display.extend}{Single logical value. Extend display beyond plotting region? Either TRUE or FALSE (xpd argument of par() without NA).}
 
 \item{return.par}{Single logical value. Return graphic parameter modification?}
+
+\item{safer_check}{Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
 }
 \value{
 Graphic parameter modification.
