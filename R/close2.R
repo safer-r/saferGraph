@@ -50,6 +50,7 @@ close2 <- function(
         .pack_and_function_check(
         fun = base::c(
             "grDevices::dev.list",
+            "grDevices::dev.off",
             "grDevices::X11",
             "saferDev::arg_check"
         ),
