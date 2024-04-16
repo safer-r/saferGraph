@@ -41,6 +41,14 @@ close2 <- function(
     arg.names <- base::names(base::formals(fun = base::sys.function(base::sys.parent(n = 2)))) # names of all the arguments
     arg.user.setting <- base::as.list(base::match.call(expand.dots = FALSE))[-1] # list of the argument settings (excluding default values not provided by the user)
     # end function name
+    # critical operator checking
+    if(safer_check == TRUE){
+        .base_op_check(
+            external.function.name = function.name,
+            external.package.name = package.name
+)
+    }
+    # end critical operator checking
     
     # package checking
     # check of lib.path
@@ -55,7 +63,8 @@ close2 <- function(
             "saferDev::arg_check"
         ),
         lib.path = NULL,
-        external.function.name = function.name
+        external.function.name = function.name,
+        external.package.name = package.name
     )
     }
     
