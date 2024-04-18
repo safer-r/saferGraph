@@ -40,6 +40,9 @@
 #' @importFrom graphics par
 #' @importFrom grDevices dev.off
 #' @importFrom grDevices dev.set
+#' @importFrom grDevices quartz
+#' @importFrom grDevices windows
+#' @importFrom grDevices X11
 #' @export
 prior_plot <- function(
         param.reinitial = FALSE, 
