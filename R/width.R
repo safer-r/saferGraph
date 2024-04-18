@@ -81,8 +81,7 @@ width <- function(
     mandat.args <- base::c(
         "categ.nb", 
         "inch.left.space", 
-        "inch.right.space",
-        "safer_check" 
+        "inch.right.space" 
     )
     tempo <- base::eval(base::parse(text = base::paste0("base::c(base::missing(", base::paste0(mandat.args, collapse = "),base::missing("), "))")))
     if(base::any(tempo)){ # normally no NA for missing() output
@@ -131,7 +130,8 @@ width <- function(
         "ini.window.width",
         "inch.left.space", 
         "inch.right.space", 
-        "boundarie.space"
+        "boundarie.space",
+        "safer_check"
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
