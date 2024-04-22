@@ -102,8 +102,8 @@ prior_plot <- function(
             "grDevices::dev.list",
             "grDevices::dev.off",
             "grDevices::dev.set",
-            #"grDevices::quartz",
-            #"grDevices::windows",
+            #"grDevices::quartz", # inactivated because of windows and Linux systems
+            #"grDevices::windows",# inactivated because of macos and Linux systems
             "grDevices::X11",
             "saferDev::arg_check"
         ),

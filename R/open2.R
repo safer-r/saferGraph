@@ -98,8 +98,8 @@ open2 <- function(
             "graphics::par",
             "grDevices::dev.off",
             "grDevices::dev.size",
-            "grDevices::quartz",
-            "grDevices::windows",
+            #"grDevices::quartz", # inactivated because of windows and Linux systems
+            #"grDevices::windows", # inactivated because of windows and Linux systems
             "grDevices::X11",
             "saferDev::arg_check"
             
