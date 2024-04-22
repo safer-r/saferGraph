@@ -35,14 +35,6 @@
 #' prior_plot(param.reinitial = FALSE, xlog.scale = FALSE, ylog.scale = FALSE, remove.label = TRUE, remove.x.axis = TRUE, remove.y.axis = TRUE, std.x.range = TRUE, std.y.range = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 4.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = FALSE)
 #' }
 #' @importFrom saferDev arg_check
-#' @importFrom grDevices dev.list
-#' @importFrom grDevices dev.cur
-#' @importFrom graphics par
-#' @importFrom grDevices dev.off
-#' @importFrom grDevices dev.set
-#' @importFrom grDevices quartz
-#' @importFrom grDevices windows
-#' @importFrom grDevices X11
 #' @export
 prior_plot <- function(
         param.reinitial = FALSE, 
@@ -97,14 +89,6 @@ prior_plot <- function(
     if(safer_check == TRUE){
         .pack_and_function_check(
         fun = base::c(
-            "graphics::par",
-            "grDevices::dev.cur",
-            "grDevices::dev.list",
-            "grDevices::dev.off",
-            "grDevices::dev.set",
-            #"grDevices::quartz", # inactivated because of windows and Linux systems
-            #"grDevices::windows",# inactivated because of macos and Linux systems
-            "grDevices::X11",
             "saferDev::arg_check"
         ),
         lib.path = NULL,

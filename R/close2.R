@@ -18,9 +18,6 @@
 #' grDevices::graphics.off()
 #' }
 #' @importFrom saferDev arg_check
-#' @importFrom grDevices x11
-#' @importFrom grDevices dev.list
-#' @importFrom grDevices dev.off
 #' @export
 close2 <- function(
         kind = "pdf", 
@@ -57,9 +54,6 @@ close2 <- function(
     if(safer_check == TRUE){
         .pack_and_function_check(
         fun = base::c(
-            "grDevices::dev.list",
-            "grDevices::dev.off",
-            "grDevices::X11",
             "saferDev::arg_check"
         ),
         lib.path = NULL,

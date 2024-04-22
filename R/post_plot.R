@@ -94,16 +94,6 @@
 #' post_plot(x.side = 1, x.lab = "Values", y.side = 2, y.lab = "TEST", y.axis.size = 1, y.label.size = 2, y.dist.legend = 0.6)
 #' }
 #' @importFrom saferDev arg_check
-#' @importFrom grDevices colors
-#' @importFrom graphics par
-#' @importFrom graphics rect
-#' @importFrom graphics grid
-#' @importFrom graphics axis
-#' @importFrom graphics mtext
-#' @importFrom graphics text
-#' @importFrom graphics rug
-#' @importFrom graphics segments
-#' @importFrom grDevices dev.off
 #' @export
 post_plot <- function(
         x.side = 0, 
@@ -167,16 +157,6 @@ post_plot <- function(
     if(safer_check == TRUE){
         .pack_and_function_check(
         fun = base::c(
-            "graphics::axis",
-            "graphics::grid",
-            "graphics::par",
-            "graphics::mtext",
-            "graphics::rug",
-            "graphics::rect",
-            "graphics::segments",
-            "graphics::text",
-            "grDevices::colors",
-            "grDevices::dev.off",
             "saferDev::arg_check"
         ),
         lib.path = NULL,

@@ -95,12 +95,6 @@ open2 <- function(
     if(safer_check == TRUE){
         .pack_and_function_check(
         fun = base::c(
-            "graphics::par",
-            "grDevices::dev.off",
-            "grDevices::dev.size",
-            #"grDevices::quartz", # inactivated because of windows and Linux systems
-            #"grDevices::windows", # inactivated because of windows and Linux systems
-            "grDevices::X11",
             "saferDev::arg_check"
             
         ),
