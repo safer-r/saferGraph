@@ -45,12 +45,6 @@
 #' # Screen devices should not be used in examples
 #' open2(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
 #' }
-#' @importFrom graphics par
-#' @importFrom grDevices dev.off
-#' @importFrom grDevices dev.size
-#' @importFrom grDevices quartz
-#' @importFrom grDevices windows
-#' @importFrom grDevices X11
 #' @importFrom saferDev arg_check
 #' @export
 open2 <- function(
