@@ -462,16 +462,37 @@
 <h3 id="all-the-arguments">All the arguments<a class="anchor" aria-label="anchor" href="#all-the-arguments"></a>
 </h3>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">"file_plot"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">prior_plot</span>(<span class="at">param.reinitial =</span> <span class="cn">TRUE</span>, <span class="at">xlog.scale =</span> <span class="cn">TRUE</span>, <span class="at">ylog.scale =</span> <span class="cn">TRUE</span>, <span class="at">remove.label =</span> <span class="cn">FALSE</span>, <span class="at">remove.x.axis =</span> <span class="cn">FALSE</span>, <span class="at">remove.y.axis =</span> <span class="cn">FALSE</span>, <span class="at">std.x.range =</span> <span class="cn">FALSE</span>, <span class="at">std.y.range =</span> <span class="cn">FALSE</span>, <span class="at">down.space =</span> <span class="dv">2</span>, <span class="at">left.space =</span> <span class="dv">2</span>, <span class="at">up.space =</span> <span class="dv">2</span>, <span class="at">right.space =</span> <span class="dv">2</span>, <span class="at">orient =</span> <span class="dv">2</span>, <span class="at">dist.legend =</span> <span class="dv">5</span>, <span class="at">tick.length =</span> <span class="dv">1</span>, <span class="at">box.type =</span> <span class="st">"l"</span>, <span class="at">amplif.label =</span> <span class="fl">1.5</span>, <span class="at">amplif.axis =</span> <span class="fl">1.5</span>, <span class="at">display.extend =</span> <span class="cn">TRUE</span>, <span class="at">return.par =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="sc">&gt;</span> Error<span class="sc">:</span> </span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="er">&gt;</span> </span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="er">&gt;</span> </span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="er">&gt;</span> ERROR IN <span class="fu">prior_plot</span>() </span>
-<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="sc">&gt;</span> THIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM</span>
-<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="sc">&gt;</span> TO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN</span>
-<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="sc">&gt;</span> </span>
-<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span></code></pre></div>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="fu">prior_plot</span>(</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  <span class="at">param.reinitial =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>  <span class="at">xlog.scale =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>  <span class="at">ylog.scale =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>  <span class="at">remove.label =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>  <span class="at">remove.x.axis =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>  <span class="at">remove.y.axis =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>  <span class="at">std.x.range =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>  <span class="at">std.y.range =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>  <span class="at">down.space =</span> <span class="dv">2</span>, </span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>  <span class="at">left.space =</span> <span class="dv">2</span>, </span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a>  <span class="at">up.space =</span> <span class="dv">2</span>, </span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a>  <span class="at">right.space =</span> <span class="dv">2</span>, </span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a>  <span class="at">orient =</span> <span class="dv">2</span>, </span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a>  <span class="at">dist.legend =</span> <span class="dv">5</span>, </span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>  <span class="at">tick.length =</span> <span class="dv">1</span>, </span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a>  <span class="at">box.type =</span> <span class="st">"l"</span>, </span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a>  <span class="at">amplif.label =</span> <span class="fl">1.5</span>, </span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a>  <span class="at">amplif.axis =</span> <span class="fl">1.5</span>, </span>
+<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a>  <span class="at">display.extend =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb22-22"><a href="#cb22-22" tabindex="-1"></a>  <span class="at">return.par =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb22-23"><a href="#cb22-23" tabindex="-1"></a>  <span class="at">safer_check =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-24"><a href="#cb22-24" tabindex="-1"></a><span class="sc">&gt;</span> Error<span class="sc">:</span> </span>
+<span id="cb22-25"><a href="#cb22-25" tabindex="-1"></a><span class="er">&gt;</span> </span>
+<span id="cb22-26"><a href="#cb22-26" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
+<span id="cb22-27"><a href="#cb22-27" tabindex="-1"></a><span class="er">&gt;</span> </span>
+<span id="cb22-28"><a href="#cb22-28" tabindex="-1"></a><span class="er">&gt;</span> ERROR IN <span class="fu">prior_plot</span>() </span>
+<span id="cb22-29"><a href="#cb22-29" tabindex="-1"></a><span class="sc">&gt;</span> THIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM</span>
+<span id="cb22-30"><a href="#cb22-30" tabindex="-1"></a><span class="sc">&gt;</span> TO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN</span>
+<span id="cb22-31"><a href="#cb22-31" tabindex="-1"></a><span class="sc">&gt;</span> </span>
+<span id="cb22-32"><a href="#cb22-32" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span></code></pre></div>
 <p><br></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
