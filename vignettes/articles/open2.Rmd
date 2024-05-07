@@ -89,6 +89,12 @@ open2(pdf = TRUE, pdf.path = ".", pdf.name = "graph1", width = 7, height = 7, pa
 ```
 <br>
 
+### Argument safer_check
+```{r}
+open2(safer_check = TRUE, pdf.name = "safer15")
+```
+<br>
+
 ### All the arguments
 ```{r}
 open2(

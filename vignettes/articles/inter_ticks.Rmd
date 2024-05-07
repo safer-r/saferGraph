@@ -45,6 +45,12 @@ inter_ticks(lim = c(0, 100), warn.print = FALSE)
 ```
 <br>
 
+### Argument safer_check
+```{r}
+inter_ticks(lim = c(0, 100), safer_check = TRUE)
+```
+<br>
+
 ### All the arguments
 ```{r}
 inter_ticks(
