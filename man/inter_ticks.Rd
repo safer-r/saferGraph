@@ -56,3 +56,10 @@ inter_ticks(lim = c(-4,4), log = "log2")
 
 inter_ticks(lim = c(-2,3), log = "log10")
 }
+\author{
+Gael Millot <gael.millot@pasteur.fr>
+
+Yushi Han <yushi.han2000@gmail.com>
+
+Haiding Wang <wanghaiding442@gmail.com>
+}
