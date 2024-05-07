@@ -53,3 +53,10 @@ close()
 \examples{
 width(categ.nb = 10, inches.per.categ.nb = 0.2, ini.window.width = 7, inch.left.space = 1, inch.right.space = 1, boundarie.space = 0.5)
 }
+\author{
+Gael Millot <gael.millot@pasteur.fr>
+
+Yushi Han <yushi.han2000@gmail.com>
+
+Haiding Wang <wanghaiding442@gmail.com>
+}

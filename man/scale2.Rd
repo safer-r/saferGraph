@@ -36,3 +36,10 @@ plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, y
 par(yaxt = "s") ; 
 axis(side = 2, at = scale)
 }
+\author{
+Gael Millot <gael.millot@pasteur.fr>
+
+Yushi Han <yushi.han2000@gmail.com>
+
+Haiding Wang <wanghaiding442@gmail.com>
+}
