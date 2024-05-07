@@ -28,6 +28,8 @@ test_that("open2 function argument tests", {
     expect_error(open2(remove.read.only = "not_logical"))
     
     # Test for 'return.output' argument (no specific test)
+
+    # Test for 'safer_check' argument (no specific test)
     
     # Test case for all arguments combined
     

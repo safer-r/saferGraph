@@ -92,6 +92,10 @@ test_that("The function prior_plot() works correctly", {
     # Test for return.par argument
     expect_no_error(prior_plot(return.par = TRUE))
     expect_no_error(prior_plot(return.par = FALSE))
+
+    # Test for safer_check argument
+    expect_no_error(prior_plot(safer_check = TRUE))
+    expect_no_error(prior_plot(safer_check = FALSE))
     
     
     # Test for all arguments combined
