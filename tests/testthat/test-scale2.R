@@ -36,8 +36,8 @@ test_that("scale2 - n argument", {
     
     # scale2 - all arguments
     # Test with valid arguments
-    expect_no_error(scale2(n = 10, lim = c(0, 100), kind = "approx"))
+    expect_no_error(scale2(n = 10, lim = c(0, 100), kind = "approx", safer_check = TRUE))
     
     # Test with invalid lim
-    expect_error(scale2(n = 10, lim = c("a", "b"), kind = "approx"))
+    expect_error(scale2(n = 10, lim = c("a", "b"), kind = "approx", safer_check = TRUE))
 })
