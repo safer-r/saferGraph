@@ -44,6 +44,12 @@ empty_graph(title = "Empty Graph", title.size = 1.5)
 
 ### All the arguments
 ```{r}
-empty_graph(text = "No data available", text.size = 1.5, title = "Empty Graph", title.size = 2)
+empty_graph(
+  text = "No data available", 
+  text.size = 1.5, 
+  title = "Empty Graph", 
+  title.size = 2, 
+  safer_check = TRUE
+)
 ```
 <br>

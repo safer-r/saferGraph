@@ -88,3 +88,21 @@ open2(pdf = TRUE, pdf.path = ".", pdf.name = "name1", width = 10, height = 8, pa
 open2(pdf = TRUE, pdf.path = ".", pdf.name = "graph1", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, rescale = "fixed", remove.read.only = TRUE, return.output = FALSE)
 ```
 <br>
+
+### All the arguments
+```{r}
+open2(
+  pdf = TRUE, 
+  pdf.path = "working.dir", 
+  pdf.name = "graph", 
+  width = 7, 
+  height = 7, 
+  paper = "special", 
+  pdf.overwrite = FALSE, 
+  rescale = "fixed", 
+  remove.read.only = TRUE, 
+  return.output = FALSE,
+  safer_check = TRUE
+)
+```
+<br>

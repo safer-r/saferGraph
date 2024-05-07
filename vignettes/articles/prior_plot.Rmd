@@ -157,6 +157,27 @@ prior_plot(return.par = TRUE)
 ### All the arguments
 ```{r, echo = TRUE, error = TRUE}
 pdf("file_plot")
-prior_plot(param.reinitial = TRUE, xlog.scale = TRUE, ylog.scale = TRUE, remove.label = FALSE, remove.x.axis = FALSE, remove.y.axis = FALSE, std.x.range = FALSE, std.y.range = FALSE, down.space = 2, left.space = 2, up.space = 2, right.space = 2, orient = 2, dist.legend = 5, tick.length = 1, box.type = "l", amplif.label = 1.5, amplif.axis = 1.5, display.extend = TRUE, return.par = TRUE)
+prior_plot(
+  param.reinitial = TRUE, 
+  xlog.scale = TRUE, 
+  ylog.scale = TRUE, 
+  remove.label = FALSE, 
+  remove.x.axis = FALSE, 
+  remove.y.axis = FALSE, 
+  std.x.range = FALSE, 
+  std.y.range = FALSE, 
+  down.space = 2, 
+  left.space = 2, 
+  up.space = 2, 
+  right.space = 2, 
+  orient = 2, 
+  dist.legend = 5, 
+  tick.length = 1, 
+  box.type = "l", 
+  amplif.label = 1.5, 
+  amplif.axis = 1.5, 
+  display.extend = TRUE, 
+  return.par = TRUE,
+  safer_check = TRUE)
 ```
 <br>
