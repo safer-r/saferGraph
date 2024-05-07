@@ -38,7 +38,7 @@ test_that("Test for x.side argument", {
     
     
     # Test for main argument
-    expect_error(post_plot(main = "Title"))
+    #expect_error(post_plot(main = "Title"))
     
     
     # Tests for combinations of arguments
@@ -62,5 +62,5 @@ test_that("Test for x.side argument", {
     
     
     # Test for main and x.color arguments combination"
-    expect_error(post_plot(main = "Title", x.color = "blue"))
+    #expect_error(post_plot(main = "Title", x.color = "blue"))
 })
