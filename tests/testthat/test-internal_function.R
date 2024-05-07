@@ -11,9 +11,9 @@ test_that(".pack_and_function_check function argument tests", {
     # Test case for all arguments combined
     
     # Test with default arguments
-    expect_error(.pack_and_function_check(fun = NULL, lib.path = NULL, external.function.name = "fun1"))
+    expect_error(.pack_and_function_check(fun = NULL, lib.path = NULL, external.function.name = "fun1", external.package.name = "pack1"))
     
     # Test with specified arguments
-    expect_error(.pack_and_function_check(fun = "ggplot2::geom_point", lib.path = "C:/Program Files/R/R-4.3.1/library", external.function.name = "fun1"))
+    expect_error(.pack_and_function_check(fun = "ggplot2::geom_point", lib.path = "C:/Program Files/R/R-4.3.1/library", external.function.name = "fun1", external.package.name = "pack1"))
     
 })
