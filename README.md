@@ -89,12 +89,14 @@ See the GNU General Public License for more details at https://www.gnu.org/licen
 
 If you are using functions of *saferGraph*, please cite: 
 
-> Han Y, Serizay J, Millot GA (2023). _The R saferGraph package_.
+> Wang H, Han Y, Serizay J, Millot GA (2023). _The R saferGraph package_.
 > <https://github.com/safer-r/saferGraph/>.
 
 <br />
 
 ## Credits
+
+[Haiding Wang](https://github.com/Tintin2710), Bioinformatics and Biostatistics Hub, Institut Pasteur, Paris, France
 
 [Yushi Han](https://github.com/yushiHn/), Bioinformatics and Biostatistics Hub, Institut Pasteur, Paris, France
 

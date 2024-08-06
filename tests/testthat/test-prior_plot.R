@@ -92,27 +92,33 @@ test_that("The function prior_plot() works correctly", {
     # Test for return.par argument
     expect_no_error(prior_plot(return.par = TRUE))
     expect_no_error(prior_plot(return.par = FALSE))
+
+    # Test for safer_check argument
+    expect_no_error(prior_plot(safer_check = TRUE))
+    expect_no_error(prior_plot(safer_check = FALSE))
     
     
     # Test for all arguments combined
-    expect_error(prior_plot(param.reinitial = TRUE,
-                               xlog.scale = TRUE,
-                               ylog.scale = TRUE,
-                               remove.label = FALSE,
-                               remove.x.axis = FALSE,
-                               remove.y.axis = FALSE,
-                               std.x.range = FALSE,
-                               std.y.range = FALSE,
-                               down.space = 2,
-                               left.space = 2,
-                               up.space = 2,
-                               right.space = 2,
-                               orient = 2,
-                               dist.legend = 4.5,
-                               tick.length = 0.6,
-                               box.type = "o",
-                               amplif.label = 2,
-                               amplif.axis = 2,
-                               display.extend = TRUE,
-                               return.par = TRUE))
+    expect_error(prior_plot(
+        param.reinitial = TRUE,
+        xlog.scale = TRUE,
+        ylog.scale = TRUE,
+        remove.label = FALSE,
+        remove.x.axis = FALSE,
+        remove.y.axis = FALSE,
+        std.x.range = FALSE,
+        std.y.range = FALSE,
+        down.space = 2,
+        left.space = 2,
+        up.space = 2,
+        right.space = 2,
+        orient = 2,
+        dist.legend = 4.5,
+        tick.length = 0.6,
+        box.type = "o",
+        amplif.label = 2,
+        amplif.axis = 2,
+        display.extend = TRUE,
+        return.par = TRUE
+    ))
 })

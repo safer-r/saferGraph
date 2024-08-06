@@ -83,6 +83,9 @@
 #' - $y.mid.plot.region: middle of the plot region, in coordinates of the y-axis.
 #' 
 #' - $text: warning text
+#' @author Gael Millot <gael.millot@pasteur.fr>
+#' @author Yushi Han <yushi.han2000@gmail.com>
+#' @author Haiding Wang <wanghaiding442@gmail.com>
 #' @examples
 #' \dontrun{
 #' # Screen devices should not be used in examples

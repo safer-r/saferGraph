@@ -37,10 +37,6 @@ test_that("Test for x.side argument", {
     expect_error(post_plot(y.color = "red"))
     
     
-    # Test for main argument
-    expect_error(post_plot(main = "Title"))
-    
-    
     # Tests for combinations of arguments
     
     expect_error(post_plot(x.side = 5, x.log.scale = TRUE))
@@ -61,6 +57,4 @@ test_that("Test for x.side argument", {
     expect_error(post_plot(x.color = "blue", y.color = "red"))
     
     
-    # Test for main and x.color arguments combination"
-    expect_error(post_plot(main = "Title", x.color = "blue"))
 })

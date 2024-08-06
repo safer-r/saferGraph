@@ -17,6 +17,9 @@
 #' - $values: the corresponding values associated to each coordinate (with log scale, 2^$values or 10^$values is equivalent to the labels of the axis).
 #' 
 #' - $warn: the potential warning messages. Use cat() for proper display. NULL if no warning.
+#' @author Gael Millot <gael.millot@pasteur.fr>
+#' @author Yushi Han <yushi.han2000@gmail.com>
+#' @author Haiding Wang <wanghaiding442@gmail.com>
 #' @examples
 #' # no log scale
 #' 

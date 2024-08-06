@@ -20,6 +20,7 @@ test_that("inter_ticks function argument tests", {
     # Test for 'warn.print' argument
     expect_no_error(inter_ticks(lim = c(0, 26.5), warn.print = TRUE))
     expect_no_error(inter_ticks(lim = c(0, 26.5), warn.print = FALSE))
+    expect_error(inter_ticks(lim = c(0, 26.5), warn.print = 123))
     
     
     # Test case for all arguments combined
@@ -28,11 +29,13 @@ test_that("inter_ticks function argument tests", {
     expect_no_error(inter_ticks(lim = c(2, 3)))
     
     # Test with specified arguments
-    expect_no_error(inter_ticks(lim = c(0, 26.5), log = "no", breaks = c(0, 10, 20), n = 3, warn.print = TRUE))
+    expect_no_error(inter_ticks(lim = c(0, 26.5), log = "no", breaks = c(0, 10, 20), n = 3, warn.print = TRUE, safer_check = TRUE))
+    expect_error(inter_ticks(lim = c(0, 26.5), log = "no", breaks = c(0, 10, 20), n = 3, warn.print = NULL, safer_check = TRUE))
+    expect_error(inter_ticks(lim = c(0, 26.5), log = "no", breaks = c(0, 10, 20), n = 3, warn.print = TRUE, safer_check = NULL))
     
     # Test with invalid arguments
     expect_error(inter_ticks(lim = NULL, log = "no"))
     expect_error(inter_ticks(lim = c(2, 3), log = "invalid_log"))
-    # expect_error(inter_ticks(lim = c(2, 3), breaks = NULL))
     expect_error(inter_ticks(lim = c(2, 3), n = 0))
+    expect_no_error(inter_ticks(lim = c(2, 3), breaks = NULL))
 })

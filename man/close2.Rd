@@ -32,3 +32,10 @@ grDevices::dev.list() # only remains the postscript devices
 grDevices::graphics.off()
 }
 }
+\author{
+Gael Millot <gael.millot@pasteur.fr>
+
+Yushi Han <yushi.han2000@gmail.com>
+
+Haiding Wang <wanghaiding442@gmail.com>
+}

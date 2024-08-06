@@ -45,3 +45,10 @@ empty_graph() # white page
 empty_graph(text = "NO GRAPH", text.size = 2, title = "GRAPH1", title.size = 1)
 
 }
+\author{
+Gael Millot <gael.millot@pasteur.fr>
+
+Yushi Han <yushi.han2000@gmail.com>
+
+Haiding Wang <wanghaiding442@gmail.com>
+}
