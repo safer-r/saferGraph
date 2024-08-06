@@ -1,15 +1,14 @@
-pandoc: 3.1.13
-pkgdown: 2.0.9
+pandoc: '3.2'
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
-  close2: close2.html
-  empty_graph: empty_graph.html
-  inter_ticks: inter_ticks.html
-  open2: open2.html
-  post_plot: post_plot.html
-  prior_plot: prior_plot.html
+  articles/close2: close2.html
+  articles/empty_graph: empty_graph.html
+  articles/inter_ticks: inter_ticks.html
+  articles/open2: open2.html
+  articles/post_plot: post_plot.html
+  articles/prior_plot: prior_plot.html
   saferGraph: saferGraph.html
-  scale2: scale2.html
-  width: width.html
-last_built: 2024-05-14T11:35Z
-
+  articles/scale2: scale2.html
+  articles/width: width.html
+last_built: 2024-08-06T15:22Z
