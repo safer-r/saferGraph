@@ -65,7 +65,7 @@ The different *saferGraph* releases are tagged [here](https://github.com/safer-r
 
 ```r
 install.packages("remotes")
-remotes::install_github("https://github.com/safer-r/saferGraph")
+remotes::install_github("https://github.com/safer-r/saferGraph") # or open R as admin and remotes::install_github("https://github.com/safer-r/saferGraph", lib = "C:/Program Files/R/R-4.3.1/library")
 ```
 
 Older versions can be installed like this:

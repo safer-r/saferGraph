@@ -211,7 +211,7 @@ post_plot <- function(
     if( ! base::is.null(bg.color)){
         tempo <- saferDev::arg_check(data = bg.color, class = "character", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
         if( ! (bg.color %in% grDevices::colors() | base::grepl(pattern = "^#", bg.color))){ # check color
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: bg.color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nbg.color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
             text.check <- base::c(text.check, tempo.cat)
             argum.check <- base::c(argum.check, TRUE)
         }
@@ -222,7 +222,7 @@ post_plot <- function(
     if( ! base::is.null(grid.col)){
         tempo <- saferDev::arg_check(data = grid.col, class = "character", length = 1, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
         if( ! (grid.col %in% grDevices::colors() | base::grepl(pattern = "^#", grid.col))){ # check color
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: grid.col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\ngrid.col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
             text.check <- base::c(text.check, tempo.cat)
             argum.check <- base::c(argum.check, TRUE)
         }
@@ -253,7 +253,7 @@ post_plot <- function(
         tempo.arg <- base::names(arg.user.setting) # values provided by the user
         tempo.log <- base::suppressWarnings(base::sapply(base::lapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.na), FUN = base::any)) & base::lapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::length) == 1L # no argument provided by the user can be just NA
         if(base::any(tempo.log) == TRUE){ # normally no NA because is.na() used here
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", base::paste0(tempo.arg[tempo.log], collapse = "\n"))
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", base::paste0(tempo.arg[tempo.log], collapse = "\n"))
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
@@ -294,7 +294,7 @@ post_plot <- function(
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
         base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end management of NULL arguments
@@ -411,7 +411,7 @@ post_plot <- function(
             if(base::is.null(x.categ.pos)){
                 x.categ.pos <- 1:base::length(x.categ)
             }else if(base::length(x.categ.pos) != base::length(x.categ)){
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: x.categ.pos MUST BE THE SAME LENGTH AS x.categ")
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nx.categ.pos MUST BE THE SAME LENGTH AS x.categ")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::par(xpd = TRUE)
@@ -422,13 +422,13 @@ post_plot <- function(
                 graphics::segments(x0 = x.left.plot.region, x1 = x.right.plot.region, y0 = y.top.plot.region, y1 = y.top.plot.region) # draw the line of the axis
                 graphics::text(x = x.categ.pos, y = y.mid.top.fig.region, labels = x.categ, srt = text.angle, cex = x.axis.size)
             }else{
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: ARGUMENT x.side CAN ONLY BE 1 OR 3")
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nARGUMENT x.side CAN ONLY BE 1 OR 3")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::par(xpd = FALSE)
             x.text <- graphics::par("usr")[2]
         }else{
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: PROBLEM WITH THE x.side (", x.side ,") OR x.log.scale (", x.log.scale,") ARGUMENTS")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nPROBLEM WITH THE x.side (", x.side ,") OR x.log.scale (", x.log.scale,") ARGUMENTS")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }else{
@@ -467,7 +467,7 @@ post_plot <- function(
             if(base::is.null(y.categ.pos)){
                 y.categ.pos <- 1:base::length(y.categ)
             }else if(base::length(y.categ.pos) != base::length(y.categ)){
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: y.categ.pos MUST BE THE SAME LENGTH AS y.categ")
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\ny.categ.pos MUST BE THE SAME LENGTH AS y.categ")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::axis(side = y.side, at = y.categ.pos, labels = base::rep("", base::length(y.categ)), lwd=0, lwd.ticks=1) # draw the line of the axis
@@ -477,13 +477,13 @@ post_plot <- function(
             }else if(base::isTRUE(base::all.equal(y.side, 4))){ # idem
                 graphics::text(x = x.mid.right.fig.region, y = y.categ.pos, labels = y.categ, srt = text.angle, cex = y.axis.size)
             }else{
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: ARGUMENT y.side CAN ONLY BE 2 OR 4")
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nARGUMENT y.side CAN ONLY BE 2 OR 4")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::par(xpd = FALSE)
             y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
         }else{
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: PROBLEM WITH THE y.side (", y.side ,") OR y.log.scale (", y.log.scale,") ARGUMENTS")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nPROBLEM WITH THE y.side (", y.side ,") OR y.log.scale (", y.log.scale,") ARGUMENTS")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }else{
@@ -503,7 +503,7 @@ post_plot <- function(
         base::invisible(grDevices::dev.off()) # close the new window
         if( ! base::is.null(custom.par)){
             if( ! base::names(custom.par) %in% base::names(tempo.par$ini.par)){
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: custom.par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\ncustom.par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             grDevices::colors(custom.par)

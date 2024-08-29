@@ -163,7 +163,7 @@ open2 <- function(
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
         base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end management of NULL arguments
@@ -188,7 +188,7 @@ open2 <- function(
             pdf.path <- base::sub(x = pdf.path, pattern = "[\\]$", replacement = "") # remove the last /
         }
         if(base::dir.exists(pdf.path) == FALSE){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\npdf.path ARGUMENT DOES NOT CORRESPOND TO EXISTING DIRECTORY\n", pdf.path)
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\npdf.path ARGUMENT DOES NOT CORRESPOND TO EXISTING DIRECTORY\n", pdf.path)
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
@@ -219,7 +219,7 @@ open2 <- function(
         }else{
             # test if X11 can be opened
             if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\nTHIS FUNCTION CANNOT BE USED ON LINUX IF A Rplots.pdf FILE ALREADY EXISTS HERE\n", base::getwd())
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nTHIS FUNCTION CANNOT BE USED ON LINUX IF A Rplots.pdf FILE ALREADY EXISTS HERE\n", base::getwd())
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }else{
                 open.fail <- base::suppressWarnings(base::try(grDevices::X11(), silent = TRUE))[] # try to open a X11 window. If open.fail == NULL, no problem, meaning that the X11 window is opened. If open.fail != NULL, a pdf can be opened here base::paste0(getwd(), "/Rplots.pdf")
@@ -228,7 +228,7 @@ open2 <- function(
                     base::invisible(grDevices::dev.off()) # close the new window
                 }else if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
                     base::file.remove(base::paste0(base::getwd(), "/Rplots.pdf")) # remove the pdf file
-                    tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function.name, " FUNCTION TO TRUE AND RERUN")
+                    tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function.name, " FUNCTION TO TRUE AND RERUN")
                     base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
                 }
             }
@@ -247,7 +247,7 @@ open2 <- function(
         }
         pdf.loc <- base::paste0(pdf.path, "/", pdf.name, ".pdf")
         if(base::file.exists(pdf.loc) == TRUE & pdf.overwrite == FALSE){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", pdf.loc, " FILE ALREADY EXISTS AND CANNOT BE OVERWRITTEN DUE TO pdf.overwrite ARGUMENT SET TO FALSE")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", pdf.loc, " FILE ALREADY EXISTS AND CANNOT BE OVERWRITTEN DUE TO pdf.overwrite ARGUMENT SET TO FALSE")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }else{
             grDevices::pdf(width = width, height = height, file=pdf.loc, paper = paper)

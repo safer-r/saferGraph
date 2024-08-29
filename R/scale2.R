@@ -64,10 +64,10 @@ scale2 <- function(
     # check of lib.path
     if( ! base::is.null(lib.path)){
         if( ! base::all(base::typeof(lib.path) == "character")){ # no na.rm = TRUE with typeof
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT MUST BE A VECTOR OF CHARACTERS:\n", base::paste(lib.path, collapse = "\n"))
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nDIRECTORY PATH INDICATED IN THE lib.path ARGUMENT MUST BE A VECTOR OF CHARACTERS:\n", base::paste(lib.path, collapse = "\n"))
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }else if( ! base::all(base::dir.exists(lib.path), na.rm = TRUE)){ # separation to avoid the problem of tempo$problem == FALSE and lib.path == NA
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", base::paste(lib.path, collapse = "\n"))
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nDIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", base::paste(lib.path, collapse = "\n"))
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }else{
             base::.libPaths(new = base::sub(x = lib.path, pattern = "/$|\\\\$", replacement = "")) # .libPaths(new = ) add path to default path. BEWARE: .libPaths() does not support / at the end of a submitted path. Thus check and replace last / or \\ in path
@@ -117,17 +117,17 @@ scale2 <- function(
     ee <- base::expression(argum.check <- base::c(argum.check, tempo$problem) , text.check <- base::c(text.check, tempo$text) , checked.arg.names <- base::c(checked.arg.names, tempo$object.name))
     tempo <- saferDev::arg_check(data = n, class = "vector", typeof = "integer", length = 1, double.as.integer.allowed = TRUE, neg.values = FALSE, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if(tempo$problem == FALSE & base::isTRUE(base::all.equal(n, 0))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: n ARGUMENT MUST BE A NON NULL AND POSITIVE INTEGER")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nn ARGUMENT MUST BE A NON NULL AND POSITIVE INTEGER")
         text.check <- base::c(text.check, tempo.cat)
         argum.check <- base::c(argum.check, TRUE) # 
     }
     tempo <- saferDev::arg_check(data = lim, class = "vector", mode = "numeric", length = 2, fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
     if(tempo$problem == FALSE & base::all(base::diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: lim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES)")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nlim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES)")
         text.check <- base::c(text.check, tempo.cat)
         argum.check <- base::c(argum.check, TRUE)
     }else if(tempo$problem == FALSE & base::any(lim %in% base::c(Inf, -Inf))){
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: lim ARGUMENT CANNOT CONTAIN -Inf OR Inf VALUES")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nlim ARGUMENT CANNOT CONTAIN -Inf OR Inf VALUES")
         text.check <- base::c(text.check, tempo.cat)
         argum.check <- base::c(argum.check, TRUE)
     }
@@ -136,7 +136,7 @@ scale2 <- function(
         tempo <- saferDev::arg_check(data = lib.path, class = "vector", mode = "character", fun.name = function.name, safer_check = FALSE) ; base::eval(ee)
         if(tempo$problem == FALSE){
             if( ! base::all(base::dir.exists(lib.path), na.rm = TRUE)){ # separation to avoid the problem of tempo$problem == FALSE and lib.path == NA
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: DIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", base::paste(lib.path, collapse = "\n"))
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nDIRECTORY PATH INDICATED IN THE lib.path ARGUMENT DOES NOT EXISTS:\n", base::paste(lib.path, collapse = "\n"))
                 text.check <- base::c(text.check, tempo.cat)
                 argum.check <- base::c(argum.check, TRUE)
             }
@@ -161,7 +161,7 @@ scale2 <- function(
         tempo.arg <- base::names(arg.user.setting) # values provided by the user
         tempo.log <- base::suppressWarnings(base::sapply(base::lapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.na), FUN = any)) & base::lapply(base::lapply(tempo.arg, FUN = get, env = base::sys.nframe(), inherit = FALSE), FUN = length) == 1L # no argument provided by the user can be just NA
         if(base::any(tempo.log) == TRUE){ # normally no NA because is.na() used here
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: \n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", base::paste0(tempo.arg[tempo.log], collapse = "\n"))
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS", "THIS ARGUMENT"), " CANNOT JUST BE NA:", base::paste0(tempo.arg[tempo.log], collapse = "\n"))
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
@@ -177,7 +177,7 @@ scale2 <- function(
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
         base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end management of NULL arguments
@@ -217,7 +217,7 @@ scale2 <- function(
         mid <- tempo.min + (tempo.range/2) # middle of axis
         tempo.inter <- tempo.range / (n + 1) # current interval between two ticks, between 0 and Inf
         if(tempo.inter == 0L){ # isTRUE(all.equal(tempo.inter, rep(0, length(tempo.inter)))) not used because we strictly need zero as a result
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: THE INTERVAL BETWEEN TWO TICKS OF THE SCALE IS NULL. MODIFY THE lim OR n ARGUMENT")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nTHE INTERVAL BETWEEN TWO TICKS OF THE SCALE IS NULL. MODIFY THE lim OR n ARGUMENT")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
         log10.abs.lim <- 200
@@ -236,7 +236,7 @@ scale2 <- function(
             power10.exp <- base::as.integer(base::substring(text = tempo.inter, first = (base::regexpr(pattern = "\\-", text = tempo.inter)))) # recover the power of 10. Example recover 08 from 1e+08
             mantisse <- base::as.numeric(base::substr(x = tempo.inter, start = 1, stop = (base::regexpr(pattern = "\\-", text = tempo.inter) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
         }else{
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: CODE INCONSISTENCY 1")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nCODE INCONSISTENCY 1")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
         tempo.scale <- dec.table[log10.range == power10.exp, ]
@@ -251,7 +251,7 @@ scale2 <- function(
             }
         }
         if(base::is.null(inter.select)){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: CODE INCONSISTENCY 2")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nCODE INCONSISTENCY 2")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
         base::options(scipen = ini.scipen) # restore the initial scientific penalty
@@ -281,7 +281,7 @@ scale2 <- function(
                 output <- base::c(mid.tick - (base::trunc(n / 2):1) * inter.select, mid.tick, mid.tick + (1:(base::trunc(n / 2) - 1)) * inter.select)
             }
         }else{
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: CODE INCONSISTENCY 3")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nCODE INCONSISTENCY 3")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
         # end centering the new scale 
@@ -292,16 +292,16 @@ scale2 <- function(
             output <- base::c(base::min(output) - inter.select, output[-base::length(output)])
         }
         if(base::min(output) < tempo.min | base::max(output) > tempo.max){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: CODE INCONSISTENCY 4")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nCODE INCONSISTENCY 4")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
         if(base::any(base::is.na(output))){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: CODE INCONSISTENCY 5 (NA GENERATION)")
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nCODE INCONSISTENCY 5 (NA GENERATION)")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
         # end last check
     }else{
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: CODE INCONSISTENCY 6")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nCODE INCONSISTENCY 6")
         base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     if(base::diff(lim.rank) < 0){

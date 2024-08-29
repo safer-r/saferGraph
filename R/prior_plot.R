@@ -181,7 +181,7 @@ prior_plot <- function(
     )
     tempo.log <- base::sapply(base::lapply(tempo.arg, FUN = base::get, env = base::sys.nframe(), inherit = FALSE), FUN = base::is.null)
     if(base::any(tempo.log) == TRUE){# normally no NA with is.null()
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE:\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", base::ifelse(base::sum(tempo.log, na.rm = TRUE) > 1, "THESE ARGUMENTS\n", "THIS ARGUMENT\n"), base::paste0(tempo.arg[tempo.log], collapse = "\n"),"\nCANNOT BE NULL")
         base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # end management of NULL arguments
@@ -198,7 +198,7 @@ prior_plot <- function(
 
     # main code
     if(base::is.null(grDevices::dev.list())){ 
-        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: THIS FUNCTION CANNOT BE USED IF NO GRAPHIC DEVICE ALREADY OPENED (grDevices::dev.list() IS CURRENTLY NULL)")
+        tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nTHIS FUNCTION CANNOT BE USED IF NO GRAPHIC DEVICE ALREADY OPENED (grDevices::dev.list() IS CURRENTLY NULL)")
         base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
     }
     # par.ini recovery
@@ -215,7 +215,7 @@ prior_plot <- function(
             base::invisible(grDevices::dev.off()) # close the new window
         }else if(base::Sys.info()["sysname"] == "Linux"){
             if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE: THIS FUNCTION CANNOT BE USED ON LINUX WITH param.reinitial SET TO TRUE IF A Rplots.pdf FILE ALREADY EXISTS HERE: ", base::getwd())
+                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nTHIS FUNCTION CANNOT BE USED ON LINUX WITH param.reinitial SET TO TRUE IF A Rplots.pdf FILE ALREADY EXISTS HERE: ", base::getwd())
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }else{
                 open.fail <- base::suppressWarnings(base::try(grDevices::X11(), silent = TRUE))[] # try to open a X11 window. If open.fail == NULL, no problem, meaning that the X11 window is opened. If open.fail != NULL, a pdf can be opened here paste0(getwd(), "/Rplots.pdf")
@@ -227,7 +227,7 @@ prior_plot <- function(
                     base::invisible(grDevices::dev.off()) # close the new window
                     base::file.remove(base::paste0(base::getwd(), "/Rplots.pdf")) # remove the pdf file
                 }else{
-                    tempo.cat <- base::paste0("ERROR IN ", function.name, " \nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN")
+                    tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, PLEASE USE A PDF GRAPHIC INTERFACE AND RERUN")
                     base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
                 }
             }
