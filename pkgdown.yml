@@ -1,4 +1,4 @@
-pandoc: '3.2'
+pandoc: '3.3'
 pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
@@ -11,4 +11,4 @@ articles:
   saferGraph: saferGraph.html
   articles/scale2: scale2.html
   articles/width: width.html
-last_built: 2024-08-06T15:22Z
+last_built: 2024-08-29T15:16Z

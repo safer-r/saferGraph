@@ -97,40 +97,40 @@
 <col width="50%">
 <col width="50%">
 </colgroup>
-<thead><tr class="header">
+<thead><tr>
 <th align="left">Function</th>
 <th align="left">Description</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td align="left"><strong>close()</strong></td>
 <td align="left">Close only specific graphic windows (devices).</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><strong>empty_graph()</strong></td>
 <td align="left">Display an empty plot with a text in the middle of the window (for instance to specify that no plot can be drawn).</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><strong>inter_ticks()</strong></td>
 <td align="left">Verify that object names in the environment defined by the pos argument are identical or not to object names in the above environments (following R Scope). This can be used to verify that names used for objects inside a function or in the working environment do not override names of objects already present in the above R environments, following the R scope.</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><strong>open()</strong></td>
 <td align="left">Open a pdf or screen (GUI) graphic window and return initial graphic parameters.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><strong>post_plot()</strong></td>
 <td align="left">Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs. Provide also positions for legend or additional text on the graph. Use prior_plot() before this function for initial inactivation of the axis drawings.</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><strong>prior_plot()</strong></td>
 <td align="left">Very convenient to erase the axes for post plot axis redrawing using post_plot(). Reinitialize and set the graphic parameters before plotting. CANNOT be used if no graphic device already opened.</td>
 </tr>
-<tr class="odd">
+<tr>
 <td align="left"><strong>scale()</strong></td>
 <td align="left">Attempt to select nice scale numbers when setting n ticks on a lim axis range.</td>
 </tr>
-<tr class="even">
+<tr>
 <td align="left"><strong>width()</strong></td>
 <td align="left">Rescale the width of a window to open depending on the number of categories of qualitative variable to plot on the x-axis. Can be used for height, considering that it is as if it was a width.</td>
 </tr>
@@ -152,7 +152,7 @@
 <p><em>saferGraph</em> can be currently be installed from GitHub:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"https://github.com/safer-r/saferGraph"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"https://github.com/safer-r/saferGraph"</span><span class="op">)</span> <span class="co"># or open R as admin and remotes::install_github("https://github.com/safer-r/saferGraph", lib = "C:/Program Files/R/R-4.3.1/library")</span></span></code></pre></div>
 <p>Older versions can be installed like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="st">"v1.0"</span> <span class="co"># desired tag version</span></span>

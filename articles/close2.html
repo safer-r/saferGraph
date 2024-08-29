@@ -102,14 +102,15 @@
 <span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="er">&gt;</span> </span>
 <span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
 <span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="er">&gt;</span> </span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="er">&gt;</span> ERROR IN <span class="fu">close2</span>()<span class="sc">:</span> THE kind OBJECT MUST BE SOME OF THESE OPTIONS<span class="sc">:</span> windows quartz x11 X11 pdf bmp png tiff</span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="sc">&gt;</span> THE PROBLEMATIC ELEMENTS OF kind ARE<span class="sc">:</span> postscript</span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="sc">&gt;</span> </span>
-<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
-<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">dev.list</span>()</span>
-<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a><span class="sc">&gt;</span>        pdf postscript        pdf postscript        pdf </span>
-<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="sc">&gt;</span>          <span class="dv">2</span>          <span class="dv">3</span>          <span class="dv">4</span>          <span class="dv">5</span>          <span class="dv">6</span></span>
-<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">graphics.off</span>()</span></code></pre></div>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="er">&gt;</span> ERROR IN <span class="fu">close2</span>()</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="sc">&gt;</span> THE kind OBJECT MUST BE SOME OF THESE OPTIONS<span class="sc">:</span> windows quartz x11 X11 pdf bmp png tiff</span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="sc">&gt;</span> THE PROBLEMATIC ELEMENTS OF kind ARE<span class="sc">:</span> postscript</span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="sc">&gt;</span> </span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">dev.list</span>()</span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="sc">&gt;</span>        pdf postscript        pdf postscript        pdf </span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a><span class="sc">&gt;</span>          <span class="dv">2</span>          <span class="dv">3</span>          <span class="dv">4</span>          <span class="dv">5</span>          <span class="dv">6</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">graphics.off</span>()</span></code></pre></div>
 <p><br></p>
 </div>
 <div class="section level3">
@@ -199,32 +200,34 @@
 <span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a><span class="er">&gt;</span> </span>
 <span id="cb5-37"><a href="#cb5-37" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
 <span id="cb5-38"><a href="#cb5-38" tabindex="-1"></a><span class="er">&gt;</span> </span>
-<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="er">&gt;</span> ERROR IN <span class="fu">close2</span>()<span class="sc">:</span> THE kind OBJECT MUST BE SOME OF THESE OPTIONS<span class="sc">:</span> windows quartz x11 X11 pdf bmp png tiff</span>
-<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="sc">&gt;</span> THE PROBLEMATIC ELEMENTS OF kind ARE<span class="sc">:</span> postscript</span>
-<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a><span class="sc">&gt;</span> </span>
-<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
-<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">dev.list</span>() <span class="co"># only remains the postscript devices</span></span>
-<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a><span class="sc">&gt;</span>        pdf postscript        pdf postscript        pdf </span>
-<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a><span class="sc">&gt;</span>          <span class="dv">2</span>          <span class="dv">3</span>          <span class="dv">4</span>          <span class="dv">5</span>          <span class="dv">6</span></span>
-<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">graphics.off</span>()</span>
-<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a></span>
-<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a><span class="fu">postscript</span>(<span class="st">"file"</span>) <span class="co"># open a postscript graphic device</span></span>
-<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">"file"</span>) <span class="co"># open a pdf graphic device</span></span>
-<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a><span class="fu">postscript</span>(<span class="st">"file"</span>) <span class="co"># open a postscript graphic device</span></span>
-<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">"file"</span>) <span class="co"># open a pdf graphic device</span></span>
-<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a><span class="fu">close2</span>(<span class="at">kind =</span> <span class="fu">c</span>(<span class="st">"pdf"</span>, <span class="st">"postscript"</span>), <span class="at">return.text =</span> <span class="cn">FALSE</span>, <span class="at">safer_check =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a><span class="sc">&gt;</span> Error<span class="sc">:</span> </span>
-<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a><span class="er">&gt;</span> </span>
-<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
-<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a><span class="er">&gt;</span> </span>
-<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a><span class="er">&gt;</span> ERROR IN <span class="fu">close2</span>()<span class="sc">:</span> THE kind OBJECT MUST BE SOME OF THESE OPTIONS<span class="sc">:</span> windows quartz x11 X11 pdf bmp png tiff</span>
-<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a><span class="sc">&gt;</span> THE PROBLEMATIC ELEMENTS OF kind ARE<span class="sc">:</span> postscript</span>
-<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a><span class="sc">&gt;</span> </span>
-<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
-<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">dev.list</span>() <span class="co"># only remains the postscript devices</span></span>
-<span id="cb5-62"><a href="#cb5-62" tabindex="-1"></a><span class="sc">&gt;</span>        pdf postscript        pdf postscript        pdf </span>
-<span id="cb5-63"><a href="#cb5-63" tabindex="-1"></a><span class="sc">&gt;</span>          <span class="dv">2</span>          <span class="dv">3</span>          <span class="dv">4</span>          <span class="dv">5</span>          <span class="dv">6</span></span>
-<span id="cb5-64"><a href="#cb5-64" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">graphics.off</span>()</span></code></pre></div>
+<span id="cb5-39"><a href="#cb5-39" tabindex="-1"></a><span class="er">&gt;</span> ERROR IN <span class="fu">close2</span>()</span>
+<span id="cb5-40"><a href="#cb5-40" tabindex="-1"></a><span class="sc">&gt;</span> THE kind OBJECT MUST BE SOME OF THESE OPTIONS<span class="sc">:</span> windows quartz x11 X11 pdf bmp png tiff</span>
+<span id="cb5-41"><a href="#cb5-41" tabindex="-1"></a><span class="sc">&gt;</span> THE PROBLEMATIC ELEMENTS OF kind ARE<span class="sc">:</span> postscript</span>
+<span id="cb5-42"><a href="#cb5-42" tabindex="-1"></a><span class="sc">&gt;</span> </span>
+<span id="cb5-43"><a href="#cb5-43" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
+<span id="cb5-44"><a href="#cb5-44" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">dev.list</span>() <span class="co"># only remains the postscript devices</span></span>
+<span id="cb5-45"><a href="#cb5-45" tabindex="-1"></a><span class="sc">&gt;</span>        pdf postscript        pdf postscript        pdf </span>
+<span id="cb5-46"><a href="#cb5-46" tabindex="-1"></a><span class="sc">&gt;</span>          <span class="dv">2</span>          <span class="dv">3</span>          <span class="dv">4</span>          <span class="dv">5</span>          <span class="dv">6</span></span>
+<span id="cb5-47"><a href="#cb5-47" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">graphics.off</span>()</span>
+<span id="cb5-48"><a href="#cb5-48" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" tabindex="-1"></a><span class="fu">postscript</span>(<span class="st">"file"</span>) <span class="co"># open a postscript graphic device</span></span>
+<span id="cb5-50"><a href="#cb5-50" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">"file"</span>) <span class="co"># open a pdf graphic device</span></span>
+<span id="cb5-51"><a href="#cb5-51" tabindex="-1"></a><span class="fu">postscript</span>(<span class="st">"file"</span>) <span class="co"># open a postscript graphic device</span></span>
+<span id="cb5-52"><a href="#cb5-52" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">"file"</span>) <span class="co"># open a pdf graphic device</span></span>
+<span id="cb5-53"><a href="#cb5-53" tabindex="-1"></a><span class="fu">close2</span>(<span class="at">kind =</span> <span class="fu">c</span>(<span class="st">"pdf"</span>, <span class="st">"postscript"</span>), <span class="at">return.text =</span> <span class="cn">FALSE</span>, <span class="at">safer_check =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb5-54"><a href="#cb5-54" tabindex="-1"></a><span class="sc">&gt;</span> Error<span class="sc">:</span> </span>
+<span id="cb5-55"><a href="#cb5-55" tabindex="-1"></a><span class="er">&gt;</span> </span>
+<span id="cb5-56"><a href="#cb5-56" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
+<span id="cb5-57"><a href="#cb5-57" tabindex="-1"></a><span class="er">&gt;</span> </span>
+<span id="cb5-58"><a href="#cb5-58" tabindex="-1"></a><span class="er">&gt;</span> ERROR IN <span class="fu">close2</span>()</span>
+<span id="cb5-59"><a href="#cb5-59" tabindex="-1"></a><span class="sc">&gt;</span> THE kind OBJECT MUST BE SOME OF THESE OPTIONS<span class="sc">:</span> windows quartz x11 X11 pdf bmp png tiff</span>
+<span id="cb5-60"><a href="#cb5-60" tabindex="-1"></a><span class="sc">&gt;</span> THE PROBLEMATIC ELEMENTS OF kind ARE<span class="sc">:</span> postscript</span>
+<span id="cb5-61"><a href="#cb5-61" tabindex="-1"></a><span class="sc">&gt;</span> </span>
+<span id="cb5-62"><a href="#cb5-62" tabindex="-1"></a><span class="er">&gt;</span> <span class="er">================</span></span>
+<span id="cb5-63"><a href="#cb5-63" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">dev.list</span>() <span class="co"># only remains the postscript devices</span></span>
+<span id="cb5-64"><a href="#cb5-64" tabindex="-1"></a><span class="sc">&gt;</span>        pdf postscript        pdf postscript        pdf </span>
+<span id="cb5-65"><a href="#cb5-65" tabindex="-1"></a><span class="sc">&gt;</span>          <span class="dv">2</span>          <span class="dv">3</span>          <span class="dv">4</span>          <span class="dv">5</span>          <span class="dv">6</span></span>
+<span id="cb5-66"><a href="#cb5-66" tabindex="-1"></a>grDevices<span class="sc">::</span><span class="fu">graphics.off</span>()</span></code></pre></div>
 <p><br></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
