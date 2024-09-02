@@ -88,27 +88,3 @@ open2(pdf = TRUE, pdf.path = ".", pdf.name = "name1", width = 10, height = 8, pa
 open2(pdf = TRUE, pdf.path = ".", pdf.name = "graph1", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, rescale = "fixed", remove.read.only = TRUE, return.output = FALSE)
 ```
 <br>
-
-### Argument safer_check
-```{r}
-open2(safer_check = TRUE, pdf.name = "safer15")
-```
-<br>
-
-### All the arguments
-```{r}
-open2(
-  pdf = TRUE, 
-  pdf.path = ".", 
-  pdf.name = "name1", 
-  width = 10, 
-  height = 8, 
-  paper = "a4", 
-  pdf.overwrite = TRUE, 
-  rescale = "fit", 
-  remove.read.only = TRUE, 
-  return.output = FALSE,
-  safer_check = TRUE
-)
-```
-<br>

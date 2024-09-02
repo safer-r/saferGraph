@@ -14,7 +14,7 @@ library(saferGraph)
 ```
 
 ### Example of log axis with log y-axis and unmodified x-axis:
-```{r, echo = TRUE, error = TRUE}
+```{r}
 pdf("file2")
 prior.par <- prior_plot(param.reinitial = TRUE, xlog.scale = FALSE, ylog.scale = TRUE, remove.label = TRUE, remove.x.axis = FALSE, remove.y.axis = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 0.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = TRUE) ; 
 plot(1:100, log = "y") ; 
