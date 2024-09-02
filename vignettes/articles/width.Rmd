@@ -14,15 +14,7 @@ library(saferGraph)
 ```
 <br>
 
-
-### Simple example
-```{r}
-width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1)
-```
-<br>
-
-
-### Argument categ.nb
+### Mandatory Arguments categ.nb, inch.left.space and inch.right.space
 ```{r}
 width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1,)
 ```
@@ -40,25 +32,27 @@ width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1, ini.window.width
 ```
 <br>
 
-### Argument inch.left.space
-```{r}
-width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1)
-```
-<br>
-
-### Argument inch.right.space
-```{r}
-width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1)
-```
-<br>
-
 ### Argument boundarie.space
 ```{r}
 width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1, boundarie.space = 0.5)
 ```
 <br>
 
+### Argument safer_check
+```{r}
+width(categ.nb = 10, inch.left.space = 1, inch.right.space = 1, safer_check = TRUE)
+```
+<br>
+
 ### All the arguments
 ```{r}
-width(categ.nb = 10, inches.per.categ.nb = 0.2, ini.window.width = 7, inch.left.space = 1, inch.right.space = 1, boundarie.space = 0.5)
+width(
+  categ.nb = 10, 
+  inches.per.categ.nb = 0.2, 
+  ini.window.width = 7, 
+  inch.left.space = 1, 
+  inch.right.space = 1, 
+  boundarie.space = 0.5,
+  safer_check = TRUE
+)
 ```
