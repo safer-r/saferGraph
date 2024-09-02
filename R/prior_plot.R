@@ -26,7 +26,7 @@
 #' @param amplif.axis Single positive numeric value to increase or decrease the size of the scale numbers in axis.
 #' @param display.extend Single logical value. Extend display beyond plotting region? Either TRUE or FALSE (xpd argument of par() without NA).
 #' @param return.par Single logical value. Return graphic parameter modification?
-#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Must be set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns 
 #' Graphic parameter modification.
 #' @author Gael Millot <gael.millot@pasteur.fr>

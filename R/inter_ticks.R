@@ -6,7 +6,7 @@
 #' @param breaks Mandatory vector of numbers indicating the main ticks values/positions when log argument is "no". Ignored when log argument is "log2" or "log10".
 #' @param n Single numeric value indicating the number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".
 #' @param warn.print Single logical value. Print potential warning messages at the end of the execution? If FALSE, warning messages are never printed, but can still be recovered in the returned list.
-#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Must be set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns 
 #' A list containing :
 #' 

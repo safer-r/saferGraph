@@ -22,7 +22,7 @@
 #' @param inch.left.space Single positive numeric value indicating the left horizontal margin of the figure region (in inches).
 #' @param inch.right.space Single positive numeric value indicating the right horizontal margin of the figure region (in inches).
 #' @param boundarie.space Single positive numeric value indicating the space between the right and left limits of the plotting region and the plot (0.5 means half a category width). It is as if empty categories were added on the right and left of the plot.
-#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
+#' @param safer_check Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Must be set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @returns The new window width in inches.
 #' @author Gael Millot <gael.millot@pasteur.fr>
 #' @author Yushi Han <yushi.han2000@gmail.com>
