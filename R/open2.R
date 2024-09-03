@@ -78,7 +78,7 @@ open2 <- function(
     # end function name
     # critical operator checking
     if(safer_check == TRUE){
-        .base_op_check(
+        saferGraph:::.base_op_check(
             external.function.name = function.name,
             external.package.name = package.name
 )
@@ -90,7 +90,7 @@ open2 <- function(
     # check of lib.path
     # end check of lib.path
     if(safer_check == TRUE){
-        .pack_and_function_check(
+        saferGraph:::.pack_and_function_check(
         fun = base::c(
             "saferDev::arg_check"
             

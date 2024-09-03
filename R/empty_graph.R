@@ -50,7 +50,7 @@ empty_graph <- function(
     # end function name
     # critical operator checking
     if(safer_check == TRUE){
-        .base_op_check(
+        saferGraph:::.base_op_check(
             external.function.name = function.name,
             external.package.name = package.name
 )
@@ -63,7 +63,7 @@ empty_graph <- function(
     # end check of lib.path
     # check of the required function from the required packages
     if(safer_check == TRUE){
-        .pack_and_function_check(
+        saferGraph:::.pack_and_function_check(
         fun = base::c(
             "saferDev::arg_check"
         ),
