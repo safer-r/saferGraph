@@ -1,19 +1,41 @@
-test_that(".pack_and_function_check function argument tests", {
-    
-    # Test for 'fun' argument
-    expect_error(.pack_and_function_check(fun = NULL, lib.path = NULL, external.function.name = "fun1"))
-    expect_error(.pack_and_function_check(fun = "some_function", lib.path = NULL, external.function.name = "fun1"))
-    
-    # Test for 'lib.path' argument (skipped because already checked in the main function)
-    
-    # Test for 'external.function.name' argument (no specific test)
-    
-    # Test case for all arguments combined
-    
-    # Test with default arguments
-    expect_error(.pack_and_function_check(fun = NULL, lib.path = NULL, external.function.name = "fun1", external.package.name = "pack1"))
-    
-    # Test with specified arguments
-    expect_error(.pack_and_function_check(fun = "ggplot2::geom_point", lib.path = "C:/Program Files/R/R-4.3.1/library", external.function.name = "fun1", external.package.name = "pack1"))
+test_that("test .internal_function.R", {
+
+    # .pack_and_function_check()
+    fun_wrong1 <- "geom_point"  # incorrect input
+    fun_wrong2 <- "ggplot2::non_existent_function"  # incorrect function name
+    fun_good <- "ggplot2::geom_point" # correct input
+    path_wrong <- "path/to/library"  # incorrect input
+    path_good <- NULL  # incorrect input
+
+    testthat::expect_no_error(.pack_and_function_check(
+        fun = fun_good, 
+        lib_path = path_good,
+        external_function_name = "FUN1",
+        external_package_name = "P1"
+    ))
+    testthat::expect_error(.pack_and_function_check(
+        fun = fun_wrong1, 
+        lib_path = path_good,
+        external_function_name = "FUN1",
+        external_package_name = "P1"
+    ))
+    testthat::expect_error(.pack_and_function_check(
+        fun = fun_wrong2, 
+        lib_path = path_good,
+        external_function_name = "FUN1",
+        external_package_name = "P1"
+    ))
+    testthat::expect_error(.pack_and_function_check(
+        fun = fun_good, 
+        lib_path = path_wrong,
+        external_function_name = "FUN1",
+        external_package_name = "P1"
+    ))
+
+    # .base_op_check()
+    testthat::expect_no_error(.base_op_check(
+        external_function_name = "FUN1",
+        external_package_name = "P1"
+    ))
     
 })
