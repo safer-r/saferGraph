@@ -318,7 +318,7 @@ open2 <- function(
             ),
             safer_check = TRUE, #one must be true
             lib_path = lib_path, 
-            error_text = ""
+            error_text = embed_error_text
         )
     }
     ######## end check of the required functions from the required packages
@@ -425,7 +425,6 @@ open2 <- function(
     #### end second round of checking and data preparation
 
     #### main code
-
     if(pdf.path == "working.dir"){
         pdf.path <- base::getwd()
     }else{
@@ -514,13 +513,15 @@ open2 <- function(
             grDevices::quartz(width = width, height = height)
         }
     }
-    # output
-    # warning output
-    # end warning output
+    #### end main code
+
+    #### warning output
+    #### end warning output
+
+    #### output
     if(return.output == TRUE){
         output <- base::list(pdf.loc = pdf.loc, ini.par = ini.par, zone.ini = zone.ini, dim = grDevices::dev.size())
         base::return(output)
     }
-    # output
-    # end main code
+    #### end output
 }
