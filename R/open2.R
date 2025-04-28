@@ -23,8 +23,8 @@
 #' @param paper Single character string. Paper argument of the pdf function (paper format). Only used for pdf(). Either "a4", "letter", "legal", "us", "executive", "a4r", "USr" or "special". If "special", means that the paper dimension will be width and height. With another paper format, if width or height is over the size of the paper, width or height will be modified such that the plot is adjusted to the paper dimension (see $dim in the returned list below to see the modified dimensions). Ignored if pdf == FALSE.
 #' @param pdf_overwrite Single logical value. Existing pdf can be overwritten? . Ignored if pdf == FALSE.
 #' @param rescale Kind of GUI. Either "R", "fit", or "fixed". Ignored on Mac and Linux OS. See ?windows for details.
-#' @param remove_read_only Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return.output == FALSE. 
-#' @param return.output Single logical value. Return output ? If TRUE the output list is displayed.
+#' @param remove_read_only Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return_output == FALSE. 
+#' @param return_output Single logical value. Return output ? If TRUE the output list is displayed.
 #' @param safer_check Single logical value. Perform some "safer" checks? If TRUE, checkings are performed before main code running (see https://github.com/safer-r): 1) correct lib_path argument value 2) required functions and related packages effectively present in local R lybraries and 3) R classical operators (like "<-") not overwritten by another package because of the R scope. Must be set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @param lib_path Vector of characters specifying the absolute pathways of the directories containing the required packages for the function, if not in the default directories. Useful when R package are not installed in the default directories because of lack of admin rights.  More precisely, lib_path is passed through the new argument of .libPaths() so that the new library paths are unique(c(new, .Library.site, .Library)). Warning: .libPaths() is restored to the initial paths, after function execution. Ignored if NULL (default) or if the safer_check argument is FALSE: only the pathways specified by the current .libPaths() are used for package calling.
 #' @param error_text Single character string used to add information in error messages returned by the function, notably if the function is inside other functions, which is practical for debugging. Example: error_text = " INSIDE <PACKAGE_1>::<FUNCTION_1> INSIDE <PACKAGE_2>::<FUNCTION_2>.". If NULL, converted into "".
@@ -48,7 +48,7 @@
 #' @examples
 #' \dontrun{
 #' # Screen devices should not be used in examples
-#' open2(pdf = FALSE, pdf_path = ".", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, return.output = TRUE)
+#' open2(pdf = FALSE, pdf_path = ".", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, return_output = TRUE)
 #' }
 #' @importFrom saferDev arg_check
 #' @export
@@ -62,12 +62,13 @@ open2 <- function(
     pdf_overwrite = FALSE, 
     rescale = "fixed", 
     remove_read_only = TRUE, 
+    return_output = TRUE, 
     safer_check = TRUE, 
     lib_path = NULL, 
     error_text = "" 
 ){
     # DEBUGGING
-    # pdf = TRUE ; pdf_path = "C:/Users/Gael/Desktop" ; pdf_name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf_overwrite = FALSE ; rescale = "fixed" ; remove_read_only = TRUE ; return.output = TRUE ; safer_check = TRUE # for function debugging
+    # pdf = TRUE ; pdf_path = "C:/Users/Gael/Desktop" ; pdf_name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf_overwrite = FALSE ; rescale = "fixed" ; remove_read_only = TRUE ; return_output = TRUE ; safer_check = TRUE # for function debugging
     #### package name
     package_name <- "saferGraph" # write NULL if the function developed is not in a package
     #### end package name
@@ -166,7 +167,7 @@ open2 <- function(
         "pdf_overwrite", 
         "rescale", 
         "remove_read_only", 
-        "return.output", 
+        "return_output", 
         "safer_check", 
         "lib_path"
         # "error_text" # inactivated because empty value converted to "" above
@@ -351,7 +352,7 @@ open2 <- function(
     tempo <- saferDev::arg_check(data = pdf_overwrite, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = rescale, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c("R", "fit", "fixed"), all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = remove_read_only, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = return.output, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = return_output, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     # lib_path already checked above
     # safer_check already checked above
     # error_text converted to single string above
@@ -519,9 +520,11 @@ open2 <- function(
     #### end warning output
 
     #### output
-    if(return.output == TRUE){
+    if(return_output == TRUE){
         output <- base::list(pdf.loc = pdf.loc, ini.par = ini.par, zone.ini = zone.ini, dim = grDevices::dev.size())
         base::return(output)
     }
     #### end output
 }
+
+
