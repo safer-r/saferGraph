@@ -6,24 +6,26 @@
 \usage{
 open2(
   pdf = TRUE,
-  pdf.path = "working.dir",
-  pdf.name = "graph",
+  pdf_path = "working.dir",
+  pdf_name = "graph",
   width = 7,
   height = 7,
   paper = "special",
-  pdf.overwrite = FALSE,
+  pdf_overwrite = FALSE,
   rescale = "fixed",
-  remove.read.only = TRUE,
-  return.output = FALSE,
-  safer_check = TRUE
+  remove_read_only = TRUE,
+  return_output = TRUE,
+  safer_check = TRUE,
+  lib_path = NULL,
+  error_text = ""
 )
 }
 \arguments{
 \item{pdf}{Single logical value. Use pdf display? If FALSE, a GUI is opened.}
 
-\item{pdf.path}{Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.}
+\item{pdf_path}{Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.}
 
-\item{pdf.name}{Single character string. Name of the pdf file containing the graphs (the .pdf extension is added by the function, if not detected in the name end). Ignored if pdf == FALSE.}
+\item{pdf_name}{Single character string. Name of the pdf file containing the graphs (the .pdf extension is added by the function, if not detected in the name end). Ignored if pdf == FALSE.}
 
 \item{width}{Single positive numeric value indicating the width of the window (in inches).}
 
@@ -31,15 +33,19 @@ open2(
 
 \item{paper}{Single character string. Paper argument of the pdf function (paper format). Only used for pdf(). Either "a4", "letter", "legal", "us", "executive", "a4r", "USr" or "special". If "special", means that the paper dimension will be width and height. With another paper format, if width or height is over the size of the paper, width or height will be modified such that the plot is adjusted to the paper dimension (see $dim in the returned list below to see the modified dimensions). Ignored if pdf == FALSE.}
 
-\item{pdf.overwrite}{Single logical value. Existing pdf can be overwritten? . Ignored if pdf == FALSE.}
+\item{pdf_overwrite}{Single logical value. Existing pdf can be overwritten? . Ignored if pdf == FALSE.}
 
 \item{rescale}{Kind of GUI. Either "R", "fit", or "fixed". Ignored on Mac and Linux OS. See ?windows for details.}
 
-\item{remove.read.only}{Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return.output == FALSE.}
+\item{remove_read_only}{Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return_output == FALSE.}
 
-\item{return.output}{Single logical value. Return output ? If TRUE the output list is displayed.}
+\item{return_output}{Single logical value. Return output ? If TRUE the output list is displayed.}
 
-\item{safer_check}{Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
+\item{safer_check}{Single logical value. Perform some "safer" checks? If TRUE, checkings are performed before main code running (see https://github.com/safer-r): 1) correct lib_path argument value 2) required functions and related packages effectively present in local R lybraries and 3) R classical operators (like "<-") not overwritten by another package because of the R scope. Must be set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
+
+\item{lib_path}{Vector of characters specifying the absolute pathways of the directories containing the required packages for the function, if not in the default directories. Useful when R package are not installed in the default directories because of lack of admin rights.  More precisely, lib_path is passed through the new argument of .libPaths() so that the new library paths are unique(c(new, .Library.site, .Library)). Warning: .libPaths() is restored to the initial paths, after function execution. Ignored if NULL (default) or if the safer_check argument is FALSE: only the pathways specified by the current .libPaths() are used for package calling.}
+
+\item{error_text}{Single character string used to add information in error messages returned by the function, notably if the function is inside other functions, which is practical for debugging. Example: error_text = " INSIDE <PACKAGE_1>::<FUNCTION_1> INSIDE <PACKAGE_2>::<FUNCTION_2>.". If NULL, converted into "".}
 }
 \value{
 A list containing:
@@ -77,7 +83,7 @@ On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meani
 \examples{
 \dontrun{
 # Screen devices should not be used in examples
-open2(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
+open2(pdf = FALSE, pdf_path = ".", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, return_output = TRUE)
 }
 }
 \author{

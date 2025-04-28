@@ -4,14 +4,24 @@
 \alias{close2}
 \title{close2}
 \usage{
-close2(kind = "pdf", return.text = FALSE, safer_check = TRUE)
+close2(
+  kind = "pdf",
+  return_text = FALSE,
+  safer_check = TRUE,
+  lib_path = NULL,
+  error_text = ""
+)
 }
 \arguments{
 \item{kind}{Vector, among c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), indicating the kind of graphic windows (devices) to close. BEWARE: either "windows", "quartz", "x11" or "X11" means that all the X11 GUI graphics devices will be closed, whatever the OS used.}
 
-\item{return.text}{Single logical value. Print text regarding the kind parameter and the devices that were finally closed?}
+\item{return_text}{Single logical value. Print text regarding the kind parameter and the devices that were finally closed?}
 
-\item{safer_check}{Single logical value. Perform some "safer" checks (see https://github.com/safer-r)? If TRUE, checkings are performed before main code running: 1) R classical operators (like "<-") not overwritten by another package because of the R scope and 2) required functions and related packages effectively present in local R lybraries. Set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
+\item{safer_check}{Single logical value. Perform some "safer" checks? If TRUE, checkings are performed before main code running (see https://github.com/safer-r): 1) correct lib_path argument value 2) required functions and related packages effectively present in local R lybraries and 3) R classical operators (like "<-") not overwritten by another package because of the R scope. Must be set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.}
+
+\item{lib_path}{Vector of characters specifying the absolute pathways of the directories containing the required packages for the function, if not in the default directories. Useful when R package are not installed in the default directories because of lack of admin rights.  More precisely, lib_path is passed through the new argument of .libPaths() so that the new library paths are unique(c(new, .Library.site, .Library)). Warning: .libPaths() is restored to the initial paths, after function execution. Ignored if NULL (default) or if the safer_check argument is FALSE: only the pathways specified by the current .libPaths() are used for package calling.}
+
+\item{error_text}{Single character string used to add information in error messages returned by the function, notably if the function is inside other functions, which is practical for debugging. Example: error_text = " INSIDE <PACKAGE_1>::<FUNCTION_1> INSIDE <PACKAGE_2>::<FUNCTION_2>.". If NULL, converted into "".}
 }
 \value{
 Text regarding the kind parameter and the devices that were finally closed.
@@ -22,12 +32,12 @@ Close only specific graphic windows (devices).
 \examples{
 \dontrun{
 # Screen devices (windows(), quartz() and x11()) should not be used in examples
-postscript(NULL) # open a postscript graphic device
+postscript() # open a postscript graphic device
 pdf(NULL) # open a pdf graphic device
-postscript(NULL) # open a postscript graphic device
+postscript() # open a postscript graphic device
 pdf(NULL) # open a pdf graphic device
 grDevices::dev.list() ; 
-close2(kind = c("pdf"), return.text = TRUE) ; 
+close2(kind = c("pdf"), return_text = TRUE) ; 
 grDevices::dev.list() # only remains the postscript devices
 grDevices::graphics.off()
 }
