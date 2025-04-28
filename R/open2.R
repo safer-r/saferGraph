@@ -16,14 +16,14 @@
 #' 
 #' close2()
 #' @param pdf Single logical value. Use pdf display? If FALSE, a GUI is opened.
-#' @param pdf.path Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.
-#' @param pdf.name Single character string. Name of the pdf file containing the graphs (the .pdf extension is added by the function, if not detected in the name end). Ignored if pdf == FALSE.
+#' @param pdf_path Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.
+#' @param pdf_name Single character string. Name of the pdf file containing the graphs (the .pdf extension is added by the function, if not detected in the name end). Ignored if pdf == FALSE.
 #' @param width Single positive numeric value indicating the width of the window (in inches).
 #' @param height Single positive numeric value indicating the height of the window (in inches).
 #' @param paper Single character string. Paper argument of the pdf function (paper format). Only used for pdf(). Either "a4", "letter", "legal", "us", "executive", "a4r", "USr" or "special". If "special", means that the paper dimension will be width and height. With another paper format, if width or height is over the size of the paper, width or height will be modified such that the plot is adjusted to the paper dimension (see $dim in the returned list below to see the modified dimensions). Ignored if pdf == FALSE.
-#' @param pdf.overwrite Single logical value. Existing pdf can be overwritten? . Ignored if pdf == FALSE.
+#' @param pdf_overwrite Single logical value. Existing pdf can be overwritten? . Ignored if pdf == FALSE.
 #' @param rescale Kind of GUI. Either "R", "fit", or "fixed". Ignored on Mac and Linux OS. See ?windows for details.
-#' @param remove.read.only Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return.output == FALSE. 
+#' @param remove_read_only Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return.output == FALSE. 
 #' @param return.output Single logical value. Return output ? If TRUE the output list is displayed.
 #' @param safer_check Single logical value. Perform some "safer" checks? If TRUE, checkings are performed before main code running (see https://github.com/safer-r): 1) correct lib_path argument value 2) required functions and related packages effectively present in local R lybraries and 3) R classical operators (like "<-") not overwritten by another package because of the R scope. Must be set to FALSE if this fonction is used inside another "safer" function to avoid pointless multiple checkings.
 #' @param lib_path Vector of characters specifying the absolute pathways of the directories containing the required packages for the function, if not in the default directories. Useful when R package are not installed in the default directories because of lack of admin rights.  More precisely, lib_path is passed through the new argument of .libPaths() so that the new library paths are unique(c(new, .Library.site, .Library)). Warning: .libPaths() is restored to the initial paths, after function execution. Ignored if NULL (default) or if the safer_check argument is FALSE: only the pathways specified by the current .libPaths() are used for package calling.
@@ -48,26 +48,26 @@
 #' @examples
 #' \dontrun{
 #' # Screen devices should not be used in examples
-#' open2(pdf = FALSE, pdf.path = ".", pdf.name = "graph", width = 7, height = 7, paper = "special", pdf.overwrite = FALSE, return.output = TRUE)
+#' open2(pdf = FALSE, pdf_path = ".", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, return.output = TRUE)
 #' }
 #' @importFrom saferDev arg_check
 #' @export
 open2 <- function(
     pdf = TRUE, 
-    pdf.path = "working.dir", 
-    pdf.name = "graph", 
+    pdf_path = "working.dir", 
+    pdf_name = "graph", 
     width = 7, 
     height = 7, 
     paper = "special", 
-    pdf.overwrite = FALSE, 
+    pdf_overwrite = FALSE, 
     rescale = "fixed", 
-    remove.read.only = TRUE, 
+    remove_read_only = TRUE, 
     safer_check = TRUE, 
     lib_path = NULL, 
     error_text = "" 
 ){
     # DEBUGGING
-    # pdf = TRUE ; pdf.path = "C:/Users/Gael/Desktop" ; pdf.name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf.overwrite = FALSE ; rescale = "fixed" ; remove.read.only = TRUE ; return.output = TRUE ; safer_check = TRUE # for function debugging
+    # pdf = TRUE ; pdf_path = "C:/Users/Gael/Desktop" ; pdf_name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf_overwrite = FALSE ; rescale = "fixed" ; remove_read_only = TRUE ; return.output = TRUE ; safer_check = TRUE # for function debugging
     #### package name
     package_name <- "saferGraph" # write NULL if the function developed is not in a package
     #### end package name
@@ -158,14 +158,14 @@ open2 <- function(
     # # before NA checking because is.na(logical()) is logical(0) (but secured with & base::length(x = x) > 0)
     tempo_arg <-base::c(
         "pdf", 
-        "pdf.path", 
-        "pdf.name", 
+        "pdf_path", 
+        "pdf_name", 
         "width", 
         "height", 
         "paper", 
-        "pdf.overwrite", 
+        "pdf_overwrite", 
         "rescale", 
-        "remove.read.only", 
+        "remove_read_only", 
         "return.output", 
         "safer_check", 
         "lib_path"
@@ -343,14 +343,14 @@ open2 <- function(
     ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object.name))
     # add as many lines as below, for each of your arguments of your function in development
     tempo <- saferDev::arg_check(data = pdf, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = pdf.path, class = "character", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = pdf.name, class = "character", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = pdf_path, class = "character", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = pdf_name, class = "character", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = width, class = "vector", typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = height, class = "vector", typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = paper, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c("a4", "letter", "legal", "us", "executive", "a4r", "USr", "special", "A4", "LETTER", "LEGAL", "US"), all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = pdf.overwrite, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = pdf_overwrite, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = rescale, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c("R", "fit", "fixed"), all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = remove.read.only, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = remove_read_only, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = return.output, class = "logical", typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     # lib_path already checked above
     # safer_check already checked above
@@ -367,8 +367,8 @@ open2 <- function(
 
     ######## management of "" in arguments of mode character
     tempo_arg <- base::c(
-        "pdf.path",
-        "pdf.name"
+        "pdf_path",
+        "pdf_name"
         # "lib_path" # inactivated because already checked above
         # "error_text" # inactivated because can be ""
     )
@@ -425,16 +425,16 @@ open2 <- function(
     #### end second round of checking and data preparation
 
     #### main code
-    if(pdf.path == "working.dir"){
-        pdf.path <- base::getwd()
+    if(pdf_path == "working.dir"){
+        pdf_path <- base::getwd()
     }else{
-        if(base::grepl(x = pdf.path, pattern = ".+/$")){
-            pdf.path <- base::sub(x = pdf.path, pattern = "/$", replacement = "") # remove the last /
-        }else if(base::grepl(x = pdf.path, pattern = ".+[\\]$")){ # or ".+\\\\$" # cannot be ".+\$" because \$ does not exist contrary to \n
-            pdf.path <- base::sub(x = pdf.path, pattern = "[\\]$", replacement = "") # remove the last /
+        if(base::grepl(x = pdf_path, pattern = ".+/$")){
+            pdf_path <- base::sub(x = pdf_path, pattern = "/$", replacement = "") # remove the last /
+        }else if(base::grepl(x = pdf_path, pattern = ".+[\\]$")){ # or ".+\\\\$" # cannot be ".+\$" because \$ does not exist contrary to \n
+            pdf_path <- base::sub(x = pdf_path, pattern = "[\\]$", replacement = "") # remove the last /
         }
-        if(base::dir.exists(pdf.path) == FALSE){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\npdf.path ARGUMENT DOES NOT CORRESPOND TO EXISTING DIRECTORY\n", pdf.path)
+        if(base::dir.exists(pdf_path) == FALSE){
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\npdf_path ARGUMENT DOES NOT CORRESPOND TO EXISTING DIRECTORY\n", pdf_path)
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }
     }
@@ -443,7 +443,7 @@ open2 <- function(
     if(base::Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
         open.fail <- NULL
         grDevices::windows()
-        ini.par <- graphics::par(no.readonly = remove.read.only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+        ini.par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
         base::invisible(grDevices::dev.off()) # close the new window
     }else if(base::Sys.info()["sysname"] == "Linux"){
         if(pdf == TRUE){# cannot use pdf(file = NULL), because some small differences between pdf() and other devices. For instance, differences with windows() for par()$fin, par()$pin and par()$plt
@@ -455,13 +455,13 @@ open2 <- function(
             }
             base::set.seed(NULL)
             tempo.code <- base::sample(x = 1:1e7, size = 1)
-            while(base::file.exists(base::paste0(pdf.path, "/recover_ini_par", tempo.code, ".pdf")) == TRUE){
+            while(base::file.exists(base::paste0(pdf_path, "/recover_ini_par", tempo.code, ".pdf")) == TRUE){
                 tempo.code <- tempo.code + 1
             }
-            grDevices::pdf(width = width, height = height, file=base::paste0(pdf.path, "/recover_ini_par", tempo.code, ".pdf"), paper = paper)
-            ini.par <- graphics::par(no.readonly = remove.read.only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+            grDevices::pdf(width = width, height = height, file=base::paste0(pdf_path, "/recover_ini_par", tempo.code, ".pdf"), paper = paper)
+            ini.par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
             base::invisible(grDevices::dev.off()) # close the pdf window
-            base::file.remove(base::paste0(pdf.path, "/recover_ini_par", tempo.code, ".pdf")) # remove the pdf file
+            base::file.remove(base::paste0(pdf_path, "/recover_ini_par", tempo.code, ".pdf")) # remove the pdf file
         }else{
             # test if X11 can be opened
             if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
@@ -470,7 +470,7 @@ open2 <- function(
             }else{
                 open.fail <- base::suppressWarnings(base::try(grDevices::X11(), silent = TRUE))[] # try to open a X11 window. If open.fail == NULL, no problem, meaning that the X11 window is opened. If open.fail != NULL, a pdf can be opened here base::paste0(getwd(), "/Rplots.pdf")
                 if(base::is.null(open.fail)){
-                    ini.par <- graphics::par(no.readonly = remove.read.only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+                    ini.par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
                     base::invisible(grDevices::dev.off()) # close the new window
                 }else if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
                     base::file.remove(base::paste0(base::getwd(), "/Rplots.pdf")) # remove the pdf file
@@ -482,18 +482,18 @@ open2 <- function(
     }else{
         open.fail <- NULL
         grDevices::quartz()
-        ini.par <- graphics::par(no.readonly = remove.read.only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+        ini.par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
         base::invisible(grDevices::dev.off()) # close the new window
     }
     # end par.ini recovery 
     zone.ini <- base::matrix(1, ncol=1) # to recover the initial parameters for next figure region when device region split into several figure regions
     if(pdf == TRUE){
-        if(base::grepl(x = pdf.name, pattern = "\\.pdf$")){
-            pdf.name <- base::sub(x = pdf.name, pattern = "\\.pdf$", replacement = "") # remove the last .pdf
+        if(base::grepl(x = pdf_name, pattern = "\\.pdf$")){
+            pdf_name <- base::sub(x = pdf_name, pattern = "\\.pdf$", replacement = "") # remove the last .pdf
         }
-        pdf.loc <- base::paste0(pdf.path, "/", pdf.name, ".pdf")
-        if(base::file.exists(pdf.loc) == TRUE & pdf.overwrite == FALSE){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", pdf.loc, " FILE ALREADY EXISTS AND CANNOT BE OVERWRITTEN DUE TO pdf.overwrite ARGUMENT SET TO FALSE")
+        pdf.loc <- base::paste0(pdf_path, "/", pdf_name, ".pdf")
+        if(base::file.exists(pdf.loc) == TRUE & pdf_overwrite == FALSE){
+            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", pdf.loc, " FILE ALREADY EXISTS AND CANNOT BE OVERWRITTEN DUE TO pdf_overwrite ARGUMENT SET TO FALSE")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         }else{
             grDevices::pdf(width = width, height = height, file=pdf.loc, paper = paper)
