@@ -435,8 +435,14 @@ open2 <- function(
             pdf_path <- base::sub(x = pdf_path, pattern = "[\\]$", replacement = "") # remove the last /
         }
         if(base::dir.exists(pdf_path) == FALSE){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\npdf_path ARGUMENT DOES NOT CORRESPOND TO EXISTING DIRECTORY\n", pdf_path)
-            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            tempo_cat <- base::paste0(
+                error_text_start, 
+                "pdf_path ARGUMENT DOES NOT CORRESPOND TO EXISTING DIRECTORY:\n", 
+                pdf_path, 
+                collapse = NULL, 
+                recycle0 = FALSE
+            )
+            base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         }
     }
     # par.ini recovery
@@ -466,8 +472,14 @@ open2 <- function(
         }else{
             # test if X11 can be opened
             if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nTHIS FUNCTION CANNOT BE USED ON LINUX IF A Rplots.pdf FILE ALREADY EXISTS HERE\n", base::getwd())
-                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo_cat <- base::paste0(
+                    error_text_start, 
+                    "THIS FUNCTION CANNOT BE USED ON LINUX IF A Rplots.pdf FILE ALREADY EXISTS HERE:\n", 
+                    base::getwd(),
+                    collapse = NULL, 
+                    recycle0 = FALSE
+                )
+                base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
             }else{
                 open.fail <- base::suppressWarnings(base::try(grDevices::X11(), silent = TRUE))[] # try to open a X11 window. If open.fail == NULL, no problem, meaning that the X11 window is opened. If open.fail != NULL, a pdf can be opened here base::paste0(getwd(), "/Rplots.pdf")
                 if(base::is.null(open.fail)){
@@ -475,8 +487,13 @@ open2 <- function(
                     base::invisible(grDevices::dev.off()) # close the new window
                 }else if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
                     base::file.remove(base::paste0(base::getwd(), "/Rplots.pdf")) # remove the pdf file
-                    tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function.name, " FUNCTION TO TRUE AND RERUN")
-                    base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                    tempo_cat <- base::paste0(
+                        error_text_start, 
+                        "THIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM.\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function_name, "() TO TRUE AND RERUN.", 
+                        collapse = NULL, 
+                        recycle0 = FALSE
+                    )
+                    base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
                 }
             }
         }
@@ -494,8 +511,14 @@ open2 <- function(
         }
         pdf.loc <- base::paste0(pdf_path, "/", pdf_name, ".pdf")
         if(base::file.exists(pdf.loc) == TRUE & pdf_overwrite == FALSE){
-            tempo.cat <- base::paste0("ERROR IN ", function.name, " OF THE ", package.name, " PACKAGE\n", pdf.loc, " FILE ALREADY EXISTS AND CANNOT BE OVERWRITTEN DUE TO pdf_overwrite ARGUMENT SET TO FALSE")
-            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            tempo_cat <- base::paste0(
+                error_text_start, 
+                "FILE NAME SET BY pdf_name AND pdf_path ARGUMENTS ALREADY EXISTS AND CANNOT BE OVERWRITTEN DUE TO pdf_overwrite ARGUMENT SET TO FALSE:\n", 
+                pdf.loc,
+                collapse = NULL, 
+                recycle0 = FALSE
+            )
+            base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         }else{
             grDevices::pdf(width = width, height = height, file=pdf.loc, paper = paper)
         }
@@ -505,8 +528,13 @@ open2 <- function(
             grDevices::windows(width = width, height = height, rescale = rescale)
         }else if(base::Sys.info()["sysname"] == "Linux"){
             if( ! base::is.null(open.fail)){
-                tempo.cat <- base::paste0("ERROR IN ", function.name, " \nTHIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function.name, " FUNCTION TO TRUE AND RERUN")
-                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo_cat <- base::paste0(
+                    error_text_start, 
+                    "THIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM.\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function_name, "() TO TRUE AND RERUN.", 
+                    collapse = NULL, 
+                    recycle0 = FALSE
+                )
+                base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
             }else{
                 grDevices::X11(width = width, height = height)
             }
