@@ -1,5 +1,5 @@
 
-# saferGraph <a href="">[<img src="man/figures/saferGraph.png" align="right" height="140" />](https://safer-r.github.io/saferGraph)</a>
+# saferGraph <a href="">[<img src="man/figures/new_saferGraph.png" align="right" height="140" />](https://safer-r.github.io/saferGraph)</a>
 
 <br />
 
