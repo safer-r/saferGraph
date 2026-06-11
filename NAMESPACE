@@ -2,4 +2,5 @@
 
 export(close2)
 export(open2)
+export(post_plot)
 importFrom(saferDev,arg_check)
