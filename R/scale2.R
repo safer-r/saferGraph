@@ -75,7 +75,7 @@ scale2 <- function(
         arg_user_setting_eval <- NULL
     }
     # end evaluation of values if they are expression, call, etc.
-    arg_names <- base::names(x = base::formals(fun = base::sys.function(which = base::sys.parent(n = 2)), envir = base::parent.frame(n = 1))) # names of all the arguments
+    arg_names <- base::names(x = base::formals(fun = base::sys.function(which = base::sys.parent(n = 0)), envir = base::parent.frame(n = 1))) # names of all the arguments
     #### end arguments settings
 
     #### error_text initiation
@@ -381,8 +381,8 @@ scale2 <- function(
     arg_check_error_text <- base::paste0("ERROR ", embed_error_text, "\n\n", collapse = NULL, recycle0 = FALSE) # must be used instead of error_text = embed_error_text when several arg_check are performed on the same argument (tempo1, tempo2, see below)
     ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object.name))
     # copy - paste ththe line below as much, one for each of the arguments of your own function
-    tempo <- saferDev::arg_check(data = n, class = "vector", typeof =  "integer", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL)) 
-    tempo <- saferDev::arg_check(data = lim, class = "vector", typeof =  NULL, mode = "numeric", length = 2, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = FALSE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL)) 
+    tempo <- saferDev::arg_check(data = n, class = "integer", typeof = "integer", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL)) 
+    tempo <- saferDev::arg_check(data = lim, class = NULL, typeof =  NULL, mode = "numeric", length = 2, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = FALSE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL)) 
     tempo <- saferDev::arg_check(data = kind, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c("approx", "strict", "strict.cl"), all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL)) # example of setting. Adapt to your own function or remove
     # lib_path already checked above
     # safer_check already checked above
@@ -490,12 +490,12 @@ scale2 <- function(
             ), 
             limits = lim
         ))$layout$panel_params[[1]]$y$breaks # pretty() alone is not appropriate: tempo.pret <-  pretty(seq(lim[1] ,lim[2], length.out = n)) ; tempo.pret[tempo.pret > = lim[1] & tempo.pret < = lim[2]]. # in ggplot 3.3.0, tempo.coord$y.major_source replaced by tempo.coord$y$breaks
-        if( ! base::is.null(base::attributes(output))){ # layout$panel_params[[1]]$y$breaks can be characters (labels of the axis). In that case, it has attributes that corresponds to positions
+        if( ! base::is.null(base::attributes(output))){ # layout$panel_params[[1]]$y$breaks can be characters (labels of the axis). In that case, it has attributes that corresponds to positions # nocov start (unreachable: output from scales::trans_breaks() with trans = "identity" is always a plain numeric vector without attributes, as verified on R 4.6.0)
             output <- base::unlist(base::attributes(output))
-        }
+        } # nocov end
         output <- output[ ! base::is.na(output)]
     }else if(kind == "strict"){
-        output <- saferTool::round2(base::seq(lim[1] ,lim[2], length.out = n), 2, safer_check = FALSE)
+        output <- saferTool::round2(data = base::seq(lim[1] ,lim[2], length.out = n), dec_nb = 2, after_lead_zero = FALSE, safer_check = FALSE, lib_path = NULL, error_text = "")
     }else if(kind == "strict.cl"){
         tempo.range <- base::diff(base::sort(lim))
         tempo.max <- base::max(lim)
@@ -526,39 +526,40 @@ scale2 <- function(
         }else if(base::any(base::grepl(pattern = "\\-", x = tempo.inter), na.rm = TRUE)){ # tempo.inter < 1
             power10.exp <- base::as.integer(base::substring(text = tempo.inter, first = (base::regexpr(pattern = "\\-", text = tempo.inter)))) # recover the power of 10. Example recover 08 from 1e+08
             mantisse <- base::as.numeric(base::substr(x = tempo.inter, start = 1, stop = (base::regexpr(pattern = "\\-", text = tempo.inter) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
-        }else{
+        }else{ # nocov start (internal error: impossible to reach with argument values, because tempo.inter is always either in scientific notation with + or -, or a plain decimal)
             tempo_cat <- base::paste0(
-                "INTERNAL ERROR 1 IN ", 
-                intern_error_text_start, 
-                "CODE INCONSISTENCY.", 
-                intern_error_text_end, 
+                "INTERNAL ERROR 1 IN ",
+                intern_error_text_start,
+                "CODE INCONSISTENCY.",
+                intern_error_text_end,
                 collapse = NULL,
                 recycle0 = FALSE
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
-        }
+        } # nocov end
         tempo.scale <- dec.table[log10.range == power10.exp, ]
         # new interval 
         inter.select <- NULL
-        for(i1 in 1:base::length(tempo.scale)){
-            tempo.first.tick <- base::trunc((tempo.min + tempo.scale[i1]) / tempo.scale[i1]) * (tempo.scale[i1]) # this would be use to have a number not multiple of tempo.scale[i1]: ceiling(tempo.min) + tempo.scale[i1] * 10^power10.exp
-            tempo.last.tick <- tempo.first.tick + tempo.scale[i1] * (n - 1)
-            if((tempo.first.tick >= tempo.min) & (tempo.last.tick <= tempo.max)){
-                inter.select <- tempo.scale[i1]
-                break()
+        for(i1 in 1:base::length(x = tempo.scale)){
+            if(base::is.null(x = inter.select)){ # loop stop condition instead of break(), which is not allowed by saferDev::colons_check()
+                tempo.first.tick <- base::trunc(x = (tempo.min + tempo.scale[i1]) / tempo.scale[i1]) * (tempo.scale[i1]) # this would be use to have a number not multiple of tempo.scale[i1]: ceiling(tempo.min) + tempo.scale[i1] * 10^power10.exp
+                tempo.last.tick <- tempo.first.tick + tempo.scale[i1] * (n - 1)
+                if((tempo.first.tick >= tempo.min) & (tempo.last.tick <= tempo.max)){
+                    inter.select <- tempo.scale[i1]
+                }
             }
         }
-        if(base::is.null(inter.select)){
+        if(base::is.null(inter.select)){ # nocov start (internal error: impossible to reach with argument values, because at least one value of tempo.scale always fits between tempo.min and tempo.max)
             tempo_cat <- base::paste0(
-                "INTERNAL ERROR 2 IN ", 
-                intern_error_text_start, 
-                "CODE INCONSISTENCY.", 
-                intern_error_text_end, 
+                "INTERNAL ERROR 2 IN ",
+                intern_error_text_start,
+                "CODE INCONSISTENCY.",
+                intern_error_text_end,
                 collapse = NULL,
                 recycle0 = FALSE
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
-        }
+        } # nocov end
         base::options(scipen = ini.scipen) # restore the initial scientific penalty
         # end new interval 
         # centering the new scale 
@@ -572,9 +573,9 @@ scale2 <- function(
             tempo.max.dist <- tempo.max - mid.tick + inter.select
             if(tempo.min.dist <= tempo.max.dist){ # distance between lowest tick and bottom axis <= distance between highest tick and top axis. If yes, extra tick but at the top, otherwise at the bottom
                 output <- base::c(mid.tick, mid.tick + inter.select)
-            }else{
+            }else{ # nocov start (unreachable: mid.tick is always within inter.select of mid, so mid.tick - inter.select - tempo.min <= tempo.max - mid.tick + inter.select always holds)
                 output <- base::c(mid.tick - inter.select, mid.tick)
-            }
+            } # nocov end
         }else if((n / 2 - base::trunc(n / 2)) > 0.1){ # > 0.1 to avoid floating point. Because result can only be 0 or 0.5. Thus, > 0.1 means odd number
             output <- base::c(mid.tick - (base::trunc(n / 2):1) * inter.select, mid.tick, mid.tick + (1:base::trunc(n / 2)) * inter.select)
         }else if((n / 2 - base::trunc(n / 2)) < 0.1){ # < 0.1 to avoid floating point. Because result can only be 0 or 0.5. Thus, < 0.1 means even number
@@ -582,61 +583,61 @@ scale2 <- function(
             tempo.max.dist <- tempo.max - mid.tick + base::trunc(n / 2) * inter.select
             if(tempo.min.dist <= tempo.max.dist){ # distance between lowest tick and bottom axis <= distance between highest tick and top axis. If yes, extra tick but at the bottom, otherwise at the top
                 output <- base::c(mid.tick - ((base::trunc(n / 2) - 1):1) * inter.select, mid.tick, mid.tick + (1:base::trunc(n / 2)) * inter.select)
-            }else{
+            }else{ # nocov start (unreachable: same geometric argument as for n == 2, with mid.tick always within inter.select of mid)
                 output <- base::c(mid.tick - (base::trunc(n / 2):1) * inter.select, mid.tick, mid.tick + (1:(base::trunc(n / 2) - 1)) * inter.select)
-            }
-        }else{
+            } # nocov end
+        }else{ # nocov start (internal error: impossible to reach with argument values, because n / 2 - trunc(n / 2) is exactly 0 or 0.5)
             tempo_cat <- base::paste0(
-                "INTERNAL ERROR 3 IN ", 
-                intern_error_text_start, 
-                "CODE INCONSISTENCY.", 
-                intern_error_text_end, 
+                "INTERNAL ERROR 3 IN ",
+                intern_error_text_start,
+                "CODE INCONSISTENCY.",
+                intern_error_text_end,
                 collapse = NULL,
                 recycle0 = FALSE
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
-        }
+        } # nocov end
         # end centering the new scale 
         # last check
-        if(base::min(output) < tempo.min){
+        if(base::min(output) < tempo.min){ # nocov start (unreachable: mid.tick is always within inter.select of mid, so min(output) = mid.tick - trunc(n/2) * inter.select >= tempo.min always holds)
             output <- base::c(output[-1], base::max(output) + inter.select) # remove the lowest tick and add a tick at the top
-        }else if( base::max(output) > tempo.max){
+        }else if( base::max(output) > tempo.max){ # unreachable for the same geometric reason (kept for safety)
             output <- base::c(base::min(output) - inter.select, output[-base::length(output)])
-        }
-        if(base::min(output) < tempo.min | base::max(output) > tempo.max){
+        } # nocov end
+        if(base::min(output) < tempo.min | base::max(output) > tempo.max){ # nocov start (internal error: unreachable after the shifts above, kept for safety)
             tempo_cat <- base::paste0(
-                "INTERNAL ERROR 4 IN ", 
-                intern_error_text_start, 
-                "CODE INCONSISTENCY.", 
-                intern_error_text_end, 
+                "INTERNAL ERROR 4 IN ",
+                intern_error_text_start,
+                "CODE INCONSISTENCY.",
+                intern_error_text_end,
                 collapse = NULL,
                 recycle0 = FALSE
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
-        }
-        if(base::any(base::is.na(output))){
+        } # nocov end
+        if(base::any(base::is.na(output))){ # nocov start (internal error: impossible to reach with valid argument values)
             tempo_cat <- base::paste0(
-                "INTERNAL ERROR 5 IN ", 
-                intern_error_text_start, 
-                "CODE INCONSISTENCY: NA GENERATION.", 
-                intern_error_text_end, 
+                "INTERNAL ERROR 5 IN ",
+                intern_error_text_start,
+                "CODE INCONSISTENCY: NA GENERATION.",
+                intern_error_text_end,
                 collapse = NULL,
                 recycle0 = FALSE
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
-        }
+        } # nocov end
         # end last check
-    }else{
+    }else{ # nocov start (internal error: kind is already restricted to "approx", "strict" and "strict.cl" by arg_check())
         tempo_cat <- base::paste0(
-            "INTERNAL ERROR 6 IN ", 
-            intern_error_text_start, 
-            "CODE INCONSISTENCY.", 
-            intern_error_text_end, 
+            "INTERNAL ERROR 6 IN ",
+            intern_error_text_start,
+            "CODE INCONSISTENCY.",
+            intern_error_text_end,
             collapse = NULL,
             recycle0 = FALSE
         )
         base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
-    }
+    } # nocov end
     if(base::diff(lim.rank) < 0){
         output <- base::rev(output)
     }

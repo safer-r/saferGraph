@@ -23,20 +23,16 @@ reference:
   - empty_graph
 - title: "inter_ticks"
   contents: 
+- title: "inter_ticks"
+  contents:
   - inter_ticks
 - title: "open2"
-  contents: 
+  contents:
   - open2
 - title: "post_plot"
-  contents: 
+  contents:
   - post_plot
-- title: "prior_plot"
-  contents: 
-  - prior_plot
 - title: "scale2"
-  contents: 
+  contents:
   - scale2
-- title: "width"
-  contents: 
-  - width
 
