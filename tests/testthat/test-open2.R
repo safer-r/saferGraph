@@ -276,6 +276,8 @@ testthat::test_that("open2()", {
     testthat::expect_error(open2(pdf = TRUE, pdf_path = temp_dir, pdf_name = str2, width = num1, height = num1, paper = factor1, pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = ""))
     testthat::expect_error(open2(pdf = TRUE, pdf_path = temp_dir, pdf_name = str2, width = num1, height = num1, paper = expr1, pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = ""))
     testthat::expect_error(open2(pdf = TRUE, pdf_path = temp_dir, pdf_name = str2, width = num1, height = num1, paper = fun1, pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = ""))
+    testthat::expect_no_error(open2(pdf = TRUE, pdf_path = temp_dir, pdf_name = str2, width = num1, height = num1, paper = "a4", pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = "")) # valid option other than "special": opens and closes a pdf device with paper = "a4"
+    if(base::length(x = grDevices::dev.list()) > 0){base::invisible(grDevices::dev.off(which = grDevices::dev.cur()))}
     # end paper
     # pdf_overwrite
     testthat::expect_error(open2(pdf = TRUE, pdf_path = temp_dir, pdf_name = str2, width = num1, height = num1, paper = "special", pdf_overwrite = NULL, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = ""))
