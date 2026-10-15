@@ -17,10 +17,9 @@ library(saferGraph)
 ### Argument kind
 ```{r, echo = TRUE, error = TRUE}
 pdf("file") # open a pdf graphic device
-pdf("file") # open a pdf graphic device
 grDevices::dev.list() ; 
 close2(kind = "pdf")
-grDevices::dev.list() # only remains the postscript devices if any
+grDevices::dev.list() # NULL: the pdf device has been closed
 grDevices::graphics.off()
 ```
 <br>

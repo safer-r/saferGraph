@@ -31,7 +31,7 @@ open2(
 
 \item{height}{Single positive numeric value indicating the height of the window (in inches).}
 
-\item{paper}{Single character string. Paper argument of the pdf function (paper format). Only used for pdf(). Either "a4", "letter", "legal", "us", "executive", "a4r", "USr" or "special". If "special", means that the paper dimension will be width and height. With another paper format, if width or height is over the size of the paper, width or height will be modified such that the plot is adjusted to the paper dimension (see $dim in the returned list below to see the modified dimensions). Ignored if pdf == FALSE.}
+\item{paper}{Single character string. Paper argument of the pdf function (paper format). Only used for pdf(). Either "a4", "letter", "legal", "us", "executive", "a4r", "USr" or "special" (case insensitive: uppercase equivalents like "A4", "LETTER", "LEGAL", "US" are also accepted). If "special", means that the paper dimension will be width and height. With another paper format, if width or height is over the size of the paper, width or height will be modified such that the plot is adjusted to the paper dimension (see $dim in the returned list below to see the modified dimensions). Ignored if pdf == FALSE.}
 
 \item{pdf_overwrite}{Single logical value. Existing pdf can be overwritten? . Ignored if pdf == FALSE.}
 

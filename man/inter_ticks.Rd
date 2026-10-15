@@ -22,7 +22,7 @@ inter_ticks(
 
 \item{breaks}{Vector of numbers indicating the main ticks values/positions when log argument is "no". Ignored when log argument is "log2" or "log10".}
 
-\item{n}{Single numeric value indicating the number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".}
+\item{n}{Single positive and non null integer value indicating the number of secondary ticks between each main tick when log argument is "no". Ignored when log argument is "log2" or "log10".}
 
 \item{warn_print}{Single logical value. Print potential warning messages at the end of the execution? If FALSE, warning messages are never printed, but can still be recovered in the returned list.}
 

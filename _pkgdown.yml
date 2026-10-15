@@ -18,9 +18,6 @@ reference:
 - title: "close2"
   contents: 
   - close2
-- title: "empty_graph"
-  contents: 
-  - empty_graph
 - title: "inter_ticks"
   contents:
   - inter_ticks

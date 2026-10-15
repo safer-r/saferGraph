@@ -1,3 +1,6 @@
 inst/doc
 docs
 AGENTS.md
+
+# MS Office temporary lock files (~$ prefix)
+~$*
