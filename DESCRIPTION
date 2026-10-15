@@ -1,7 +1,7 @@
 Package: saferGraph
 Type: Package
 Title: Classical graphic handling
-Version: 2.0.0
+Version: 1.0.0
 Date: 2026-10-14
 Authors@R: c(
     person(given = "Haiding", family = "Wang", role = "ctb"),
