@@ -39,14 +39,11 @@ Set of R functions for the development of R functions, written according to the 
 
 | Function | Description |
 | :--- | :--- |
-| **close()** | Close only specific graphic windows (devices). |
-| **empty_graph()** | Display an empty plot with a text in the middle of the window (for instance to specify that no plot can be drawn). |
-| **inter_ticks()** | Verify that object names in the environment defined by the pos argument are identical or not to object names in the above environments (following R Scope). This can be used to verify that names used for objects inside a function or in the working environment do not override names of objects already present in the above R environments, following the R scope. |
-| **open()** | Open a pdf or screen (GUI) graphic window and return initial graphic parameters. |
-| **post_plot()** | Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs. Provide also positions for legend or additional text on the graph. Use prior_plot() before this function for initial inactivation of the axis drawings. |
-| **prior_plot()** | Very convenient to erase the axes for post plot axis redrawing using post_plot(). Reinitialize and set the graphic parameters before plotting. CANNOT be used if no graphic device already opened. |
-| **scale()** | Attempt to select nice scale numbers when setting n ticks on a lim axis range. |
-| **width()** | Rescale the width of a window to open depending on the number of categories of qualitative variable to plot on the x-axis. Can be used for height, considering that it is as if it was a width. |
+| **close2()** | Close only specific graphic windows (devices). |
+| **inter_ticks()** | Define coordinates and values of secondary ticks. |
+| **open2()** | Open a pdf or screen (GUI) graphic window and return initial graphic parameters. |
+| **post_plot()** | Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs. Provide also positions for legend or additional text on the graph. |
+| **scale2()** | Attempt to select nice scale numbers when setting n ticks on a lim axis range. |
 
 <br />
 
