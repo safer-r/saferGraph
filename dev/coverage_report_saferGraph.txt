@@ -1,0 +1,7 @@
+saferGraph coverage report (generated 2026-10-15 10:27)
+COVERED LINES: 887/887 = 100.00%
+R/close2.R: 96/96
+R/inter_ticks.R: 164/164
+R/open2.R: 142/142
+R/post_plot.R: 321/321
+R/scale2.R: 164/164

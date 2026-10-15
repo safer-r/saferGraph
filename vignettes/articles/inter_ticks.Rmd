@@ -38,10 +38,10 @@ inter_ticks(lim = c(0, 100), n = 5)
 ```
 <br>
 
-### Argument warn.print
+### Argument warn_print
 ```{r}
-inter_ticks(lim = c(0, 100), warn.print = TRUE)
-inter_ticks(lim = c(0, 100), warn.print = FALSE)
+inter_ticks(lim = c(0, 100), warn_print = TRUE)
+inter_ticks(lim = c(0, 100), warn_print = FALSE)
 ```
 <br>
 
@@ -58,7 +58,7 @@ inter_ticks(
   log = "log10", 
   breaks = c(0, 20, 40, 60, 80, 100), 
   n = 5, 
-  warn.print = TRUE, 
+  warn_print = TRUE, 
   safer_check = TRUE
 )
 ```

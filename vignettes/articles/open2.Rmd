@@ -16,71 +16,71 @@ library(saferGraph)
 
 ### Argument pdf
 ```{r}
-open2(pdf = TRUE, pdf.name = "safer1") # pdf.name also present to avoid potential error messages
+open2(pdf = TRUE, pdf_name = "safer1") # pdf_name also present to avoid potential error messages
 ```
 <br>
 
-### Argument pdf.path
+### Argument pdf_path
 ```{r}
-open2(pdf.path = ".", pdf.name = "safer2")
+open2(pdf_path = ".", pdf_name = "safer2")
 ```
 <br>
 
-### Argument pdf.name
+### Argument pdf_name
 ```{r}
-open2(pdf.name = "safer3")
+open2(pdf_name = "safer3")
 ```
 <br>
 
 ### Argument width
 ```{r}
-open2(width = 10, pdf.name = "safer4")
+open2(width = 10, pdf_name = "safer4")
 ```
 <br>
 
 ### Argument height
 ```{r}
-open2(height = 8, pdf.name = "safer5")
+open2(height = 8, pdf_name = "safer5")
 ```
 <br>
 
 ### Argument paper
 ```{r}
-open2(paper = "a4", pdf.name = "safer6")
-open2(paper = "special", pdf.name = "safer7")
+open2(paper = "a4", pdf_name = "safer6")
+open2(paper = "special", pdf_name = "safer7")
 ```
 <br>
 
-### Argument pdf.overwrite
+### Argument pdf_overwrite
 ```{r}
-open2(pdf.overwrite = TRUE) # no need of pdf.name here because the plot is overwritten
+open2(pdf_overwrite = TRUE) # no need of pdf_name here because the plot is overwritten
 ```
 <br>
 
 ### Argument rescale
 ```{r}
-open2(rescale = "fit", pdf.name = "safer8")
-open2(rescale = "fixed", pdf.name = "safer9")
+open2(rescale = "fit", pdf_name = "safer8")
+open2(rescale = "fixed", pdf_name = "safer9")
 ```
 <br>
 
-### Argument remove.read.only
+### Argument remove_read_only
 ```{r}
-open2(remove.read.only = FALSE, pdf.name = "safer10")
-open2(remove.read.only = TRUE, pdf.name = "safer11")
+open2(remove_read_only = FALSE, pdf_name = "safer10")
+open2(remove_read_only = TRUE, pdf_name = "safer11")
 ```
 <br>
 
-### Argument return.output
+### Argument return_output
 ```{r}
-open2(return.output = TRUE, pdf.name = "safer12")
-open2(return.output = FALSE, pdf.name = "safer13")
+open2(return_output = TRUE, pdf_name = "safer12")
+open2(return_output = FALSE, pdf_name = "safer13")
 ```
 <br>
 
 ### Argument safer_check
 ```{r}
-open2(safer_check = TRUE, pdf.name = "safer15")
+open2(safer_check = TRUE, pdf_name = "safer15")
 ```
 <br>
 
@@ -88,15 +88,15 @@ open2(safer_check = TRUE, pdf.name = "safer15")
 ```{r}
 open2(
   pdf = TRUE, 
-  pdf.path = ".", 
-  pdf.name = "name1", 
+  pdf_path = ".", 
+  pdf_name = "name1", 
   width = 10, 
   height = 8, 
   paper = "a4", 
-  pdf.overwrite = TRUE, 
+  pdf_overwrite = TRUE, 
   rescale = "fit", 
-  remove.read.only = TRUE, 
-  return.output = FALSE,
+  remove_read_only = TRUE, 
+  return_output = FALSE,
   safer_check = TRUE
 )
 ```

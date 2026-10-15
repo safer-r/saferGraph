@@ -17,14 +17,14 @@ library(saferGraph)
 ```{r, echo = TRUE, error = TRUE}
 pdf("file2")
 plot(1:100, log = "y") ; 
-post_plot(y.side = 2, y.log.scale = TRUE, x.lab = "Values", y.lab = "TEST", y.axis.size = 1.25, y.label.size = 1.5, y.dist.legend = 0.7, just.label.add = TRUE)
+post_plot(y.side = 2, y_log_scale = TRUE, x_lab = "Values", y_lab = "TEST", y_axis_size = 1.25, y_label_size = 1.5, y_dist_legend = 0.7, just_label_add = TRUE)
 ```
 <br>
 
 ### Example of title easily added to a plot:
 ```{r}
 plot(1:100) ; 
-para <- post_plot(corner.text = "TITLE ADDED") 
+para <- post_plot(corner_text = "TITLE ADDED") 
 
 par(xpd = TRUE) ; text(x = para$x.mid.left.fig.region, y = para$y.mid.top.fig.region, labels = "TITLE ADDED", cex = 0.5)
 ```

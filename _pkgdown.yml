@@ -22,8 +22,6 @@ reference:
   contents: 
   - empty_graph
 - title: "inter_ticks"
-  contents: 
-- title: "inter_ticks"
   contents:
   - inter_ticks
 - title: "open2"

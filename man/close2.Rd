@@ -13,7 +13,7 @@ close2(
 )
 }
 \arguments{
-\item{kind}{Vector, among c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), indicating the kind of graphic windows (devices) to close. BEWARE: either "windows", "quartz", "x11" or "X11" means that all the X11 GUI graphics devices will be closed, whatever the OS used.}
+\item{kind}{Single character string, among c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), indicating the kind of graphic windows (devices) to close. BEWARE: either "windows", "quartz", "x11" or "X11" means that all the X11 GUI graphics devices will be closed, whatever the OS used.}
 
 \item{return_text}{Single logical value. Print text regarding the kind parameter and the devices that were finally closed?}
 

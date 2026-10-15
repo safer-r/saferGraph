@@ -16,53 +16,36 @@ library(saferGraph)
 
 ### Argument kind
 ```{r, echo = TRUE, error = TRUE}
-postscript("file") # open a postscript graphic device
+pdf("file") # open a pdf graphic device
 pdf("file") # open a pdf graphic device
 grDevices::dev.list() ; 
 close2(kind = "pdf")
-grDevices::dev.list() # only remains the postscript devices
-grDevices::graphics.off()
-
-
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-grDevices::dev.list() ; 
-close2(kind = c("pdf", "postscript"))
-grDevices::dev.list()
+grDevices::dev.list() # only remains the postscript devices if any
 grDevices::graphics.off()
 ```
 <br>
 
-### Argument return.text
+### Argument return_text
 ```{r, echo = TRUE, error = TRUE}
-postscript("file") # open a postscript graphic device
 pdf("file") # open a pdf graphic device
 grDevices::dev.list() ; 
-close2(kind = "pdf", return.text = TRUE)
-grDevices::dev.list() # only remains the postscript devices
+close2(kind = "pdf", return_text = TRUE)
+grDevices::dev.list() # NULL: all the pdf devices have been closed
 grDevices::graphics.off()
 
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-postscript("file") # open a postscript graphic device
 pdf("file") # open a pdf graphic device
 grDevices::dev.list() ; 
-close2(kind = c("pdf"), return.text = FALSE) ; 
-grDevices::dev.list() # only remains the postscript devices
+close2(kind = "pdf", return_text = FALSE) ; 
+grDevices::dev.list() # NULL: all the pdf devices have been closed, but no text displayed because return_text == FALSE
 grDevices::graphics.off()
 ```
 <br>
 
 ### Argument safer_check 
 ```{r, echo = TRUE, error = TRUE}
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-postscript("file") # open a postscript graphic device
 pdf("file") # open a pdf graphic device
 grDevices::dev.list() ; 
-close2(kind = c("pdf"), safer_check = TRUE)
+close2(kind = "pdf", safer_check = TRUE)
 grDevices::dev.list()
 grDevices::graphics.off()
 ```
@@ -70,42 +53,18 @@ grDevices::graphics.off()
 
 ### All the arguments
 ```{r, echo = TRUE, error = TRUE}
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-postscript("file") # open a postscript graphic device
 pdf("file") # open a pdf graphic device
 grDevices::dev.list() ; 
-close2(kind = c("pdf"), return.text = TRUE, safer_check = TRUE) ; 
-grDevices::dev.list() # only remains the postscript devices
+close2(kind = "pdf", return_text = TRUE, safer_check = TRUE) ; 
+grDevices::dev.list()
 grDevices::graphics.off()
 
 
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-postscript("file") # open a postscript graphic device
 pdf("file") # open a pdf graphic device
 grDevices::dev.list() ; 
-close2(kind = c("pdf"), return.text = FALSE, safer_check = TRUE) ; 
-grDevices::dev.list() # only remains the postscript devices
-grDevices::graphics.off()
-
-
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-close2(kind = c("pdf", "postscript"), return.text = TRUE, safer_check = TRUE)
-grDevices::dev.list() # only remains the postscript devices
-grDevices::graphics.off()
-
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-postscript("file") # open a postscript graphic device
-pdf("file") # open a pdf graphic device
-close2(kind = c("pdf", "postscript"), return.text = FALSE, safer_check = TRUE)
-grDevices::dev.list() # only remains the postscript devices
+close2(kind = "pdf", return_text = FALSE, safer_check = TRUE) ; 
+grDevices::dev.list()
 grDevices::graphics.off()
 ```
 <br>
-
 
