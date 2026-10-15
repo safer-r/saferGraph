@@ -1,0 +1,12 @@
+setwd("C:/Users/gmillot/Documents/Git_projects/safer-r/saferGraph")
+pkgload::load_all(path = ".", quiet = TRUE)
+cov <- covr::package_coverage(quiet = TRUE, clean = FALSE)
+df <- as.data.frame(cov)
+tot <- 100 * sum(df$value > 0) / nrow(df)
+cat(sprintf("COVERED LINES: %d/%d = %.2f%%\n", sum(df$value > 0), nrow(df), tot))
+out <- c(sprintf("saferGraph coverage report (generated %s)", base::format(Sys.time(), "%Y-%m-%d %H:%M")), sprintf("COVERED LINES: %d/%d = %.2f%%", sum(df$value > 0), nrow(df), tot))
+per_file <- aggregate(cbind(cov = as.integer(df$value > 0), tot = 1) ~ filename, data = df, FUN = sum)
+for(i in seq_len(nrow(per_file))){out <- c(out, sprintf("%s: %d/%d", per_file$filename[i], per_file$cov[i], per_file$tot[i]))}
+writeLines(out, "dev/coverage_report_saferGraph.txt")
+cat("WROTE dev/coverage_report_saferGraph.txt\n")
+quit(save = "no", status = 0)
