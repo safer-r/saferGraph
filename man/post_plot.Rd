@@ -82,11 +82,11 @@ post_plot(
 
 \item{sec.tick.length}{Single positive proportion value indicating the length of the secondary ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).}
 
-\item{bg.color}{Background color of the plot region. Either (1) NULL (no color), or (2) a single character string or integer. Color can be a color name (see ?colors() in R), an hexadecimal color code, or an integer (according to palette()). BEWARE: cover/hide an existing plot !}
+\item{bg.color}{Background color of the plot region. Either (1) NULL (no color), or (2) a single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code. BEWARE: cover/hide an existing plot !}
 
 \item{grid.lwd}{Vector of positive numeric values. If non NULL, both activate the grid lines and specify the line widths.}
 
-\item{grid.col}{Grid line colors (only if grid.lwd non NULL). Either (1) NULL (no color), or (2) a vector of character strings or integers. Color can be color names (see ?colors() in R), hexadecimal color codes, or integers (according to palette()).}
+\item{grid.col}{Grid line colors (only if grid.lwd non NULL). A single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code.}
 
 \item{corner.text}{Single character string adding a text at the top right corner of the window.}
 

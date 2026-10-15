@@ -26,9 +26,9 @@
 #' @param text.angle Single numeric value for the angle of the text when axis is qualitative.
 #' @param tick.length Single positive proportion value indicating the length of the main ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
 #' @param sec.tick.length Single positive proportion value indicating the length of the secondary ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
-#' @param bg.color Background color of the plot region. Either (1) NULL (no color), or (2) a single character string or integer. Color can be a color name (see ?colors() in R), an hexadecimal color code, or an integer (according to palette()). BEWARE: cover/hide an existing plot !
+#' @param bg.color Background color of the plot region. Either (1) NULL (no color), or (2) a single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code. BEWARE: cover/hide an existing plot !
 #' @param grid.lwd Vector of positive numeric values. If non NULL, both activate the grid lines and specify the line widths.
-#' @param grid.col Grid line colors (only if grid.lwd non NULL). Either (1) NULL (no color), or (2) a vector of character strings or integers. Color can be color names (see ?colors() in R), hexadecimal color codes, or integers (according to palette()).
+#' @param grid.col Grid line colors (only if grid.lwd non NULL). A single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code.
 #' @param corner.text Single character string adding a text at the top right corner of the window.
 #' @param corner.text.size Single positive numeric value to increase or decrease the size of the text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
 #' @param par.reset Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.
