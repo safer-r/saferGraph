@@ -540,8 +540,8 @@ post_plot <- function(
     if( ! base::is.null(bg_color)){
         tempo <- saferDev::arg_check(data = bg_color, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
         if( ! (bg_color %in% grDevices::colors() | base::grepl(pattern = "^#", bg_color))){ # check color
-            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nbg_color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
-            text_check <- base::c(text_check, tempo.cat)
+            tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nbg_color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
+            text_check <- base::c(text_check, tempo_cat)
             argum_check <- base::c(argum_check, TRUE)
         }
     }
@@ -551,8 +551,8 @@ post_plot <- function(
     if( ! base::is.null(grid_col)){
         tempo <- saferDev::arg_check(data = grid_col, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
         if( ! (grid_col %in% grDevices::colors() | base::grepl(pattern = "^#", grid_col))){ # check color
-            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ngrid_col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
-            text_check <- base::c(text_check, tempo.cat)
+            tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ngrid_col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
+            text_check <- base::c(text_check, tempo_cat)
             argum_check <- base::c(argum_check, TRUE)
         }
     }
@@ -745,8 +745,8 @@ post_plot <- function(
             if(base::is.null(x_categ_pos)){
                 x_categ_pos <- 1:base::length(x_categ)
             }else if(base::length(x_categ_pos) != base::length(x_categ)){
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nx_categ_pos MUST BE THE SAME LENGTH AS x_categ")
-                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nx_categ_pos MUST BE THE SAME LENGTH AS x_categ")
+                base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::par(xpd = TRUE)
             if(base::isTRUE(base::all.equal(x_side, 1))){ #isTRUE(all.equal(x_side, 1)) is similar to x_side == 1L but deals with float
@@ -756,14 +756,14 @@ post_plot <- function(
                 graphics::segments(x0 = x_left_plot_region, x1 = x_right_plot_region, y0 = y_top_plot_region, y1 = y_top_plot_region) # draw the line of the axis
                 graphics::text(x = x_categ_pos, y = y_mid_top_fig_region, labels = x_categ, srt = text_angle, cex = x_axis_size)
             }else{ # nocov start (unreachable: arg_check() above restricts x_side to 0, 1 and 3 when x_categ is not NULL)
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT x_side CAN ONLY BE 1 OR 3")
-                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT x_side CAN ONLY BE 1 OR 3")
+                base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             } # nocov end
             graphics::par(xpd = FALSE)
             x_text <- graphics::par("usr")[2]
         }else{ # nocov start (unreachable: the three branches above cover all combinations of x_categ NULL/non-NULL and x_log_scale TRUE/FALSE allowed by arg_check())
-            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE x_side (", x_side ,") OR x_log_scale (", x_log_scale,") ARGUMENTS")
-            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE x_side (", x_side ,") OR x_log_scale (", x_log_scale,") ARGUMENTS")
+            base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         } # nocov end
     }else{
         x_text <- graphics::par("usr")[2]
@@ -801,8 +801,8 @@ post_plot <- function(
             if(base::is.null(y_categ_pos)){
                 y_categ_pos <- 1:base::length(y_categ)
             }else if(base::length(y_categ_pos) != base::length(y_categ)){
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ny_categ_pos MUST BE THE SAME LENGTH AS y_categ")
-                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ny_categ_pos MUST BE THE SAME LENGTH AS y_categ")
+                base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::axis(side = y_side, at = y_categ_pos, labels = base::rep("", base::length(y_categ)), lwd=0, lwd.ticks=1) # draw the line of the axis
             graphics::par(xpd = TRUE)
@@ -811,14 +811,14 @@ post_plot <- function(
             }else if(base::isTRUE(base::all.equal(y_side, 4))){ # idem
                 graphics::text(x = x_mid_right_fig_region, y = y_categ_pos, labels = y_categ, srt = text_angle, cex = y_axis_size)
             }else{ # nocov start (unreachable: arg_check() above restricts y_side to 0, 2 and 4 when y_categ is not NULL)
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT y_side CAN ONLY BE 2 OR 4")
-                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT y_side CAN ONLY BE 2 OR 4")
+                base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             } # nocov end
             graphics::par(xpd = FALSE)
             y_text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
         }else{ # nocov start (unreachable: the three branches above cover all combinations of y_categ NULL/non-NULL and y_log_scale TRUE/FALSE allowed by arg_check())
-            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE y_side (", y_side ,") OR y_log_scale (", y_log_scale,") ARGUMENTS")
-            base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+            tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE y_side (", y_side ,") OR y_log_scale (", y_log_scale,") ARGUMENTS")
+            base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         } # nocov end
     }else{
         y_text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
@@ -837,8 +837,8 @@ post_plot <- function(
         base::invisible(grDevices::dev.off()) # close the new window
         if( ! base::is.null(custom_par)){
             if( ! base::names(x = custom_par) %in% base::names(x = tempo_par$ini.par)){
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ncustom_par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
-                base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
+                tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ncustom_par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
+                base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             base::suppressWarnings(expr = graphics::par(custom_par), classes = "warning") # apply the custom parameters on the current device
             text <- base::c(text, "\nGRAPH PARAMETERS SET TO VALUES DEFINED BY custom_par ARGUMENT\n")
