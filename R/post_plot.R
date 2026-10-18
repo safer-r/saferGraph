@@ -647,70 +647,70 @@ post_plot <- function(
     text <- NULL
     graphics::par(tcl = -graphics::par()$mgp[2] * tick_length)
     if(x_log_scale == TRUE){
-        grid.coord.x <- base::c(10^graphics::par("usr")[1], 10^graphics::par("usr")[2])
+        grid_coord_x <- base::c(10^graphics::par("usr")[1], 10^graphics::par("usr")[2])
     }else{
-        grid.coord.x <- base::c(graphics::par("usr")[1], graphics::par("usr")[2])
+        grid_coord_x <- base::c(graphics::par("usr")[1], graphics::par("usr")[2])
     }
     if(y_log_scale == TRUE){
-        grid.coord.y <- base::c(10^graphics::par("usr")[3], 10^graphics::par("usr")[4])
+        grid_coord_y <- base::c(10^graphics::par("usr")[3], 10^graphics::par("usr")[4])
     }else{
-        grid.coord.y <- base::c(graphics::par("usr")[3], graphics::par("usr")[4])
+        grid_coord_y <- base::c(graphics::par("usr")[3], graphics::par("usr")[4])
     }
     if( ! base::is.null(bg_color)){
-        graphics::rect(grid.coord.x[1], grid.coord.y[1], grid.coord.x[2], grid.coord.y[2], col = bg_color, border = NA)
+        graphics::rect(grid_coord_x[1], grid_coord_y[1], grid_coord_x[2], grid_coord_y[2], col = bg_color, border = NA)
     }
     if( ! base::is.null(grid_lwd)){
         graphics::grid(nx = NA, ny = NULL, col = grid_col, lty = 1, lwd = grid_lwd)
     }
     if(x_log_scale == TRUE){
-        x.mid.left.dev.region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
-        x.left.dev.region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1]) # in x coordinates
-        x.mid.right.dev.region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
-        x.right.dev.region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2])) # in x coordinates
-        x.mid.left.fig.region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
-        x.left.fig.region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1]) # in x coordinates
-        x.mid.right.fig.region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
-        x.right.fig.region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2])) # in x coordinates
-        x.left.plot.region <- 10^graphics::par("usr")[1] # in x coordinates, left of the plot region (according to x scale)
-        x.right.plot.region <- 10^graphics::par("usr")[2] # in x coordinates, right of the plot region (according to x scale)
-        x.mid.plot.region <- 10^((graphics::par("usr")[2] + graphics::par("usr")[1]) / 2) # in x coordinates, right of the plot region (according to x scale)
+        x_mid_left_dev_region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
+        x_left_dev_region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1]) # in x coordinates
+        x_mid_right_dev_region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
+        x_right_dev_region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2])) # in x coordinates
+        x_mid_left_fig_region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
+        x_left_fig_region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1]) # in x coordinates
+        x_mid_right_fig_region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
+        x_right_fig_region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2])) # in x coordinates
+        x_left_plot_region <- 10^graphics::par("usr")[1] # in x coordinates, left of the plot region (according to x scale)
+        x_right_plot_region <- 10^graphics::par("usr")[2] # in x coordinates, right of the plot region (according to x scale)
+        x_mid_plot_region <- 10^((graphics::par("usr")[2] + graphics::par("usr")[1]) / 2) # in x coordinates, right of the plot region (according to x scale)
     }else{
-        x.mid.left.dev.region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
-        x.left.dev.region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1]) # in x coordinates
-        x.mid.right.dev.region <- (graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
-        x.right.dev.region <- (graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2])) # in x coordinates
-        x.mid.left.fig.region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
-        x.left.fig.region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1]) # in x coordinates
-        x.mid.right.fig.region <- (graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
-        x.right.fig.region <- (graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2])) # in x coordinates
-        x.left.plot.region <- graphics::par("usr")[1] # in x coordinates, left of the plot region (according to x scale)
-        x.right.plot.region <- graphics::par("usr")[2] # in x coordinates, right of the plot region (according to x scale)
-        x.mid.plot.region <- (graphics::par("usr")[2] + graphics::par("usr")[1]) / 2 # in x coordinates, right of the plot region (according to x scale)
+        x_mid_left_dev_region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
+        x_left_dev_region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1]) # in x coordinates
+        x_mid_right_dev_region <- (graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
+        x_right_dev_region <- (graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2])) # in x coordinates
+        x_mid_left_fig_region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
+        x_left_fig_region <- (graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1]) # in x coordinates
+        x_mid_right_fig_region <- (graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
+        x_right_fig_region <- (graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2])) # in x coordinates
+        x_left_plot_region <- graphics::par("usr")[1] # in x coordinates, left of the plot region (according to x scale)
+        x_right_plot_region <- graphics::par("usr")[2] # in x coordinates, right of the plot region (according to x scale)
+        x_mid_plot_region <- (graphics::par("usr")[2] + graphics::par("usr")[1]) / 2 # in x coordinates, right of the plot region (according to x scale)
     }
     if(y_log_scale == TRUE){
-        y.mid.bottom.dev.region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (graphics::par("omd")[3] / 2)) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
-        y.bottom.dev.region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * graphics::par("omd")[3]) # in y coordinates
-        y.mid.top.dev.region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
-        y.top.dev.region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4])) # in y coordinates
-        y.mid.bottom.fig.region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] / 2) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
-        y.bottom.fig.region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3]) # in y coordinates
-        y.mid.top.fig.region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
-        y.top.fig.region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4])) # in y coordinates
-        y.top.plot.region <- 10^graphics::par("usr")[4] # in y coordinates, top of the plot region (according to y scale)
-        y.bottom.plot.region <- 10^graphics::par("usr")[3] # in y coordinates, bottom of the plot region (according to y scale)
-        y.mid.plot.region <- (graphics::par("usr")[3] + graphics::par("usr")[4]) / 2 # in x coordinates, right of the plot region (according to x scale)
+        y_mid_bottom_dev_region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (graphics::par("omd")[3] / 2)) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
+        y_bottom_dev_region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * graphics::par("omd")[3]) # in y coordinates
+        y_mid_top_dev_region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
+        y_top_dev_region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4])) # in y coordinates
+        y_mid_bottom_fig_region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] / 2) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
+        y_bottom_fig_region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3]) # in y coordinates
+        y_mid_top_fig_region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
+        y_top_fig_region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4])) # in y coordinates
+        y_top_plot_region <- 10^graphics::par("usr")[4] # in y coordinates, top of the plot region (according to y scale)
+        y_bottom_plot_region <- 10^graphics::par("usr")[3] # in y coordinates, bottom of the plot region (according to y scale)
+        y_mid_plot_region <- (graphics::par("usr")[3] + graphics::par("usr")[4]) / 2 # in x coordinates, right of the plot region (according to x scale)
     }else{
-        y.mid.bottom.dev.region <- (graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (graphics::par("omd")[3] / 2)) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
-        y.bottom.dev.region <- (graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * graphics::par("omd")[3]) # in y coordinates
-        y.mid.top.dev.region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
-        y.top.dev.region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4])) # in y coordinates
-        y.mid.bottom.fig.region <- (graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] / 2) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
-        y.bottom.fig.region <- (graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3]) # in y coordinates
-        y.mid.top.fig.region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
-        y.top.fig.region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4])) # in y coordinates
-        y.top.plot.region <- graphics::par("usr")[4] # in y coordinates, top of the plot region (according to y scale)
-        y.bottom.plot.region <- graphics::par("usr")[3] # in y coordinates, bottom of the plot region (according to y scale)
-        y.mid.plot.region <- ((graphics::par("usr")[3] + graphics::par("usr")[4]) / 2) # in x coordinates, right of the plot region (according to x scale)
+        y_mid_bottom_dev_region <- (graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (graphics::par("omd")[3] / 2)) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
+        y_bottom_dev_region <- (graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * graphics::par("omd")[3]) # in y coordinates
+        y_mid_top_dev_region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
+        y_top_dev_region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4])) # in y coordinates
+        y_mid_bottom_fig_region <- (graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] / 2) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
+        y_bottom_fig_region <- (graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3]) # in y coordinates
+        y_mid_top_fig_region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
+        y_top_fig_region <- (graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4])) # in y coordinates
+        y_top_plot_region <- graphics::par("usr")[4] # in y coordinates, top of the plot region (according to y scale)
+        y_bottom_plot_region <- graphics::par("usr")[3] # in y coordinates, bottom of the plot region (according to y scale)
+        y_mid_plot_region <- ((graphics::par("usr")[3] + graphics::par("usr")[4]) / 2) # in x coordinates, right of the plot region (according to x scale)
     }
     if(base::any(base::sapply(FUN = all.equal, base::c(1, 3), x_side) == TRUE, na.rm = TRUE)){
         graphics::par(xpd=FALSE, xaxt="s")
@@ -729,18 +729,18 @@ post_plot <- function(
             base::suppressWarnings(graphics::rug(10^base::outer(base::c((base::log10(graphics::par("xaxp")[1]) -1):base::log10(graphics::par("xaxp")[2])), base::log10(1:10), "+"), ticksize = NA, side = x_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
             graphics::par(tcl = -graphics::par()$mgp[2] * tick_length) # back to main ticks
             graphics::axis(side = x_side, at = base::c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = base::expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = x_axis_size)
-            x.text <- 10^graphics::par("usr")[2]
+            x_text <- 10^graphics::par("usr")[2]
         }else if(base::is.null(x_categ) & x_log_scale == FALSE){
             graphics::axis(side=x_side, at=base::c(graphics::par()$usr[1], graphics::par()$usr[2]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
             graphics::axis(side=x_side, at=base::round(base::seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), cex.axis = x_axis_size) # axis(side=x_side, at=round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), labels = format(round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), big.mark=','), cex.axis = x_axis_size) # to get the 1000 comma separator
             graphics::mtext(side = x_side, text = x_lab, line = x_dist_legend / 0.2, las = 0, cex = x_label_size)
             if(x_nb_inter_tick > 0){
-                inter.tick.unit <- (graphics::par("xaxp")[2] - graphics::par("xaxp")[1]) / graphics::par("xaxp")[3]
+                inter_tick_unit <- (graphics::par("xaxp")[2] - graphics::par("xaxp")[1]) / graphics::par("xaxp")[3]
                 graphics::par(tcl = -graphics::par()$mgp[2] * sec_tick_length) # length of the ticks are reduced
-                base::suppressWarnings(graphics::rug(base::seq(graphics::par("xaxp")[1] - 10 * inter.tick.unit, graphics::par("xaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + x_nb_inter_tick)), ticksize = NA, x_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+                base::suppressWarnings(graphics::rug(base::seq(graphics::par("xaxp")[1] - 10 * inter_tick_unit, graphics::par("xaxp")[2] + 10 * inter_tick_unit, by = inter_tick_unit / (1 + x_nb_inter_tick)), ticksize = NA, x_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
                 graphics::par(tcl = -graphics::par()$mgp[2] * tick_length) # back to main ticks
             }
-            x.text <- graphics::par("usr")[2]
+            x_text <- graphics::par("usr")[2]
         }else if(( ! base::is.null(x_categ)) & x_log_scale == FALSE){
             if(base::is.null(x_categ_pos)){
                 x_categ_pos <- 1:base::length(x_categ)
@@ -750,23 +750,23 @@ post_plot <- function(
             }
             graphics::par(xpd = TRUE)
             if(base::isTRUE(base::all.equal(x_side, 1))){ #isTRUE(all.equal(x_side, 1)) is similar to x_side == 1L but deals with float
-                graphics::segments(x0 = x.left.plot.region, x1 = x.right.plot.region, y0 = y.bottom.plot.region, y1 = y.bottom.plot.region) # draw the line of the axis
-                graphics::text(x = x_categ_pos, y = y.mid.bottom.fig.region, labels = x_categ, srt = text_angle, cex = x_axis_size)
+                graphics::segments(x0 = x_left_plot_region, x1 = x_right_plot_region, y0 = y_bottom_plot_region, y1 = y_bottom_plot_region) # draw the line of the axis
+                graphics::text(x = x_categ_pos, y = y_mid_bottom_fig_region, labels = x_categ, srt = text_angle, cex = x_axis_size)
             }else if(base::isTRUE(base::all.equal(x_side, 3))){ #isTRUE(all.equal(x_side, 1)) is similar to x_side == 3L but deals with float
-                graphics::segments(x0 = x.left.plot.region, x1 = x.right.plot.region, y0 = y.top.plot.region, y1 = y.top.plot.region) # draw the line of the axis
-                graphics::text(x = x_categ_pos, y = y.mid.top.fig.region, labels = x_categ, srt = text_angle, cex = x_axis_size)
+                graphics::segments(x0 = x_left_plot_region, x1 = x_right_plot_region, y0 = y_top_plot_region, y1 = y_top_plot_region) # draw the line of the axis
+                graphics::text(x = x_categ_pos, y = y_mid_top_fig_region, labels = x_categ, srt = text_angle, cex = x_axis_size)
             }else{ # nocov start (unreachable: arg_check() above restricts x_side to 0, 1 and 3 when x_categ is not NULL)
                 tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT x_side CAN ONLY BE 1 OR 3")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             } # nocov end
             graphics::par(xpd = FALSE)
-            x.text <- graphics::par("usr")[2]
+            x_text <- graphics::par("usr")[2]
         }else{ # nocov start (unreachable: the three branches above cover all combinations of x_categ NULL/non-NULL and x_log_scale TRUE/FALSE allowed by arg_check())
             tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE x_side (", x_side ,") OR x_log_scale (", x_log_scale,") ARGUMENTS")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         } # nocov end
     }else{
-        x.text <- graphics::par("usr")[2]
+        x_text <- graphics::par("usr")[2]
     }
     if(base::any(base::sapply(FUN = all.equal, base::c(2, 4), y_side) == TRUE, na.rm = TRUE)){
         graphics::par(xpd=FALSE, yaxt="s")
@@ -784,19 +784,19 @@ post_plot <- function(
             base::suppressWarnings(graphics::rug(10^base::outer(base::c((base::log10(graphics::par("yaxp")[1])-1):base::log10(graphics::par("yaxp")[2])), base::log10(1:10), "+"), ticksize = NA, side = y_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
             graphics::par(tcl = -graphics::par()$mgp[2] * tick_length) # back to main tick length
             graphics::axis(side = y_side, at = base::c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = base::expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = y_axis_size)
-            y.text <- 10^(graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
+            y_text <- 10^(graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
             graphics::mtext(side = y_side, text = y_lab, line = y_dist_legend / 0.2, las = 0, cex = y_label_size)
         }else if(base::is.null(y_categ) & y_log_scale == FALSE){
             graphics::axis(side=y_side, at=base::c(graphics::par()$usr[3], graphics::par()$usr[4]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
             graphics::axis(side=y_side, at=base::round(base::seq(graphics::par()$yaxp[1], graphics::par()$yaxp[2], length.out=graphics::par()$yaxp[3]+1), 2), cex.axis = y_axis_size)
             graphics::mtext(side = y_side, text = y_lab, line = y_dist_legend / 0.2, las = 0, cex = y_label_size)
             if(y_nb_inter_tick > 0){
-                inter.tick.unit <- (graphics::par("yaxp")[2] - graphics::par("yaxp")[1]) / graphics::par("yaxp")[3]
+                inter_tick_unit <- (graphics::par("yaxp")[2] - graphics::par("yaxp")[1]) / graphics::par("yaxp")[3]
                 graphics::par(tcl = -graphics::par()$mgp[2] * sec_tick_length) # length of the ticks are reduced
-                base::suppressWarnings(graphics::rug(base::seq(graphics::par("yaxp")[1] - 10 * inter.tick.unit, graphics::par("yaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + y_nb_inter_tick)), ticksize = NA, side=y_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+                base::suppressWarnings(graphics::rug(base::seq(graphics::par("yaxp")[1] - 10 * inter_tick_unit, graphics::par("yaxp")[2] + 10 * inter_tick_unit, by = inter_tick_unit / (1 + y_nb_inter_tick)), ticksize = NA, side=y_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
                 graphics::par(tcl = -graphics::par()$mgp[2] * tick_length) # back to main tick length
             }
-            y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
+            y_text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
         }else if(( ! base::is.null(y_categ)) & y_log_scale == FALSE){
             if(base::is.null(y_categ_pos)){
                 y_categ_pos <- 1:base::length(y_categ)
@@ -807,47 +807,47 @@ post_plot <- function(
             graphics::axis(side = y_side, at = y_categ_pos, labels = base::rep("", base::length(y_categ)), lwd=0, lwd.ticks=1) # draw the line of the axis
             graphics::par(xpd = TRUE)
             if(base::isTRUE(base::all.equal(y_side, 2))){ #isTRUE(all.equal(y_side, 2)) is similar to y_side == 2L but deals with float
-                graphics::text(x = x.mid.left.fig.region, y = y_categ_pos, labels = y_categ, srt = text_angle, cex = y_axis_size)
+                graphics::text(x = x_mid_left_fig_region, y = y_categ_pos, labels = y_categ, srt = text_angle, cex = y_axis_size)
             }else if(base::isTRUE(base::all.equal(y_side, 4))){ # idem
-                graphics::text(x = x.mid.right.fig.region, y = y_categ_pos, labels = y_categ, srt = text_angle, cex = y_axis_size)
+                graphics::text(x = x_mid_right_fig_region, y = y_categ_pos, labels = y_categ, srt = text_angle, cex = y_axis_size)
             }else{ # nocov start (unreachable: arg_check() above restricts y_side to 0, 2 and 4 when y_categ is not NULL)
                 tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT y_side CAN ONLY BE 2 OR 4")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             } # nocov end
             graphics::par(xpd = FALSE)
-            y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
+            y_text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
         }else{ # nocov start (unreachable: the three branches above cover all combinations of y_categ NULL/non-NULL and y_log_scale TRUE/FALSE allowed by arg_check())
             tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE y_side (", y_side ,") OR y_log_scale (", y_log_scale,") ARGUMENTS")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         } # nocov end
     }else{
-        y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
+        y_text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
     }
     graphics::par(xpd=NA)
-    graphics::text(x = x.mid.right.fig.region, y = y.text, corner_text, adj=base::c(1, 1.1), cex = corner_text_size) # text at the topright corner. Replace x.right.fig.region by x.text if text at the right edge of the plot region
+    graphics::text(x = x_mid_right_fig_region, y = y_text, corner_text, adj=base::c(1, 1.1), cex = corner_text_size) # text at the topright corner. Replace x_right_fig_region by x_text if text at the right edge of the plot region
     if(just_label_add == TRUE & base::isTRUE(base::all.equal(x_side, 0)) & x_lab != ""){
-        graphics::text(x = x.mid.plot.region, y = y.mid.bottom.fig.region, x_lab, adj=base::c(0.5, 0.5), cex = x_label_size) # x label
+        graphics::text(x = x_mid_plot_region, y = y_mid_bottom_fig_region, x_lab, adj=base::c(0.5, 0.5), cex = x_label_size) # x label
     }
     if(just_label_add == TRUE & base::isTRUE(base::all.equal(y_side, 0)) & y_lab != ""){
-        graphics::text(x = y.mid.plot.region, y = x.mid.left.fig.region, y_lab, adj=base::c(0.5, 0.5), cex = y_label_size) # x label
+        graphics::text(x = y_mid_plot_region, y = x_mid_left_fig_region, y_lab, adj=base::c(0.5, 0.5), cex = y_label_size) # x label
     }
     graphics::par(xpd=FALSE)
     if(par_reset == TRUE){
-        tempo.par <- saferGraph::open2(pdf = FALSE, pdf_path = "working.dir", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, rescale = "R", remove_read_only = FALSE, return_output = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text)
+        tempo_par <- saferGraph::open2(pdf = FALSE, pdf_path = "working.dir", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, rescale = "R", remove_read_only = FALSE, return_output = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text)
         base::invisible(grDevices::dev.off()) # close the new window
         if( ! base::is.null(custom_par)){
-            if( ! base::names(x = custom_par) %in% base::names(x = tempo.par$ini.par)){
+            if( ! base::names(x = custom_par) %in% base::names(x = tempo_par$ini.par)){
                 tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ncustom_par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             base::suppressWarnings(expr = graphics::par(custom_par), classes = "warning") # apply the custom parameters on the current device
             text <- base::c(text, "\nGRAPH PARAMETERS SET TO VALUES DEFINED BY custom_par ARGUMENT\n")
         }else{
-            base::suppressWarnings(expr = graphics::par(tempo.par$ini.par), classes = "warning") # reset to the default parameters of a fresh device
+            base::suppressWarnings(expr = graphics::par(tempo_par$ini.par), classes = "warning") # reset to the default parameters of a fresh device
             text <- base::c(text, "\nGRAPH PARAMETERS RESET TO graphics::par() DEFAULT VALUES\n")
         }
     }
-    output <- base::list(x.mid.left.dev.region = x.mid.left.dev.region, x.left.dev.region = x.left.dev.region, x.mid.right.dev.region = x.mid.right.dev.region, x.right.dev.region = x.right.dev.region, x.mid.left.fig.region = x.mid.left.fig.region, x.left.fig.region = x.left.fig.region, x.mid.right.fig.region = x.mid.right.fig.region, x.right.fig.region = x.right.fig.region, x.left.plot.region = x.left.plot.region, x.right.plot.region = x.right.plot.region, x.mid.plot.region = x.mid.plot.region, y.mid.bottom.dev.region = y.mid.bottom.dev.region, y.bottom.dev.region = y.bottom.dev.region, y.mid.top.dev.region = y.mid.top.dev.region, y.top.dev.region = y.top.dev.region, y.mid.bottom.fig.region = y.mid.bottom.fig.region, y.bottom.fig.region = y.bottom.fig.region, y.mid.top.fig.region = y.mid.top.fig.region, y.top.fig.region = y.top.fig.region, y.top.plot.region = y.top.plot.region, y.bottom.plot.region = y.bottom.plot.region, y.mid.plot.region = y.mid.plot.region, text = text)
+    output <- base::list(x.mid.left.dev.region = x_mid_left_dev_region, x.left.dev.region = x_left_dev_region, x.mid.right.dev.region = x_mid_right_dev_region, x.right.dev.region = x_right_dev_region, x.mid.left.fig.region = x_mid_left_fig_region, x.left.fig.region = x_left_fig_region, x.mid.right.fig.region = x_mid_right_fig_region, x.right.fig.region = x_right_fig_region, x.left.plot.region = x_left_plot_region, x.right.plot.region = x_right_plot_region, x.mid.plot.region = x_mid_plot_region, y.mid.bottom.dev.region = y_mid_bottom_dev_region, y.bottom.dev.region = y_bottom_dev_region, y.mid.top.dev.region = y_mid_top_dev_region, y.top.dev.region = y_top_dev_region, y.mid.bottom.fig.region = y_mid_bottom_fig_region, y.bottom.fig.region = y_bottom_fig_region, y.mid.top.fig.region = y_mid_top_fig_region, y.top.fig.region = y_top_fig_region, y.top.plot.region = y_top_plot_region, y.bottom.plot.region = y_bottom_plot_region, y.mid.plot.region = y_mid_plot_region, text = text)
     # output
     # warning output
     # end warning output

@@ -495,52 +495,52 @@ inter_ticks <- function(
     #### end second round of checking and data preparation
 
     #### main code
-    lim.rank <- base::rank(lim) # to deal with inverse axis
+    lim_rank <- base::rank(lim) # to deal with inverse axis
     if(log != "no"){
-        ini.scipen <- base::options()$scipen
+        ini_scipen <- base::options()$scipen
         base::options(scipen = -9) # force scientific format
-        power10.exp <- base::as.integer(base::substring(text = 10^lim, first = (base::regexpr(pattern = "\\+|\\-", text = 10^lim)))) # recover the power of 10, i.e., integer part of lim. Example recover 08 from 1e+08. Works for log2
+        power10_exp <- base::as.integer(base::substring(text = 10^lim, first = (base::regexpr(pattern = "\\+|\\-", text = 10^lim)))) # recover the power of 10, i.e., integer part of lim. Example recover 08 from 1e+08. Works for log2
         # mantisse <- as.numeric(substr(x = 10^lim, start = 1, stop = (regexpr(pattern = "\\+|\\-", text = 10^lim) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
-        base::options(scipen = ini.scipen) # restore the initial scientific penalty
-        tick.pos <- base::unique(base::as.vector(base::outer(2:10, base::ifelse(log == "log2", 2, 10)^((power10.exp[1] - base::ifelse(base::diff(lim.rank) > 0, 1, -1)):(power10.exp[2] + base::ifelse(base::diff(lim.rank) > 0, 1, -1)))))) # use log10(2:10) even if log2: it is to get log values between 0 and 1
-        tick.pos <- base::sort(tick.pos, decreasing = base::ifelse(base::diff(lim.rank) > 0, FALSE, TRUE))
+        base::options(scipen = ini_scipen) # restore the initial scientific penalty
+        tick_pos <- base::unique(base::as.vector(base::outer(2:10, base::ifelse(log == "log2", 2, 10)^((power10_exp[1] - base::ifelse(base::diff(lim_rank) > 0, 1, -1)):(power10_exp[2] + base::ifelse(base::diff(lim_rank) > 0, 1, -1)))))) # use log10(2:10) even if log2: it is to get log values between 0 and 1
+        tick_pos <- base::sort(tick_pos, decreasing = base::ifelse(base::diff(lim_rank) > 0, FALSE, TRUE))
         if(log == "log2"){
-            tick.values <- tick.pos[tick.pos >= base::min(2^lim) & tick.pos <= base::max(2^lim)]
-            tick.pos <- base::log2(tick.values)
+            tick_values <- tick_pos[tick_pos >= base::min(2^lim) & tick_pos <= base::max(2^lim)]
+            tick_pos <- base::log2(tick_values)
         }else if(log == "log10"){
-            tick.values <- tick.pos[tick.pos >= base::min(10^lim) & tick.pos <= base::max(10^lim)]
-            tick.pos <- base::log10(tick.values)
+            tick_values <- tick_pos[tick_pos >= base::min(10^lim) & tick_pos <= base::max(10^lim)]
+            tick_pos <- base::log10(tick_values)
         }
     }else{
         # if(length(breaks) > 1){ # not required because already checked above
-        breaks.rank <- base::rank(base::c(breaks[1], breaks[base::length(breaks)]))
-        if(base::diff(breaks.rank) != base::diff(lim.rank)){
-            breaks <- base::sort(breaks, decreasing = base::ifelse(base::diff(lim.rank) < 0, TRUE, FALSE))
+        breaks_rank <- base::rank(base::c(breaks[1], breaks[base::length(breaks)]))
+        if(base::diff(breaks_rank) != base::diff(lim_rank)){
+            breaks <- base::sort(breaks, decreasing = base::ifelse(base::diff(lim_rank) < 0, TRUE, FALSE))
             warn_count <- warn_count + 1
             tempo_warn <- base::paste0("(", warn_count,") VALUES IN breaks ARGUMENT NOT IN THE SAME ORDER AS IN lim ARGUMENT -> VALUES REORDERED AS IN lim: ", base::paste(breaks, collapse = " "))
             warn <- base::paste0(base::ifelse(test = base::is.null(x = warn), yes = tempo_warn, no = base::paste0(warn, "\n\n", tempo_warn, collapse = NULL, recycle0 = FALSE)), collapse = NULL, recycle0 = FALSE)
-            breaks.rank <- base::rank(base::c(breaks[1], breaks[base::length(breaks)]))
+            breaks_rank <- base::rank(base::c(breaks[1], breaks[base::length(breaks)]))
         }
         # }
-        main.tick.dist <- base::mean(base::diff(breaks), na.rm = TRUE)
-        tick.dist <- main.tick.dist / (n + 1)
-        tempo.extra.margin <- base::max(base::abs(base::diff(breaks)), na.rm = TRUE)
-        tick.pos <- base::seq(
-            if(base::diff(breaks.rank) > 0){breaks[1] - tempo.extra.margin}else{breaks[1] + tempo.extra.margin}, 
-            if(base::diff(breaks.rank) > 0){breaks[base::length(breaks)] + tempo.extra.margin}else{breaks[base::length(breaks)] - tempo.extra.margin}, 
-            by = tick.dist
+        main_tick_dist <- base::mean(base::diff(breaks), na.rm = TRUE)
+        tick_dist <- main_tick_dist / (n + 1)
+        tempo_extra_margin <- base::max(base::abs(base::diff(breaks)), na.rm = TRUE)
+        tick_pos <- base::seq(
+            if(base::diff(breaks_rank) > 0){breaks[1] - tempo_extra_margin}else{breaks[1] + tempo_extra_margin}, 
+            if(base::diff(breaks_rank) > 0){breaks[base::length(breaks)] + tempo_extra_margin}else{breaks[base::length(breaks)] - tempo_extra_margin}, 
+            by = tick_dist
         )
-        tick.pos <- tick.pos[tick.pos >= base::min(lim) & tick.pos <= base::max(lim)]
-        tick.values <- tick.pos
+        tick_pos <- tick_pos[tick_pos >= base::min(lim) & tick_pos <= base::max(lim)]
+        tick_values <- tick_pos
     }
-    if(base::any(base::is.na(tick.pos) | ! base::is.finite(tick.pos), na.rm = TRUE)){ 
+    if(base::any(base::is.na(tick_pos) | ! base::is.finite(tick_pos), na.rm = TRUE)){ 
         # nocov start
         # codecov inactivated because it is an internal control of code writing, impossible to cover with argument values.
         tempo_cat <- base::paste0(
             "INTERNAL ERROR 1 IN ", 
             intern_error_text_start, 
             "NA or Inf GENERATED FOR THE INTER TICK POSITIONS:\n",
-            base::paste0(tick.pos, collapse = "\n", recycle0 = FALSE), 
+            base::paste0(tick_pos, collapse = "\n", recycle0 = FALSE), 
             intern_error_text_end, 
             collapse = NULL,
              recycle0 = FALSE
@@ -548,12 +548,12 @@ inter_ticks <- function(
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", base::ifelse(test = base::is.null(x = warn), yes = "", no = base::paste0("IN ADDITION\nWARNING", base::ifelse(test = warn_count > 1, yes = "S", no = ""), ":\n\n", warn, collapse = NULL, recycle0 = FALSE)), collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         # nocov end
     }
-    if(base::length(tick.pos) == 0L){
+    if(base::length(tick_pos) == 0L){
         warn_count <- warn_count + 1
         tempo_warn <- base::paste0("(", warn_count,") NO INTER TICKS COMPUTED BETWEEN THE LIMITS INDICATED: ", base::paste(lim, collapse = " "))
         warn <- base::paste0(base::ifelse(test = base::is.null(x = warn), yes = tempo_warn, no = base::paste0(warn, "\n\n", tempo_warn, collapse = NULL, recycle0 = FALSE)), collapse = NULL, recycle0 = FALSE)
     }
-    output <- base::list(log = log, coordinates = tick.pos, values = tick.values, warn = warn)
+    output <- base::list(log = log, coordinates = tick_pos, values = tick_values, warn = warn)
     #### end main code
 
     #### warning output

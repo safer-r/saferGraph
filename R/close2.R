@@ -415,8 +415,8 @@ close2 <- function(
     }else if(base::Sys.info()["sysname"] == "Linux"){ # nocov start (Linux-only branch)
         # codecov inactivated because this branch is only executed on Linux systems
         if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"))){
-            tempo.device <- base::suppressWarnings(base::try(grDevices::X11(display = "", width = 7, height = 7, pointsize = 12, gamma = 1, bg = "white", canvas = "white", fonts = NULL, family = "", xpos = 0, ypos = 0, title = "", type = "cairo", antialias = "default", symbolfamily = ""), silent = TRUE))[] # open a X11 window to try to recover the X11 system used. All the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the x11 options settings
-            if( ! base::is.null(tempo.device)){
+            tempo_device <- base::suppressWarnings(base::try(grDevices::X11(display = "", width = 7, height = 7, pointsize = 12, gamma = 1, bg = "white", canvas = "white", fonts = NULL, family = "", xpos = 0, ypos = 0, title = "", type = "cairo", antialias = "default", symbolfamily = ""), silent = TRUE))[] # open a X11 window to try to recover the X11 system used. All the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the x11 options settings
+            if( ! base::is.null(tempo_device)){
                 text <- base::paste0(text, "\nCANNOT CLOSE GUI GRAPHIC DEVICES AS REQUIRED BECAUSE THIS LINUX SYSTEM DOES NOT HAVE IT")
             }else{
                 tempo <- kind %in% base::c("windows", "quartz", "x11", "X11")

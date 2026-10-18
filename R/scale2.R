@@ -479,7 +479,7 @@ scale2 <- function(
     #### end second round of checking and data preparation
 
     #### main code
-    lim.rank <- base::rank(lim) # to deal with inverted axis
+    lim_rank <- base::rank(lim) # to deal with inverted axis
     lim <- base::sort(lim)
     if(kind == "approx"){
         output <- ggplot2::ggplot_build(ggplot2::ggplot() + ggplot2::scale_y_continuous(
@@ -497,12 +497,12 @@ scale2 <- function(
     }else if(kind == "strict"){
         output <- saferTool::round2(data = base::seq(lim[1] ,lim[2], length.out = n), dec_nb = 2, after_lead_zero = FALSE, safer_check = FALSE, lib_path = NULL, error_text = "")
     }else if(kind == "strict.cl"){
-        tempo.range <- base::diff(base::sort(lim))
-        tempo.max <- base::max(lim)
-        tempo.min <- base::min(lim)
-        mid <- tempo.min + (tempo.range/2) # middle of axis
-        tempo.inter <- tempo.range / (n + 1) # current interval between two ticks, between 0 and Inf
-        if(tempo.inter == 0L){ # isTRUE(all.equal(tempo.inter, rep(0, length(tempo.inter)))) not used because we strictly need zero as a result
+        tempo_range <- base::diff(base::sort(lim))
+        tempo_max <- base::max(lim)
+        tempo_min <- base::min(lim)
+        mid <- tempo_min + (tempo_range/2) # middle of axis
+        tempo_inter <- tempo_range / (n + 1) # current interval between two ticks, between 0 and Inf
+        if(tempo_inter == 0L){ # isTRUE(all.equal(tempo_inter, rep(0, length(tempo_inter)))) not used because we strictly need zero as a result
             tempo_cat <- base::paste0(
                 error_text_start, 
                 "THE INTERVAL BETWEEN TWO TICKS OF THE SCALE IS NULL. MODIFY THE lim OR n ARGUMENT", 
@@ -511,22 +511,22 @@ scale2 <- function(
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         }
-        log10.abs.lim <- 200
-        log10.range <- (-log10.abs.lim):log10.abs.lim
-        log10.vec <- 10^log10.range
-        round.vec <- base::c(5, 4, 3, 2.5, 2, 1.25, 1)
-        dec.table <- base::outer(log10.vec, round.vec) # table containing the scale units (row: power of ten from -201 to +199, column: the 5, 2.5, 2, 1.25, 1 notches
+        log10_abs_lim <- 200
+        log10_range <- (-log10_abs_lim):log10_abs_lim
+        log10_vec <- 10^log10_range
+        round_vec <- base::c(5, 4, 3, 2.5, 2, 1.25, 1)
+        dec_table <- base::outer(log10_vec, round_vec) # table containing the scale units (row: power of ten from -201 to +199, column: the 5, 2.5, 2, 1.25, 1 notches
         
-        # recover the number of leading zeros in tempo.inter
-        ini.scipen <- base::options()$scipen
+        # recover the number of leading zeros in tempo_inter
+        ini_scipen <- base::options()$scipen
         base::options(scipen = -9) # force scientific format
-        if(base::any(base::grepl(pattern = "\\+", x = tempo.inter), na.rm = TRUE)){ # tempo.inter > 1
-            power10.exp <- base::as.integer(base::substring(text = tempo.inter, first = (base::regexpr(pattern = "\\+", text = tempo.inter) + 1))) # recover the power of 10. Example recover 08 from 1e+08
-            mantisse <- base::as.numeric(base::substr(x = tempo.inter, start = 1, stop = (base::regexpr(pattern = "\\+", text = tempo.inter) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
-        }else if(base::any(base::grepl(pattern = "\\-", x = tempo.inter), na.rm = TRUE)){ # tempo.inter < 1
-            power10.exp <- base::as.integer(base::substring(text = tempo.inter, first = (base::regexpr(pattern = "\\-", text = tempo.inter)))) # recover the power of 10. Example recover 08 from 1e+08
-            mantisse <- base::as.numeric(base::substr(x = tempo.inter, start = 1, stop = (base::regexpr(pattern = "\\-", text = tempo.inter) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
-        }else{ # nocov start (internal error: impossible to reach with argument values, because tempo.inter is always either in scientific notation with + or -, or a plain decimal)
+        if(base::any(base::grepl(pattern = "\\+", x = tempo_inter), na.rm = TRUE)){ # tempo_inter > 1
+            power10_exp <- base::as.integer(base::substring(text = tempo_inter, first = (base::regexpr(pattern = "\\+", text = tempo_inter) + 1))) # recover the power of 10. Example recover 08 from 1e+08
+            mantisse <- base::as.numeric(base::substr(x = tempo_inter, start = 1, stop = (base::regexpr(pattern = "\\+", text = tempo_inter) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
+        }else if(base::any(base::grepl(pattern = "\\-", x = tempo_inter), na.rm = TRUE)){ # tempo_inter < 1
+            power10_exp <- base::as.integer(base::substring(text = tempo_inter, first = (base::regexpr(pattern = "\\-", text = tempo_inter)))) # recover the power of 10. Example recover 08 from 1e+08
+            mantisse <- base::as.numeric(base::substr(x = tempo_inter, start = 1, stop = (base::regexpr(pattern = "\\-", text = tempo_inter) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
+        }else{ # nocov start (internal error: impossible to reach with argument values, because tempo_inter is always either in scientific notation with + or -, or a plain decimal)
             tempo_cat <- base::paste0(
                 "INTERNAL ERROR 1 IN ",
                 intern_error_text_start,
@@ -537,19 +537,19 @@ scale2 <- function(
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         } # nocov end
-        tempo.scale <- dec.table[log10.range == power10.exp, ]
+        tempo_scale <- dec_table[log10_range == power10_exp, ]
         # new interval 
-        inter.select <- NULL
-        for(i1 in 1:base::length(x = tempo.scale)){
-            if(base::is.null(x = inter.select)){ # loop stop condition instead of break(), which is not allowed by saferDev::colons_check()
-                tempo.first.tick <- base::trunc(x = (tempo.min + tempo.scale[i1]) / tempo.scale[i1]) * (tempo.scale[i1]) # this would be use to have a number not multiple of tempo.scale[i1]: ceiling(tempo.min) + tempo.scale[i1] * 10^power10.exp
-                tempo.last.tick <- tempo.first.tick + tempo.scale[i1] * (n - 1)
-                if((tempo.first.tick >= tempo.min) & (tempo.last.tick <= tempo.max)){
-                    inter.select <- tempo.scale[i1]
+        inter_select <- NULL
+        for(i1 in 1:base::length(x = tempo_scale)){
+            if(base::is.null(x = inter_select)){ # loop stop condition instead of break(), which is not allowed by saferDev::colons_check()
+                tempo_first_tick <- base::trunc(x = (tempo_min + tempo_scale[i1]) / tempo_scale[i1]) * (tempo_scale[i1]) # this would be use to have a number not multiple of tempo_scale[i1]: ceiling(tempo_min) + tempo_scale[i1] * 10^power10_exp
+                tempo_last_tick <- tempo_first_tick + tempo_scale[i1] * (n - 1)
+                if((tempo_first_tick >= tempo_min) & (tempo_last_tick <= tempo_max)){
+                    inter_select <- tempo_scale[i1]
                 }
             }
         }
-        if(base::is.null(inter.select)){ # nocov start (internal error: impossible to reach with argument values, because at least one value of tempo.scale always fits between tempo.min and tempo.max)
+        if(base::is.null(inter_select)){ # nocov start (internal error: impossible to reach with argument values, because at least one value of tempo_scale always fits between tempo_min and tempo_max)
             tempo_cat <- base::paste0(
                 "INTERNAL ERROR 2 IN ",
                 intern_error_text_start,
@@ -560,31 +560,31 @@ scale2 <- function(
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         } # nocov end
-        base::options(scipen = ini.scipen) # restore the initial scientific penalty
+        base::options(scipen = ini_scipen) # restore the initial scientific penalty
         # end new interval 
         # centering the new scale 
-        tempo.mid <- base::trunc((mid + (-1:1) * inter.select) / inter.select) * inter.select # tempo middle tick closest to the middle axis
-        mid.tick <- tempo.mid[base::which.min(base::abs(tempo.mid - mid))]
+        tempo_mid <- base::trunc((mid + (-1:1) * inter_select) / inter_select) * inter_select # tempo middle tick closest to the middle axis
+        mid_tick <- tempo_mid[base::which.min(base::abs(tempo_mid - mid))]
         if(base::isTRUE(base::all.equal(n, base::rep(1, base::length(n))))){ # isTRUE(all.equal(n, rep(1, length(n)))) is similar to n == 1L but deals with float
-            output <- mid.tick
+            output <- mid_tick
         }else if(base::isTRUE(base::all.equal(n, base::rep(2, base::length(n))))){ # isTRUE(all.equal(n, rep(0, length(n)))) is similar to n == 2L but deals with float
-            output <- mid.tick
-            tempo.min.dist <- mid.tick - inter.select - tempo.min
-            tempo.max.dist <- tempo.max - mid.tick + inter.select
-            if(tempo.min.dist <= tempo.max.dist){ # distance between lowest tick and bottom axis <= distance between highest tick and top axis. If yes, extra tick but at the top, otherwise at the bottom
-                output <- base::c(mid.tick, mid.tick + inter.select)
-            }else{ # nocov start (unreachable: mid.tick is always within inter.select of mid, so mid.tick - inter.select - tempo.min <= tempo.max - mid.tick + inter.select always holds)
-                output <- base::c(mid.tick - inter.select, mid.tick)
+            output <- mid_tick
+            tempo_min_dist <- mid_tick - inter_select - tempo_min
+            tempo_max_dist <- tempo_max - mid_tick + inter_select
+            if(tempo_min_dist <= tempo_max_dist){ # distance between lowest tick and bottom axis <= distance between highest tick and top axis. If yes, extra tick but at the top, otherwise at the bottom
+                output <- base::c(mid_tick, mid_tick + inter_select)
+            }else{ # nocov start (unreachable: mid_tick is always within inter_select of mid, so mid_tick - inter_select - tempo_min <= tempo_max - mid_tick + inter_select always holds)
+                output <- base::c(mid_tick - inter_select, mid_tick)
             } # nocov end
         }else if((n / 2 - base::trunc(n / 2)) > 0.1){ # > 0.1 to avoid floating point. Because result can only be 0 or 0.5. Thus, > 0.1 means odd number
-            output <- base::c(mid.tick - (base::trunc(n / 2):1) * inter.select, mid.tick, mid.tick + (1:base::trunc(n / 2)) * inter.select)
+            output <- base::c(mid_tick - (base::trunc(n / 2):1) * inter_select, mid_tick, mid_tick + (1:base::trunc(n / 2)) * inter_select)
         }else if((n / 2 - base::trunc(n / 2)) < 0.1){ # < 0.1 to avoid floating point. Because result can only be 0 or 0.5. Thus, < 0.1 means even number
-            tempo.min.dist <- mid.tick - base::trunc(n / 2) * inter.select - tempo.min
-            tempo.max.dist <- tempo.max - mid.tick + base::trunc(n / 2) * inter.select
-            if(tempo.min.dist <= tempo.max.dist){ # distance between lowest tick and bottom axis <= distance between highest tick and top axis. If yes, extra tick but at the bottom, otherwise at the top
-                output <- base::c(mid.tick - ((base::trunc(n / 2) - 1):1) * inter.select, mid.tick, mid.tick + (1:base::trunc(n / 2)) * inter.select)
-            }else{ # nocov start (unreachable: same geometric argument as for n == 2, with mid.tick always within inter.select of mid)
-                output <- base::c(mid.tick - (base::trunc(n / 2):1) * inter.select, mid.tick, mid.tick + (1:(base::trunc(n / 2) - 1)) * inter.select)
+            tempo_min_dist <- mid_tick - base::trunc(n / 2) * inter_select - tempo_min
+            tempo_max_dist <- tempo_max - mid_tick + base::trunc(n / 2) * inter_select
+            if(tempo_min_dist <= tempo_max_dist){ # distance between lowest tick and bottom axis <= distance between highest tick and top axis. If yes, extra tick but at the bottom, otherwise at the top
+                output <- base::c(mid_tick - ((base::trunc(n / 2) - 1):1) * inter_select, mid_tick, mid_tick + (1:base::trunc(n / 2)) * inter_select)
+            }else{ # nocov start (unreachable: same geometric argument as for n == 2, with mid_tick always within inter_select of mid)
+                output <- base::c(mid_tick - (base::trunc(n / 2):1) * inter_select, mid_tick, mid_tick + (1:(base::trunc(n / 2) - 1)) * inter_select)
             } # nocov end
         }else{ # nocov start (internal error: impossible to reach with argument values, because n / 2 - trunc(n / 2) is exactly 0 or 0.5)
             tempo_cat <- base::paste0(
@@ -599,12 +599,12 @@ scale2 <- function(
         } # nocov end
         # end centering the new scale 
         # last check
-        if(base::min(output) < tempo.min){ # nocov start (unreachable: mid.tick is always within inter.select of mid, so min(output) = mid.tick - trunc(n/2) * inter.select >= tempo.min always holds)
-            output <- base::c(output[-1], base::max(output) + inter.select) # remove the lowest tick and add a tick at the top
-        }else if( base::max(output) > tempo.max){ # unreachable for the same geometric reason (kept for safety)
-            output <- base::c(base::min(output) - inter.select, output[-base::length(output)])
+        if(base::min(output) < tempo_min){ # nocov start (unreachable: mid_tick is always within inter_select of mid, so min(output) = mid_tick - trunc(n/2) * inter_select >= tempo_min always holds)
+            output <- base::c(output[-1], base::max(output) + inter_select) # remove the lowest tick and add a tick at the top
+        }else if( base::max(output) > tempo_max){ # unreachable for the same geometric reason (kept for safety)
+            output <- base::c(base::min(output) - inter_select, output[-base::length(output)])
         } # nocov end
-        if(base::min(output) < tempo.min | base::max(output) > tempo.max){ # nocov start (internal error: unreachable after the shifts above, kept for safety)
+        if(base::min(output) < tempo_min | base::max(output) > tempo_max){ # nocov start (internal error: unreachable after the shifts above, kept for safety)
             tempo_cat <- base::paste0(
                 "INTERNAL ERROR 4 IN ",
                 intern_error_text_start,
@@ -638,7 +638,7 @@ scale2 <- function(
         )
         base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
     } # nocov end
-    if(base::diff(lim.rank) < 0){
+    if(base::diff(lim_rank) < 0){
         output <- base::rev(output)
     }
     #### end main code
