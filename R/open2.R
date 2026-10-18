@@ -23,7 +23,7 @@
 #' @param paper Single character string. Paper argument of the pdf function (paper format). Only used for pdf(). Either "a4", "letter", "legal", "us", "executive", "a4r", "USr" or "special" (case insensitive: uppercase equivalents like "A4", "LETTER", "LEGAL", "US" are also accepted). If "special", means that the paper dimension will be width and height. With another paper format, if width or height is over the size of the paper, width or height will be modified such that the plot is adjusted to the paper dimension (see $dim in the returned list below to see the modified dimensions). Ignored if pdf == FALSE.
 #' @param pdf_overwrite Single logical value. Existing pdf can be overwritten? . Ignored if pdf == FALSE.
 #' @param rescale Kind of GUI. Either "R", "fit", or "fixed". Ignored on Mac and Linux OS. See ?windows for details.
-#' @param remove_read_only Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return_output == FALSE. 
+#' @param remove_read_only Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini_par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini_par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return_output == FALSE. 
 #' @param return_output Single logical value. Return output ? If TRUE the output list is displayed.
 #' @param safer_check Single logical value. Perform the "safer" checks? If \code{TRUE}, checkings are performed before main code running (see the \href{https://github.com/safer-r}{safer-r project}): 1) correct \code{lib_path} argument value 2) required functions and related packages effectively present in local R libraries and 3) R classical operators (like \code{"<-"}) not overwritten by another package because of the R scope. Warning: must be set to \code{FALSE} if this function is used inside another "safer" function to avoid pointless multiple checkings.
 #' @param lib_path Vector of characters specifying the absolute pathways of the directories containing the required packages for the function, if not in the default directories. Useful when R packages are not installed in the default directories because of lack of admin rights. More precisely, \code{lib_path} is passed through the \code{new} argument of \code{.libPaths()} so that the new library paths are \code{c(lib_path, .libPaths())}. Warning: \code{.libPaths()} is restored to the initial paths, after function execution. Ignored if \code{NULL} (default) or if the \code{safer_check} argument is \code{FALSE}: only the pathways specified by the current \code{.libPaths()} are used for package calling.
@@ -31,11 +31,11 @@
 #' @returns
 #' A list containing:
 #' 
-#' - $pdf.loc: path of the pdf created.
+#' - $pdf_loc: path of the pdf created.
 #' 
-#' - $ini.par: initial par() parameters.
+#' - $ini_par: initial par() parameters.
 #' 
-#' - $zone.ini: initial window spliting.
+#' - $zone_ini: initial window spliting.
 #' 
 #' - $dim: dimension of the graphical device (in inches).
 #' @details 
@@ -609,7 +609,7 @@ open2 <- function(
 
     #### output
     if(return_output == TRUE){
-        output <- base::list(pdf.loc = pdf_loc, ini.par = ini_par, zone.ini = zone_ini, dim = grDevices::dev.size())
+        output <- base::list(pdf_loc = pdf_loc, ini_par = ini_par, zone_ini = zone_ini, dim = grDevices::dev.size())
         base::return(output)
     }
     #### end output

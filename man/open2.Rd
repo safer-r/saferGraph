@@ -37,7 +37,7 @@ open2(
 
 \item{rescale}{Kind of GUI. Either "R", "fit", or "fixed". Ignored on Mac and Linux OS. See ?windows for details.}
 
-\item{remove_read_only}{Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini.par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini.par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return_output == FALSE.}
+\item{remove_read_only}{Single logical value. Remove the read only (R.O.) graphical parameters? If TRUE, the graphical parameters are returned without the R.O. parameters. The returned $ini_par list can be used to set the par() of a new graphical device. If FALSE, graphical parameters are returned with the R.O. parameters, which provides information like text dimension (see ?par() ). The returned $ini_par list can be used to set the par() of a new graphical device, but generate a warning message. Ignored if return_output == FALSE.}
 
 \item{return_output}{Single logical value. Return output ? If TRUE the output list is displayed.}
 
@@ -50,11 +50,11 @@ open2(
 \value{
 A list containing:
 
-- $pdf.loc: path of the pdf created.
+- $pdf_loc: path of the pdf created.
 
-- $ini.par: initial par() parameters.
+- $ini_par: initial par() parameters.
 
-- $zone.ini: initial window spliting.
+- $zone_ini: initial window spliting.
 
 - $dim: dimension of the graphical device (in inches).
 }

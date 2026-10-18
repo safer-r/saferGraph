@@ -40,49 +40,49 @@
 #' @returns 
 #' A list containing: 
 #' 
-#' - $x.mid.left.dev.region: middle of the left margin of the device region, in coordinates of the x-axis.
+#' - $x_mid_left_dev_region: middle of the left margin of the device region, in coordinates of the x-axis.
 #' 
-#' - $x.left.dev.region: left side of the left margin (including the potential margin of the device region), in coordinates of the x-axis.
+#' - $x_left_dev_region: left side of the left margin (including the potential margin of the device region), in coordinates of the x-axis.
 #' 
-#' - $x.mid.right.dev.region: middle of the right margin of the device region, in coordinates of the x-axis.
+#' - $x_mid_right_dev_region: middle of the right margin of the device region, in coordinates of the x-axis.
 #' 
-#' - $x.right.dev.region: right side of the right margin (including the potential margin of the device region), in coordinates of the x-axis.
+#' - $x_right_dev_region: right side of the right margin (including the potential margin of the device region), in coordinates of the x-axis.
 #' 
-#' - $x.mid.left.fig.region: middle of the left margin of the figure region, in coordinates of the x-axis.
+#' - $x_mid_left_fig_region: middle of the left margin of the figure region, in coordinates of the x-axis.
 #' 
-#' - $x.left.fig.region: left side of the left margin, in coordinates of the x-axis.
+#' - $x_left_fig_region: left side of the left margin, in coordinates of the x-axis.
 #' 
-#' - $x.mid.right.fig.region: middle of the right margin of the figure region, in coordinates of the x-axis.
+#' - $x_mid_right_fig_region: middle of the right margin of the figure region, in coordinates of the x-axis.
 #' 
-#' - $x.right.fig.region: right side of the right margin, in coordinates of the x-axis.
+#' - $x_right_fig_region: right side of the right margin, in coordinates of the x-axis.
 #' 
-#' - $x.left.plot.region: left side of the plot region, in coordinates of the x-axis.
+#' - $x_left_plot_region: left side of the plot region, in coordinates of the x-axis.
 #' 
-#' - $x.right.plot.region: right side of the plot region, in coordinates of the x-axis.
+#' - $x_right_plot_region: right side of the plot region, in coordinates of the x-axis.
 #' 
-#' - $x.mid.plot.region: middle of the plot region, in coordinates of the x-axis.
+#' - $x_mid_plot_region: middle of the plot region, in coordinates of the x-axis.
 #' 
-#' - $y.mid.bottom.dev.region: middle of the bottom margin of the device region, in coordinates of the y-axis.
+#' - $y_mid_bottom_dev_region: middle of the bottom margin of the device region, in coordinates of the y-axis.
 #' 
-#' - $y.bottom.dev.region: bottom side of the bottom margin (including the potential margin of the device region), in coordinates of the y-axis.
+#' - $y_bottom_dev_region: bottom side of the bottom margin (including the potential margin of the device region), in coordinates of the y-axis.
 #' 
-#' - $y.mid.top.dev.region: middle of the top margin of the device region, in coordinates of the y-axis.
+#' - $y_mid_top_dev_region: middle of the top margin of the device region, in coordinates of the y-axis.
 #' 
-#' - $y.top.dev.region: top side of the top margin (including the potential margin of the device region), in coordinates of the y-axis.
+#' - $y_top_dev_region: top side of the top margin (including the potential margin of the device region), in coordinates of the y-axis.
 #' 
-#' - $y.mid.bottom.fig.region: middle of the bottom margin of the figure region, in coordinates of the y-axis.
+#' - $y_mid_bottom_fig_region: middle of the bottom margin of the figure region, in coordinates of the y-axis.
 #' 
-#' - $y.bottom.fig.region: bottom of the bottom margin of the figure region, in coordinates of the y-axis.
+#' - $y_bottom_fig_region: bottom of the bottom margin of the figure region, in coordinates of the y-axis.
 #' 
-#' - $y.mid.top.fig.region: middle of the top margin of the figure region, in coordinates of the y-axis.
+#' - $y_mid_top_fig_region: middle of the top margin of the figure region, in coordinates of the y-axis.
 #' 
-#' - $y.top.fig.region: top of the top margin of the figure region, in coordinates of the y-axis.
+#' - $y_top_fig_region: top of the top margin of the figure region, in coordinates of the y-axis.
 #' 
-#' - $y.top.plot.region: top of the plot region, in coordinates of the y-axis.
+#' - $y_top_plot_region: top of the plot region, in coordinates of the y-axis.
 #' 
-#' - $y.bottom.plot.region: bottom of the plot region, in coordinates of the y-axis.
+#' - $y_bottom_plot_region: bottom of the plot region, in coordinates of the y-axis.
 #' 
-#' - $y.mid.plot.region: middle of the plot region, in coordinates of the y-axis.
+#' - $y_mid_plot_region: middle of the plot region, in coordinates of the y-axis.
 #' 
 #' - $text: warning text
 #' @author Gael Millot <gael.millot@pasteur.fr>
@@ -836,18 +836,18 @@ post_plot <- function(
         tempo_par <- saferGraph::open2(pdf = FALSE, pdf_path = "working.dir", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, rescale = "R", remove_read_only = FALSE, return_output = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text)
         base::invisible(grDevices::dev.off()) # close the new window
         if( ! base::is.null(custom_par)){
-            if( ! base::names(x = custom_par) %in% base::names(x = tempo_par$ini.par)){
+            if( ! base::names(x = custom_par) %in% base::names(x = tempo_par$ini_par)){
                 tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ncustom_par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
                 base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             base::suppressWarnings(expr = graphics::par(custom_par), classes = "warning") # apply the custom parameters on the current device
             text <- base::c(text, "\nGRAPH PARAMETERS SET TO VALUES DEFINED BY custom_par ARGUMENT\n")
         }else{
-            base::suppressWarnings(expr = graphics::par(tempo_par$ini.par), classes = "warning") # reset to the default parameters of a fresh device
+            base::suppressWarnings(expr = graphics::par(tempo_par$ini_par), classes = "warning") # reset to the default parameters of a fresh device
             text <- base::c(text, "\nGRAPH PARAMETERS RESET TO graphics::par() DEFAULT VALUES\n")
         }
     }
-    output <- base::list(x.mid.left.dev.region = x_mid_left_dev_region, x.left.dev.region = x_left_dev_region, x.mid.right.dev.region = x_mid_right_dev_region, x.right.dev.region = x_right_dev_region, x.mid.left.fig.region = x_mid_left_fig_region, x.left.fig.region = x_left_fig_region, x.mid.right.fig.region = x_mid_right_fig_region, x.right.fig.region = x_right_fig_region, x.left.plot.region = x_left_plot_region, x.right.plot.region = x_right_plot_region, x.mid.plot.region = x_mid_plot_region, y.mid.bottom.dev.region = y_mid_bottom_dev_region, y.bottom.dev.region = y_bottom_dev_region, y.mid.top.dev.region = y_mid_top_dev_region, y.top.dev.region = y_top_dev_region, y.mid.bottom.fig.region = y_mid_bottom_fig_region, y.bottom.fig.region = y_bottom_fig_region, y.mid.top.fig.region = y_mid_top_fig_region, y.top.fig.region = y_top_fig_region, y.top.plot.region = y_top_plot_region, y.bottom.plot.region = y_bottom_plot_region, y.mid.plot.region = y_mid_plot_region, text = text)
+    output <- base::list(x_mid_left_dev_region = x_mid_left_dev_region, x_left_dev_region = x_left_dev_region, x_mid_right_dev_region = x_mid_right_dev_region, x_right_dev_region = x_right_dev_region, x_mid_left_fig_region = x_mid_left_fig_region, x_left_fig_region = x_left_fig_region, x_mid_right_fig_region = x_mid_right_fig_region, x_right_fig_region = x_right_fig_region, x_left_plot_region = x_left_plot_region, x_right_plot_region = x_right_plot_region, x_mid_plot_region = x_mid_plot_region, y_mid_bottom_dev_region = y_mid_bottom_dev_region, y_bottom_dev_region = y_bottom_dev_region, y_mid_top_dev_region = y_mid_top_dev_region, y_top_dev_region = y_top_dev_region, y_mid_bottom_fig_region = y_mid_bottom_fig_region, y_bottom_fig_region = y_bottom_fig_region, y_mid_top_fig_region = y_mid_top_fig_region, y_top_fig_region = y_top_fig_region, y_top_plot_region = y_top_plot_region, y_bottom_plot_region = y_bottom_plot_region, y_mid_plot_region = y_mid_plot_region, text = text)
     # output
     # warning output
     # end warning output

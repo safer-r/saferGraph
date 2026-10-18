@@ -26,7 +26,7 @@ post_plot(y_side = 2, y_log_scale = TRUE, x_lab = "Values", y_lab = "TEST", y_ax
 plot(1:100) ; 
 para <- post_plot(corner_text = "TITLE ADDED") 
 
-par(xpd = TRUE) ; text(x = para$x.mid.left.fig.region, y = para$y.mid.top.fig.region, labels = "TITLE ADDED", cex = 0.5)
+par(xpd = TRUE) ; text(x = para$x_mid_left_fig_region, y = para$y_mid_top_fig_region, labels = "TITLE ADDED", cex = 0.5)
 ```
 <br>
 
@@ -36,11 +36,11 @@ pdf("file2") ;
 graphics::par(mai=c(0.5,0.5,0.5,0.5), omi = c(0.25,0.25,1,0.25), xaxs = "i", yaxs = "i") ; 
 plot(0:10) ; 
 a <- post_plot(x_side = 0, y_side = 0) ; 
-x <- c(a$x.mid.left.dev.region, a$x.left.dev.region, a$x.mid.right.dev.region, a$x.right.dev.region, a$x.mid.left.fig.region, a$x.left.fig.region, a$x.mid.right.fig.region, a$x.right.fig.region, a$x.right.plot.region, a$x.left.plot.region, a$x.mid.plot.region) ; 
-y <- c(a$y.mid.bottom.dev.region, a$y.bottom.dev.region, a$y.mid.top.dev.region, a$y.top.dev.region, a$y.mid.bottom.fig.region, a$y.bottom.fig.region, a$y.mid.top.fig.region, a$y.top.fig.region, a$y.top.plot.region, a$y.bottom.plot.region, a$y.mid.plot.region) ; 
+x <- c(a$x_mid_left_dev_region, a$x_left_dev_region, a$x_mid_right_dev_region, a$x_right_dev_region, a$x_mid_left_fig_region, a$x_left_fig_region, a$x_mid_right_fig_region, a$x_right_fig_region, a$x_right_plot_region, a$x_left_plot_region, a$x_mid_plot_region) ; 
+y <- c(a$y_mid_bottom_dev_region, a$y_bottom_dev_region, a$y_mid_top_dev_region, a$y_top_dev_region, a$y_mid_bottom_fig_region, a$y_bottom_fig_region, a$y_mid_top_fig_region, a$y_top_fig_region, a$y_top_plot_region, a$y_bottom_plot_region, a$y_mid_plot_region) ; 
 graphics::par(xpd = NA) ; 
 points(x = rep(5, length(y)), y = y, pch = 16, col = "red") ; 
-text(x = rep(5, length(y)), y = y, c("y.mid.bottom.dev.region", "y.bottom.dev.region", "y.mid.top.dev.region", "y.top.dev.region", "y.mid.bottom.fig.region", "y.bottom.fig.region", "y.mid.top.fig.region", "y.top.fig.region", "y.top.plot.region", "y.bottom.plot.region", "y.mid.plot.region"), cex = 0.65, col = grey(0.25)) ; 
+text(x = rep(5, length(y)), y = y, c("y_mid_bottom_dev_region", "y_bottom_dev_region", "y_mid_top_dev_region", "y_top_dev_region", "y_mid_bottom_fig_region", "y_bottom_fig_region", "y_mid_top_fig_region", "y_top_fig_region", "y_top_plot_region", "y_bottom_plot_region", "y_mid_plot_region"), cex = 0.65, col = grey(0.25)) ; 
 points(y = rep(5, length(x)), x = x, pch = 16, col = "blue") ; 
-text(y = rep(5, length(x)), x = x, c("x.mid.left.dev.region", "x.left.dev.region", "x.mid.right.dev.region", "x.right.dev.region", "x.mid.left.fig.region", "x.left.fig.region", "x.mid.right.fig.region", "x.right.fig.region", "x.right.plot.region", "x.left.plot.region", "x.mid.plot.region"), cex = 0.65, srt = 90, col = grey(0.25))
+text(y = rep(5, length(x)), x = x, c("x_mid_left_dev_region", "x_left_dev_region", "x_mid_right_dev_region", "x_right_dev_region", "x_mid_left_fig_region", "x_left_fig_region", "x_mid_right_fig_region", "x_right_fig_region", "x_right_plot_region", "x_left_plot_region", "x_mid_plot_region"), cex = 0.65, srt = 90, col = grey(0.25))
 ```

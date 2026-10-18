@@ -361,18 +361,18 @@ testthat::test_that("open2()", {
     }
     # pdf_path with trailing "/" and "\\" (cleaned in main code)
     result0 <- open2(pdf = TRUE, pdf_path = base::paste0(temp_dir, "/"), pdf_name = "open2_test", width = num1, height = num1, paper = "special", pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = "")
-    testthat::expect_equal(object = result0$pdf.loc, expected = pdf_file)
+    testthat::expect_equal(object = result0$pdf_loc, expected = pdf_file)
     base::invisible(grDevices::dev.off())
     result0b <- open2(pdf = TRUE, pdf_path = base::paste0(temp_dir, "\\"), pdf_name = "open2_test", width = num1, height = num1, paper = "special", pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = "")
-    testthat::expect_equal(object = result0b$pdf.loc, expected = pdf_file)
+    testthat::expect_equal(object = result0b$pdf_loc, expected = pdf_file)
     base::invisible(grDevices::dev.off())
     result <- open2(pdf = TRUE, pdf_path = temp_dir, pdf_name = "open2_test", width = num1, height = num1, paper = "special", pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = "")
     testthat::expect_true(object = base::is.list(x = result))
-    testthat::expect_equal(object = base::names(x = result), expected = base::c("pdf.loc", "ini.par", "zone.ini", "dim"))
-    testthat::expect_equal(object = result$pdf.loc, expected = pdf_file)
-    testthat::expect_true(object = base::is.list(x = result$ini.par)) # par() with no.readonly = TRUE returns a list
+    testthat::expect_equal(object = base::names(x = result), expected = base::c("pdf_loc", "ini_par", "zone_ini", "dim"))
+    testthat::expect_equal(object = result$pdf_loc, expected = pdf_file)
+    testthat::expect_true(object = base::is.list(x = result$ini_par)) # par() with no.readonly = TRUE returns a list
     testthat::expect_equal(object = result$dim, expected = base::unname(grDevices::dev.size(unit = "in"))[1:2])
-    testthat::expect_true(object = base::file.exists(pdf_file)) # the pdf file is created at return? No: the file is created when the device is closed. Thus here, it does not exist yet. But pdf.loc is the path where it will be created
+    testthat::expect_true(object = base::file.exists(pdf_file)) # the pdf file is created at return? No: the file is created when the device is closed. Thus here, it does not exist yet. But pdf_loc is the path where it will be created
     # actually, the pdf file is only written on dev.off()
     base::invisible(grDevices::dev.off())
     testthat::expect_true(object = base::file.exists(pdf_file))
@@ -382,7 +382,7 @@ testthat::test_that("open2()", {
         base::file.remove(pdf_file2)
     }
     result2 <- open2(pdf = TRUE, pdf_path = temp_dir, pdf_name = "open2_test2.pdf", width = num1, height = num1, paper = "special", pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = "")
-    testthat::expect_equal(object = result2$pdf.loc, expected = pdf_file2)
+    testthat::expect_equal(object = result2$pdf_loc, expected = pdf_file2)
     base::invisible(grDevices::dev.off())
     # return_output = FALSE does not return anything
     pdf_file3 <- base::file.path(temp_dir, "open2_test3.pdf")

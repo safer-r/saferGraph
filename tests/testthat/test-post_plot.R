@@ -440,7 +440,7 @@ testthat::test_that("post_plot()", {
     result <- post_plot(x_side = 1, x_log_scale = FALSE, x_categ = NULL, x_categ_pos = NULL, x_lab = "x", x_axis_size = num1, x_label_size = num1, x_dist_legend = num2, x_nb_inter_tick = int1, y_side = 0, y_log_scale = FALSE, y_categ = NULL, y_categ_pos = NULL, y_lab = "", y_axis_size = num1, y_label_size = num1, y_dist_legend = num2, y_nb_inter_tick = int1, text_angle = 90, tick_length = num2, sec_tick_length = 0.3, bg_color = NULL, grid_lwd = NULL, grid_col = "white", corner_text = "c", corner_text_size = 1, just_label_add = FALSE, par_reset = FALSE, custom_par = NULL, safer_check = TRUE, lib_path = NULL, error_text = "")
     testthat::expect_true(object = base::is.list(x = result))
     testthat::expect_true(object = base::length(x = result) > 20)
-    testthat::expect_true(object = base::is.numeric(x = result$x.mid.left.dev.region))
+    testthat::expect_true(object = base::is.numeric(x = result$x_mid_left_dev_region))
     testthat::expect_null(object = result$text)
     # numeric axis, top with inter ticks
     result2 <- post_plot(x_side = 3, x_log_scale = FALSE, x_categ = NULL, x_categ_pos = NULL, x_lab = "x", x_axis_size = num1, x_label_size = num1, x_dist_legend = num2, x_nb_inter_tick = 2L, y_side = 0, y_log_scale = FALSE, y_categ = NULL, y_categ_pos = NULL, y_lab = "", y_axis_size = num1, y_label_size = num1, y_dist_legend = num2, y_nb_inter_tick = int1, text_angle = 90, tick_length = num2, sec_tick_length = 0.3, bg_color = NULL, grid_lwd = NULL, grid_col = "white", corner_text = "c", corner_text_size = 1, just_label_add = FALSE, par_reset = FALSE, custom_par = NULL, safer_check = TRUE, lib_path = NULL, error_text = "")
