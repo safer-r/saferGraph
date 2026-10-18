@@ -5,98 +5,98 @@
 \title{post_plot}
 \usage{
 post_plot(
-  x.side = 0,
-  x.log.scale = FALSE,
-  x.categ = NULL,
-  x.categ.pos = NULL,
-  x.lab = "",
-  x.axis.size = 1.5,
-  x.label.size = 1.5,
-  x.dist.legend = 0.5,
-  x.nb.inter.tick = 1,
-  y.side = 0,
-  y.log.scale = FALSE,
-  y.categ = NULL,
-  y.categ.pos = NULL,
-  y.lab = "",
-  y.axis.size = 1.5,
-  y.label.size = 1.5,
-  y.dist.legend = 0.5,
-  y.nb.inter.tick = 1,
-  text.angle = 90,
-  tick.length = 0.5,
-  sec.tick.length = 0.3,
-  bg.color = NULL,
-  grid.lwd = NULL,
-  grid.col = "white",
-  corner.text = "",
-  corner.text.size = 1,
-  just.label.add = FALSE,
-  par.reset = FALSE,
-  custom.par = NULL,
+  x_side = 0,
+  x_log_scale = FALSE,
+  x_categ = NULL,
+  x_categ_pos = NULL,
+  x_lab = "",
+  x_axis_size = 1.5,
+  x_label_size = 1.5,
+  x_dist_legend = 0.5,
+  x_nb_inter_tick = 1,
+  y_side = 0,
+  y_log_scale = FALSE,
+  y_categ = NULL,
+  y_categ_pos = NULL,
+  y_lab = "",
+  y_axis_size = 1.5,
+  y_label_size = 1.5,
+  y_dist_legend = 0.5,
+  y_nb_inter_tick = 1,
+  text_angle = 90,
+  tick_length = 0.5,
+  sec_tick_length = 0.3,
+  bg_color = NULL,
+  grid_lwd = NULL,
+  grid_col = "white",
+  corner_text = "",
+  corner_text_size = 1,
+  just_label_add = FALSE,
+  par_reset = FALSE,
+  custom_par = NULL,
   safer_check = TRUE,
   lib_path = NULL,
   error_text = ""
 )
 }
 \arguments{
-\item{x.side}{Single integer value indicating the axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.}
+\item{x_side}{Single integer value indicating the axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.}
 
-\item{x.log.scale}{Single logical value. Log scale for the x-axis?}
+\item{x_log_scale}{Single logical value. Log scale for the x-axis?}
 
-\item{x.categ}{Vector of character indicating the categories when the x-axis is qualitative(stripchart, boxplot).}
+\item{x_categ}{Vector of character indicating the categories when the x-axis is qualitative(stripchart, boxplot).}
 
-\item{x.categ.pos}{Numeric vector of identical length than x.categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).}
+\item{x_categ_pos}{Numeric vector of identical length than x_categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).}
 
-\item{x.lab}{Single character string of the label of the x-axis. If x.side == 0 and x.lab != "", then x.lab is printed.}
+\item{x_lab}{Single character string of the label of the x-axis. If x_side == 0 and x_lab != "", then x_lab is printed.}
 
-\item{x.axis.size}{Single positive numeric value to increase or decrease the size of the x axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.}
+\item{x_axis_size}{Single positive numeric value to increase or decrease the size of the x axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.}
 
-\item{x.label.size}{Single positive numeric value to increase or decrease the size of the x axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.}
+\item{x_label_size}{Single positive numeric value to increase or decrease the size of the x axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.}
 
-\item{x.dist.legend}{Single positive numeric value to move x-axis legends away (first number of mgp argument of par() but in inches).}
+\item{x_dist_legend}{Single positive numeric value to move x-axis legends away (first number of mgp argument of par() but in inches).}
 
-\item{x.nb.inter.tick}{Single positive integer value indicating the number of secondary ticks between main ticks on x-axis (only if not log scale). 0 means no secondary ticks.}
+\item{x_nb_inter_tick}{Single positive integer value indicating the number of secondary ticks between main ticks on x-axis (only if not log scale). 0 means no secondary ticks.}
 
-\item{y.side}{Single integer of either 0, 2 or 4 value to display the axis at the left (2) or right (4) of the region figure. Write 0 for no change.}
+\item{y_side}{Single integer of either 0, 2 or 4 value to display the axis at the left (2) or right (4) of the region figure. Write 0 for no change.}
 
-\item{y.log.scale}{Single logical value. Log scale for the y-axis?}
+\item{y_log_scale}{Single logical value. Log scale for the y-axis?}
 
-\item{y.categ}{Vector of character indicating the categories when the y-axis is qualitative(stripchart, boxplot).}
+\item{y_categ}{Vector of character indicating the categories when the y-axis is qualitative(stripchart, boxplot).}
 
-\item{y.categ.pos}{Numeric vector of identical length than y.categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).}
+\item{y_categ_pos}{Numeric vector of identical length than y_categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).}
 
-\item{y.lab}{Label of the y-axis. If y.side == 0 and y.lab != "", then y.lab is printed.}
+\item{y_lab}{Label of the y-axis. If y_side == 0 and y_lab != "", then y_lab is printed.}
 
-\item{y.axis.size}{Single positive numeric value to increase or decrease the size of the y axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.}
+\item{y_axis_size}{Single positive numeric value to increase or decrease the size of the y axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.}
 
-\item{y.label.size}{Single positive numeric value to increase or decrease the size of the y axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.}
+\item{y_label_size}{Single positive numeric value to increase or decrease the size of the y axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.}
 
-\item{y.dist.legend}{Single positive numeric value to move y-axis legends away (first number of mgp argument of par() but in inches).}
+\item{y_dist_legend}{Single positive numeric value to move y-axis legends away (first number of mgp argument of par() but in inches).}
 
-\item{y.nb.inter.tick}{Single positive integer value indicating the number of secondary ticks between main ticks on y-axis (only if not log scale). 0 means no secondary ticks.}
+\item{y_nb_inter_tick}{Single positive integer value indicating the number of secondary ticks between main ticks on y-axis (only if not log scale). 0 means no secondary ticks.}
 
-\item{text.angle}{Single numeric value for the angle of the text when axis is qualitative.}
+\item{text_angle}{Single numeric value for the angle of the text when axis is qualitative.}
 
-\item{tick.length}{Single positive proportion value indicating the length of the main ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).}
+\item{tick_length}{Single positive proportion value indicating the length of the main ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).}
 
-\item{sec.tick.length}{Single positive proportion value indicating the length of the secondary ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).}
+\item{sec_tick_length}{Single positive proportion value indicating the length of the secondary ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).}
 
-\item{bg.color}{Background color of the plot region. Either (1) NULL (no color), or (2) a single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code. BEWARE: cover/hide an existing plot !}
+\item{bg_color}{Background color of the plot region. Either (1) NULL (no color), or (2) a single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code. BEWARE: cover/hide an existing plot !}
 
-\item{grid.lwd}{Vector of positive numeric values. If non NULL, both activate the grid lines and specify the line widths.}
+\item{grid_lwd}{Vector of positive numeric values. If non NULL, both activate the grid lines and specify the line widths.}
 
-\item{grid.col}{Grid line colors (only if grid.lwd non NULL). A single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code.}
+\item{grid_col}{Grid line colors (only if grid_lwd non NULL). A single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code.}
 
-\item{corner.text}{Single character string adding a text at the top right corner of the window.}
+\item{corner_text}{Single character string adding a text at the top right corner of the window.}
 
-\item{corner.text.size}{Single positive numeric value to increase or decrease the size of the text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.}
+\item{corner_text_size}{Single positive numeric value to increase or decrease the size of the text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.}
 
-\item{just.label.add}{Single logical value that just add axis labels (legend). If TRUE, at least (x.side == 0 & x.lab != "") or (y.side == 0 & y.lab != "") must be set to display the corresponding x.lab or y.lab.}
+\item{just_label_add}{Single logical value that just add axis labels (legend). If TRUE, at least (x_side == 0 & x_lab != "") or (y_side == 0 & y_lab != "") must be set to display the corresponding x_lab or y_lab.}
 
-\item{par.reset}{Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.}
+\item{par_reset}{Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.}
 
-\item{custom.par}{List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par.reset == TRUE, the default par() parameters are used.}
+\item{custom_par}{List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par_reset == TRUE, the default par() parameters are used.}
 
 \item{safer_check}{Single logical value. Perform the "safer" checks? If \code{TRUE}, checkings are performed before main code running (see the \href{https://github.com/safer-r}{safer-r project}): 1) correct \code{lib_path} argument value 2) required functions and related packages effectively present in local R libraries and 3) R classical operators (like \code{"<-"}) not overwritten by another package because of the R scope. Warning: must be set to \code{FALSE} if this function is used inside another "safer" function to avoid pointless multiple checkings.}
 
@@ -154,7 +154,7 @@ A list containing:
 - $text: warning text
 }
 \description{
-Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs (see below).
+Redesign axis. If x_side = 0, y_side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs (see below).
 
 Provide also positions for legend or additional text on the graph.
 
@@ -168,7 +168,7 @@ Use prior_plot() before this function for initial inactivation of the axis drawi
 
 prior.par <- prior_plot(param.reinitial = TRUE) ; 
 plot(1:100) ; 
-post_plot(x.side = 1, x.lab = "Values", y.side = 2, y.lab = "TEST", y.axis.size = 1, y.label.size = 2, y.dist.legend = 0.6)
+post_plot(x_side = 1, x_lab = "Values", y_side = 2, y_lab = "TEST", y_axis_size = 1, y_label_size = 2, y_dist_legend = 0.6)
 }
 }
 \author{

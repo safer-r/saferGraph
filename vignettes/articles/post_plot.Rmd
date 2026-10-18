@@ -17,7 +17,7 @@ library(saferGraph)
 ```{r, echo = TRUE, error = TRUE}
 pdf("file2")
 plot(1:100, log = "y") ; 
-post_plot(y.side = 2, y_log_scale = TRUE, x_lab = "Values", y_lab = "TEST", y_axis_size = 1.25, y_label_size = 1.5, y_dist_legend = 0.7, just_label_add = TRUE)
+post_plot(y_side = 2, y_log_scale = TRUE, x_lab = "Values", y_lab = "TEST", y_axis_size = 1.25, y_label_size = 1.5, y_dist_legend = 0.7, just_label_add = TRUE)
 ```
 <br>
 
@@ -35,7 +35,7 @@ par(xpd = TRUE) ; text(x = para$x.mid.left.fig.region, y = para$y.mid.top.fig.re
 pdf("file2") ; 
 graphics::par(mai=c(0.5,0.5,0.5,0.5), omi = c(0.25,0.25,1,0.25), xaxs = "i", yaxs = "i") ; 
 plot(0:10) ; 
-a <- post_plot(x.side = 0, y.side = 0) ; 
+a <- post_plot(x_side = 0, y_side = 0) ; 
 x <- c(a$x.mid.left.dev.region, a$x.left.dev.region, a$x.mid.right.dev.region, a$x.right.dev.region, a$x.mid.left.fig.region, a$x.left.fig.region, a$x.mid.right.fig.region, a$x.right.fig.region, a$x.right.plot.region, a$x.left.plot.region, a$x.mid.plot.region) ; 
 y <- c(a$y.mid.bottom.dev.region, a$y.bottom.dev.region, a$y.mid.top.dev.region, a$y.top.dev.region, a$y.mid.bottom.fig.region, a$y.bottom.fig.region, a$y.mid.top.fig.region, a$y.top.fig.region, a$y.top.plot.region, a$y.bottom.plot.region, a$y.mid.plot.region) ; 
 graphics::par(xpd = NA) ; 

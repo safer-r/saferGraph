@@ -1,39 +1,39 @@
 #' @title post_plot
 #' @description
-#' Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs (see below).
+#' Redesign axis. If x_side = 0, y_side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs (see below).
 #' 
 #' Provide also positions for legend or additional text on the graph.
 #' 
 #' Use prior_plot() before this function for initial inactivation of the axis drawings.
-#' @param x.side Single integer value indicating the axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.
-#' @param x.log.scale Single logical value. Log scale for the x-axis?
-#' @param x.categ Vector of character indicating the categories when the x-axis is qualitative(stripchart, boxplot).
-#' @param x.categ.pos Numeric vector of identical length than x.categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).
-#' @param x.lab Single character string of the label of the x-axis. If x.side == 0 and x.lab != "", then x.lab is printed.
-#' @param x.axis.size Single positive numeric value to increase or decrease the size of the x axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
-#' @param x.label.size Single positive numeric value to increase or decrease the size of the x axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
-#' @param x.dist.legend Single positive numeric value to move x-axis legends away (first number of mgp argument of par() but in inches).
-#' @param x.nb.inter.tick Single positive integer value indicating the number of secondary ticks between main ticks on x-axis (only if not log scale). 0 means no secondary ticks.
-#' @param y.side Single integer of either 0, 2 or 4 value to display the axis at the left (2) or right (4) of the region figure. Write 0 for no change.
-#' @param y.log.scale Single logical value. Log scale for the y-axis?
-#' @param y.categ Vector of character indicating the categories when the y-axis is qualitative(stripchart, boxplot).
-#' @param y.categ.pos Numeric vector of identical length than y.categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).
-#' @param y.lab Label of the y-axis. If y.side == 0 and y.lab != "", then y.lab is printed.
-#' @param y.axis.size Single positive numeric value to increase or decrease the size of the y axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
-#' @param y.label.size Single positive numeric value to increase or decrease the size of the y axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
-#' @param y.dist.legend Single positive numeric value to move y-axis legends away (first number of mgp argument of par() but in inches).
-#' @param y.nb.inter.tick Single positive integer value indicating the number of secondary ticks between main ticks on y-axis (only if not log scale). 0 means no secondary ticks.
-#' @param text.angle Single numeric value for the angle of the text when axis is qualitative.
-#' @param tick.length Single positive proportion value indicating the length of the main ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
-#' @param sec.tick.length Single positive proportion value indicating the length of the secondary ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
-#' @param bg.color Background color of the plot region. Either (1) NULL (no color), or (2) a single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code. BEWARE: cover/hide an existing plot !
-#' @param grid.lwd Vector of positive numeric values. If non NULL, both activate the grid lines and specify the line widths.
-#' @param grid.col Grid line colors (only if grid.lwd non NULL). A single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code.
-#' @param corner.text Single character string adding a text at the top right corner of the window.
-#' @param corner.text.size Single positive numeric value to increase or decrease the size of the text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
-#' @param par.reset Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.
-#' @param just.label.add Single logical value that just add axis labels (legend). If TRUE, at least (x.side == 0 & x.lab != "") or (y.side == 0 & y.lab != "") must be set to display the corresponding x.lab or y.lab.
-#' @param custom.par List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par.reset == TRUE, the default par() parameters are used.
+#' @param x_side Single integer value indicating the axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.
+#' @param x_log_scale Single logical value. Log scale for the x-axis?
+#' @param x_categ Vector of character indicating the categories when the x-axis is qualitative(stripchart, boxplot).
+#' @param x_categ_pos Numeric vector of identical length than x_categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).
+#' @param x_lab Single character string of the label of the x-axis. If x_side == 0 and x_lab != "", then x_lab is printed.
+#' @param x_axis_size Single positive numeric value to increase or decrease the size of the x axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
+#' @param x_label_size Single positive numeric value to increase or decrease the size of the x axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
+#' @param x_dist_legend Single positive numeric value to move x-axis legends away (first number of mgp argument of par() but in inches).
+#' @param x_nb_inter_tick Single positive integer value indicating the number of secondary ticks between main ticks on x-axis (only if not log scale). 0 means no secondary ticks.
+#' @param y_side Single integer of either 0, 2 or 4 value to display the axis at the left (2) or right (4) of the region figure. Write 0 for no change.
+#' @param y_log_scale Single logical value. Log scale for the y-axis?
+#' @param y_categ Vector of character indicating the categories when the y-axis is qualitative(stripchart, boxplot).
+#' @param y_categ_pos Numeric vector of identical length than y_categ indicating the position of the categories names. If NULL, this will be 1:length(levels()).
+#' @param y_lab Label of the y-axis. If y_side == 0 and y_lab != "", then y_lab is printed.
+#' @param y_axis_size Single positive numeric value to increase or decrease the size of the y axis numbers. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2. Also control the size of displayed categories.
+#' @param y_label_size Single positive numeric value to increase or decrease the size of the y axis legend text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
+#' @param y_dist_legend Single positive numeric value to move y-axis legends away (first number of mgp argument of par() but in inches).
+#' @param y_nb_inter_tick Single positive integer value indicating the number of secondary ticks between main ticks on y-axis (only if not log scale). 0 means no secondary ticks.
+#' @param text_angle Single numeric value for the angle of the text when axis is qualitative.
+#' @param tick_length Single positive proportion value indicating the length of the main ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
+#' @param sec_tick_length Single positive proportion value indicating the length of the secondary ticks (1 means complete the distance between the plot region and the axis numbers, 0.5 means half the length, etc., 0 for no ticks).
+#' @param bg_color Background color of the plot region. Either (1) NULL (no color), or (2) a single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code. BEWARE: cover/hide an existing plot !
+#' @param grid_lwd Vector of positive numeric values. If non NULL, both activate the grid lines and specify the line widths.
+#' @param grid_col Grid line colors (only if grid_lwd non NULL). A single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code.
+#' @param corner_text Single character string adding a text at the top right corner of the window.
+#' @param corner_text_size Single positive numeric value to increase or decrease the size of the text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
+#' @param par_reset Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.
+#' @param just_label_add Single logical value that just add axis labels (legend). If TRUE, at least (x_side == 0 & x_lab != "") or (y_side == 0 & y_lab != "") must be set to display the corresponding x_lab or y_lab.
+#' @param custom_par List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par_reset == TRUE, the default par() parameters are used.
 #' @param safer_check Single logical value. Perform the "safer" checks? If \code{TRUE}, checkings are performed before main code running (see the \href{https://github.com/safer-r}{safer-r project}): 1) correct \code{lib_path} argument value 2) required functions and related packages effectively present in local R libraries and 3) R classical operators (like \code{"<-"}) not overwritten by another package because of the R scope. Warning: must be set to \code{FALSE} if this function is used inside another "safer" function to avoid pointless multiple checkings.
 #' @param lib_path Vector of characters specifying the absolute pathways of the directories containing the required packages for the function, if not in the default directories. Useful when R packages are not installed in the default directories because of lack of admin rights. More precisely, \code{lib_path} is passed through the \code{new} argument of \code{.libPaths()} so that the new library paths are \code{c(lib_path, .libPaths())}. Warning: \code{.libPaths()} is restored to the initial paths, after function execution. Ignored if \code{NULL} (default) or if the \code{safer_check} argument is \code{FALSE}: only the pathways specified by the current \code{.libPaths()} are used for package calling.
 #' @param error_text Single character string used to add information in error messages returned by the function, notably if the function is inside other functions, which is practical for debugging. Example: \code{error_text = " INSIDE <PACKAGE_1>::<FUNCTION_1> INSIDE <PACKAGE_2>::<FUNCTION_2>."}. If \code{NULL}, converted into \code{""}.
@@ -96,47 +96,47 @@
 #'
 #' prior.par <- prior_plot(param.reinitial = TRUE) ; 
 #' plot(1:100) ; 
-#' post_plot(x.side = 1, x.lab = "Values", y.side = 2, y.lab = "TEST", y.axis.size = 1, y.label.size = 2, y.dist.legend = 0.6)
+#' post_plot(x_side = 1, x_lab = "Values", y_side = 2, y_lab = "TEST", y_axis_size = 1, y_label_size = 2, y_dist_legend = 0.6)
 #' }
 #' @importFrom saferDev arg_check
 #' @export
 post_plot <- function(
-        x.side = 0, 
-        x.log.scale = FALSE, 
-        x.categ = NULL, 
-        x.categ.pos = NULL, 
-        x.lab = "", 
-        x.axis.size = 1.5, 
-        x.label.size = 1.5, 
-        x.dist.legend = 0.5, 
-        x.nb.inter.tick = 1, 
-        y.side = 0, 
-        y.log.scale = FALSE, 
-        y.categ = NULL, 
-        y.categ.pos = NULL, 
-        y.lab = "", 
-        y.axis.size = 1.5, 
-        y.label.size = 1.5, 
-        y.dist.legend = 0.5, 
-        y.nb.inter.tick = 1, 
-        text.angle = 90, 
-        tick.length = 0.5, 
-        sec.tick.length = 0.3, 
-        bg.color = NULL, 
-        grid.lwd = NULL, 
-        grid.col = "white", 
-        corner.text = "", 
-        corner.text.size = 1, 
-        just.label.add = FALSE, 
-        par.reset = FALSE, 
-        custom.par = NULL,
+        x_side = 0, 
+        x_log_scale = FALSE, 
+        x_categ = NULL, 
+        x_categ_pos = NULL, 
+        x_lab = "", 
+        x_axis_size = 1.5, 
+        x_label_size = 1.5, 
+        x_dist_legend = 0.5, 
+        x_nb_inter_tick = 1, 
+        y_side = 0, 
+        y_log_scale = FALSE, 
+        y_categ = NULL, 
+        y_categ_pos = NULL, 
+        y_lab = "", 
+        y_axis_size = 1.5, 
+        y_label_size = 1.5, 
+        y_dist_legend = 0.5, 
+        y_nb_inter_tick = 1, 
+        text_angle = 90, 
+        tick_length = 0.5, 
+        sec_tick_length = 0.3, 
+        bg_color = NULL, 
+        grid_lwd = NULL, 
+        grid_col = "white", 
+        corner_text = "", 
+        corner_text_size = 1, 
+        just_label_add = FALSE, 
+        par_reset = FALSE, 
+        custom_par = NULL,
         safer_check = TRUE, 
         lib_path = NULL, 
         error_text = "" 
 
 ){
     # DEBUGGING
-    # x.side = 0 ; x.log.scale = FALSE ; x.categ = NULL ; x.categ.pos = NULL ; x.lab = "" ; x.axis.size = 1.5 ; x.label.size = 1.5 ; x.dist.legend = 1 ; x.nb.inter.tick = 1 ; y.side = 0 ; y.log.scale = FALSE ; y.categ = NULL ; y.categ.pos = NULL ; y.lab = "" ; y.axis.size = 1.5 ; y.label.size = 1.5 ; y.dist.legend = 0.7 ; y.nb.inter.tick = 1 ; text.angle = 90 ; tick.length = 0.5 ; sec.tick.length = 0.3 ; bg.color = NULL ; grid.lwd = NULL ; grid.col = "white" ; corner.text = "" ; corner.text.size = 1 ; just.label.add = FALSE ; par.reset = FALSE ; custom.par = NULL ; safer_check = TRUE# for function debugging
+    # x_side = 0 ; x_log_scale = FALSE ; x_categ = NULL ; x_categ_pos = NULL ; x_lab = "" ; x_axis_size = 1.5 ; x_label_size = 1.5 ; x_dist_legend = 1 ; x_nb_inter_tick = 1 ; y_side = 0 ; y_log_scale = FALSE ; y_categ = NULL ; y_categ_pos = NULL ; y_lab = "" ; y_axis_size = 1.5 ; y_label_size = 1.5 ; y_dist_legend = 0.7 ; y_nb_inter_tick = 1 ; text_angle = 90 ; tick_length = 0.5 ; sec_tick_length = 0.3 ; bg_color = NULL ; grid_lwd = NULL ; grid_col = "white" ; corner_text = "" ; corner_text_size = 1 ; just_label_add = FALSE ; par_reset = FALSE ; custom_par = NULL ; safer_check = TRUE# for function debugging
 
 
 
@@ -257,35 +257,35 @@ post_plot <- function(
     ######## management of NULL arguments
     # before NA checking because is.na(NULL) return logical(0) and all(logical(0)) is TRUE (but secured with & base::length(x = x) > 0)
     tempo_arg <-base::c(
-        "x.side", 
-        "x.log.scale", 
-        # "x.categ", # inactivated because can be null
-        # "x.categ.pos", # inactivated because can be null
-        "x.lab", 
-        "x.axis.size", 
-        "x.label.size", 
-        "x.dist.legend", 
-        "x.nb.inter.tick", 
-        "y.side", 
-        "y.log.scale", 
-        # "y.categ", # inactivated because can be null
-        # "y.categ.pos", # inactivated because can be null
-        "y.lab", 
-        "y.axis.size", 
-        "y.label.size", 
-        "y.dist.legend", 
-        "y.nb.inter.tick" , 
-        "text.angle", 
-        "tick.length", 
-        "sec.tick.length", 
-        # "bg.color", # inactivated because can be null
-        # "grid.lwd", # inactivated because can be null
-        "grid.col", 
-        "corner.text", 
-        "corner.text.size", 
-        "just.label.add", 
-        "par.reset",
-        # "custom.par", # inactivated because can be null
+        "x_side", 
+        "x_log_scale", 
+        # "x_categ", # inactivated because can be null
+        # "x_categ_pos", # inactivated because can be null
+        "x_lab", 
+        "x_axis_size", 
+        "x_label_size", 
+        "x_dist_legend", 
+        "x_nb_inter_tick", 
+        "y_side", 
+        "y_log_scale", 
+        # "y_categ", # inactivated because can be null
+        # "y_categ_pos", # inactivated because can be null
+        "y_lab", 
+        "y_axis_size", 
+        "y_label_size", 
+        "y_dist_legend", 
+        "y_nb_inter_tick" , 
+        "text_angle", 
+        "tick_length", 
+        "sec_tick_length", 
+        # "bg_color", # inactivated because can be null
+        # "grid_lwd", # inactivated because can be null
+        "grid_col", 
+        "corner_text", 
+        "corner_text_size", 
+        "just_label_add", 
+        "par_reset",
+        # "custom_par", # inactivated because can be null
         "safer_check"
         # "lib_path", # inactivated because can be NULL
         # "error_text" # inactivated because NULL converted to "" above
@@ -307,35 +307,35 @@ post_plot <- function(
     ######## management of empty non NULL arguments
     # # before NA checking because is.na(logical()) is logical(0) (but secured with & base::length(x = x) > 0)
     tempo_arg <-base::c(
-        "x.side", 
-        "x.log.scale", 
-        "x.categ",  
-        "x.categ.pos",  
-        # "x.lab", 
-        "x.axis.size", 
-        "x.label.size", 
-        "x.dist.legend", 
-        "x.nb.inter.tick", 
-        "y.side", 
-        "y.log.scale", 
-        "y.categ",  
-        "y.categ.pos",  
-        # "y.lab", 
-        "y.axis.size", 
-        "y.label.size", 
-        "y.dist.legend", 
-        "y.nb.inter.tick" , 
-        "text.angle", 
-        "tick.length", 
-        "sec.tick.length", 
-        "bg.color",  
-        "grid.lwd",  
-        "grid.col", 
-        # "corner.text", 
-        "corner.text.size", 
-        "just.label.add", 
-        "par.reset",
-        "custom.par",  
+        "x_side", 
+        "x_log_scale", 
+        "x_categ",  
+        "x_categ_pos",  
+        # "x_lab", 
+        "x_axis_size", 
+        "x_label_size", 
+        "x_dist_legend", 
+        "x_nb_inter_tick", 
+        "y_side", 
+        "y_log_scale", 
+        "y_categ",  
+        "y_categ_pos",  
+        # "y_lab", 
+        "y_axis_size", 
+        "y_label_size", 
+        "y_dist_legend", 
+        "y_nb_inter_tick" , 
+        "text_angle", 
+        "tick_length", 
+        "sec_tick_length", 
+        "bg_color",  
+        "grid_lwd",  
+        "grid_col", 
+        # "corner_text", 
+        "corner_text_size", 
+        "just_label_add", 
+        "par_reset",
+        "custom_par",  
         "safer_check", 
         "lib_path"
         # "error_text" # inactivated because empty value converted to "" above
@@ -508,60 +508,60 @@ post_plot <- function(
     checked_arg_names <- NULL # for function debbuging: used by r_debugging_tools
     arg_check_error_text <- base::paste0("ERROR ", embed_error_text, "\n\n", collapse = NULL, recycle0 = FALSE) # must be used instead of error_text = embed_error_text when several arg_check are performed on the same argument (tempo1, tempo2, see below)
     ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object.name))
-    tempo <- saferDev::arg_check(data = x.side, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c(0, 1, 3), all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = x.log.scale, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    if( ! base::is.null(x.categ)){
-        tempo <- saferDev::arg_check(data = x.categ, class = NULL, typeof = "character", mode = NULL, length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = x_side, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c(0, 1, 3), all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = x_log_scale, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    if( ! base::is.null(x_categ)){
+        tempo <- saferDev::arg_check(data = x_categ, class = NULL, typeof = "character", mode = NULL, length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     }
-    if( ! base::is.null(x.categ.pos)){
-        tempo <- saferDev::arg_check(data = x.categ.pos, class = NULL, typeof = NULL, mode = "numeric", length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    if( ! base::is.null(x_categ_pos)){
+        tempo <- saferDev::arg_check(data = x_categ_pos, class = NULL, typeof = NULL, mode = "numeric", length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     }
-    tempo <- saferDev::arg_check(data = x.lab, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = x.axis.size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = x.label.size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = x.dist.legend, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = x.nb.inter.tick, class = "integer", typeof = "integer", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = y.side, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c(0, 2, 4), all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = y.log.scale, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    if( ! base::is.null(y.categ)){
-        tempo <- saferDev::arg_check(data = y.categ, class = NULL, typeof = "character", mode = NULL, length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = x_lab, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = x_axis_size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = x_label_size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = x_dist_legend, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = x_nb_inter_tick, class = "integer", typeof = "integer", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = y_side, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c(0, 2, 4), all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = y_log_scale, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    if( ! base::is.null(y_categ)){
+        tempo <- saferDev::arg_check(data = y_categ, class = NULL, typeof = "character", mode = NULL, length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     }
-    if( ! base::is.null(y.categ.pos)){
-        tempo <- saferDev::arg_check(data = y.categ.pos, class = NULL, typeof = NULL, mode = "numeric", length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    if( ! base::is.null(y_categ_pos)){
+        tempo <- saferDev::arg_check(data = y_categ_pos, class = NULL, typeof = NULL, mode = "numeric", length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     }
-    tempo <- saferDev::arg_check(data = y.lab, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = y.axis.size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = y.label.size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = y.dist.legend, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = y.nb.inter.tick, class = "integer", typeof = "integer", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = text.angle, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = tick.length, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = sec.tick.length, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    if( ! base::is.null(bg.color)){
-        tempo <- saferDev::arg_check(data = bg.color, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-        if( ! (bg.color %in% grDevices::colors() | base::grepl(pattern = "^#", bg.color))){ # check color
-            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nbg.color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
+    tempo <- saferDev::arg_check(data = y_lab, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = y_axis_size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = y_label_size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = y_dist_legend, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = y_nb_inter_tick, class = "integer", typeof = "integer", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = text_angle, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = tick_length, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = sec_tick_length, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    if( ! base::is.null(bg_color)){
+        tempo <- saferDev::arg_check(data = bg_color, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+        if( ! (bg_color %in% grDevices::colors() | base::grepl(pattern = "^#", bg_color))){ # check color
+            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nbg_color ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
             text_check <- base::c(text_check, tempo.cat)
             argum_check <- base::c(argum_check, TRUE)
         }
     }
-    if( ! base::is.null(grid.lwd)){
-        tempo <- saferDev::arg_check(data = grid.lwd, class = NULL, typeof = NULL, mode = "numeric", length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    if( ! base::is.null(grid_lwd)){
+        tempo <- saferDev::arg_check(data = grid_lwd, class = NULL, typeof = NULL, mode = "numeric", length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     }
-    if( ! base::is.null(grid.col)){
-        tempo <- saferDev::arg_check(data = grid.col, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-        if( ! (grid.col %in% grDevices::colors() | base::grepl(pattern = "^#", grid.col))){ # check color
-            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ngrid.col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
+    if( ! base::is.null(grid_col)){
+        tempo <- saferDev::arg_check(data = grid_col, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+        if( ! (grid_col %in% grDevices::colors() | base::grepl(pattern = "^#", grid_col))){ # check color
+            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ngrid_col ARGUMENT MUST BE A HEXADECIMAL COLOR VECTOR STARTING BY # OR A COLOR NAME GIVEN BY grDevices::colors()")
             text_check <- base::c(text_check, tempo.cat)
             argum_check <- base::c(argum_check, TRUE)
         }
     }
-    tempo <- saferDev::arg_check(data = corner.text, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = corner.text.size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = just.label.add, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    tempo <- saferDev::arg_check(data = par.reset, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    if( ! base::is.null(custom.par)){
-        tempo <- saferDev::arg_check(data = custom.par, class = NULL, typeof = "list", mode = NULL, length = 1, prop = FALSE, options = NULL, double_as_integer_allowed = FALSE, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = corner_text, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = corner_text_size, class = NULL, typeof = NULL, mode = "numeric", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = just_label_add, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    tempo <- saferDev::arg_check(data = par_reset, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
+    if( ! base::is.null(custom_par)){
+        tempo <- saferDev::arg_check(data = custom_par, class = NULL, typeof = "list", mode = NULL, length = 1, prop = FALSE, options = NULL, double_as_integer_allowed = FALSE, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     }
     # lib_path already checked above
     # safer_check already checked above
@@ -579,13 +579,13 @@ post_plot <- function(
     ######## management of "" in arguments of mode character
     # optional section: remove the code if you do not want to check if arguments of mode character of your own function cannot contain ""
     tempo_arg <- base::c(
-        "x.categ",   
-        # "x.lab", 
-        "y.categ",   
-        # "y.lab", 
-        "bg.color",  
-        "grid.col" 
-        # "corner.text", 
+        "x_categ",   
+        # "x_lab", 
+        "y_categ",   
+        # "y_lab", 
+        "bg_color",  
+        "grid_col" 
+        # "corner_text", 
         # "lib_path" # inactivated because already checked above
         # "error_text" # inactivated because can be ""
     )
@@ -645,24 +645,24 @@ post_plot <- function(
 
     #### main code
     text <- NULL
-    graphics::par(tcl = -graphics::par()$mgp[2] * tick.length)
-    if(x.log.scale == TRUE){
+    graphics::par(tcl = -graphics::par()$mgp[2] * tick_length)
+    if(x_log_scale == TRUE){
         grid.coord.x <- base::c(10^graphics::par("usr")[1], 10^graphics::par("usr")[2])
     }else{
         grid.coord.x <- base::c(graphics::par("usr")[1], graphics::par("usr")[2])
     }
-    if(y.log.scale == TRUE){
+    if(y_log_scale == TRUE){
         grid.coord.y <- base::c(10^graphics::par("usr")[3], 10^graphics::par("usr")[4])
     }else{
         grid.coord.y <- base::c(graphics::par("usr")[3], graphics::par("usr")[4])
     }
-    if( ! base::is.null(bg.color)){
-        graphics::rect(grid.coord.x[1], grid.coord.y[1], grid.coord.x[2], grid.coord.y[2], col = bg.color, border = NA)
+    if( ! base::is.null(bg_color)){
+        graphics::rect(grid.coord.x[1], grid.coord.y[1], grid.coord.x[2], grid.coord.y[2], col = bg_color, border = NA)
     }
-    if( ! base::is.null(grid.lwd)){
-        graphics::grid(nx = NA, ny = NULL, col = grid.col, lty = 1, lwd = grid.lwd)
+    if( ! base::is.null(grid_lwd)){
+        graphics::grid(nx = NA, ny = NULL, col = grid_col, lty = 1, lwd = grid_lwd)
     }
-    if(x.log.scale == TRUE){
+    if(x_log_scale == TRUE){
         x.mid.left.dev.region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1] / 2) # in x coordinates, to position axis labeling at the bottom of the graph (according to x scale)
         x.left.dev.region <- 10^(graphics::par("usr")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * graphics::par("plt")[1] - ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * graphics::par("omd")[1]) # in x coordinates
         x.mid.right.dev.region <- 10^(graphics::par("usr")[2] + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / (graphics::par("plt")[2] - graphics::par("plt")[1])) * (1 - graphics::par("plt")[2]) + ((graphics::par("usr")[2] - graphics::par("usr")[1]) / ((graphics::par("omd")[2] - graphics::par("omd")[1]) * (graphics::par("plt")[2] - graphics::par("plt")[1]))) * (1 - graphics::par("omd")[2]) / 2) # in x coordinates, to position axis labeling at the top of the graph (according to x scale)
@@ -687,7 +687,7 @@ post_plot <- function(
         x.right.plot.region <- graphics::par("usr")[2] # in x coordinates, right of the plot region (according to x scale)
         x.mid.plot.region <- (graphics::par("usr")[2] + graphics::par("usr")[1]) / 2 # in x coordinates, right of the plot region (according to x scale)
     }
-    if(y.log.scale == TRUE){
+    if(y_log_scale == TRUE){
         y.mid.bottom.dev.region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (graphics::par("omd")[3] / 2)) # in y coordinates, to position axis labeling at the bottom of the graph (according to y scale). Ex mid.bottom.space
         y.bottom.dev.region <- 10^(graphics::par("usr")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * graphics::par("plt")[3] - ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * graphics::par("omd")[3]) # in y coordinates
         y.mid.top.dev.region <- 10^(graphics::par("usr")[4] + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3])) * (1 - graphics::par("plt")[4]) + ((graphics::par("usr")[4] - graphics::par("usr")[3]) / ((graphics::par("omd")[4] - graphics::par("omd")[3]) * (graphics::par("plt")[4] - graphics::par("plt")[3]))) * (1 - graphics::par("omd")[4]) / 2) # in y coordinates, to position axis labeling at the top of the graph (according to y scale). Ex mid.top.space
@@ -712,65 +712,65 @@ post_plot <- function(
         y.bottom.plot.region <- graphics::par("usr")[3] # in y coordinates, bottom of the plot region (according to y scale)
         y.mid.plot.region <- ((graphics::par("usr")[3] + graphics::par("usr")[4]) / 2) # in x coordinates, right of the plot region (according to x scale)
     }
-    if(base::any(base::sapply(FUN = all.equal, base::c(1, 3), x.side) == TRUE, na.rm = TRUE)){
+    if(base::any(base::sapply(FUN = all.equal, base::c(1, 3), x_side) == TRUE, na.rm = TRUE)){
         graphics::par(xpd=FALSE, xaxt="s")
-        if(base::is.null(x.categ) & x.log.scale == TRUE){
+        if(base::is.null(x_categ) & x_log_scale == TRUE){
             if(base::any(graphics::par()$xaxp[1:2] == 0L, na.rm = TRUE)){ # any(sapply(FUN = all.equal, graphics::par()$xaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
                 if(graphics::par()$xaxp[1] == 0L){ # isTRUE(all.equal(graphics::par()$xaxp[1], 0)) not used because we strictly need zero as a result
                     graphics::par(xaxp = base::c(10^-30, graphics::par()$xaxp[2:3])) # because log10(graphics::par()$xaxp[1] == 0) == -Inf
                 }
-                if(graphics::par()$xaxp[2] == 0L){ # isTRUE(all.equal(graphics::par()$xaxp[1], 0)) not used because we strictly need zero as a result # nocov start (unreachable: the plot.window() at the top of the function resets the par and no valid x.log.scale == TRUE plot can have xaxp[2] == 0, because xaxp[2] == 0 on a log axis means 10^0 == 1, which is always in the interior of the axis when xaxp[1] is already <= 0) ; kept for safety
+                if(graphics::par()$xaxp[2] == 0L){ # isTRUE(all.equal(graphics::par()$xaxp[1], 0)) not used because we strictly need zero as a result # nocov start (unreachable: the plot.window() at the top of the function resets the par and no valid x_log_scale == TRUE plot can have xaxp[2] == 0, because xaxp[2] == 0 on a log axis means 10^0 == 1, which is always in the interior of the axis when xaxp[1] is already <= 0) ; kept for safety
                     graphics::par(xaxp = base::c(graphics::par()$xaxp[1], 10^-30, graphics::par()$xaxp[3])) # because log10(graphics::par()$xaxp[2] == 0) == -Inf
                 } # nocov end
             }
-            graphics::axis(side = x.side, at = base::c(10^graphics::par()$usr[1], 10^graphics::par()$usr[2]), labels=base::rep("", 2), lwd=1, lwd.ticks = 0) # draw the axis line
-            graphics::mtext(side = x.side, text = x.lab, line = x.dist.legend / 0.2, las = 0, cex = x.label.size)
-            graphics::par(tcl = -graphics::par()$mgp[2] * sec.tick.length) # length of the secondary ticks are reduced
-            base::suppressWarnings(graphics::rug(10^base::outer(base::c((base::log10(graphics::par("xaxp")[1]) -1):base::log10(graphics::par("xaxp")[2])), base::log10(1:10), "+"), ticksize = NA, side = x.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
-            graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # back to main ticks
-            graphics::axis(side = x.side, at = base::c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = base::expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = x.axis.size)
+            graphics::axis(side = x_side, at = base::c(10^graphics::par()$usr[1], 10^graphics::par()$usr[2]), labels=base::rep("", 2), lwd=1, lwd.ticks = 0) # draw the axis line
+            graphics::mtext(side = x_side, text = x_lab, line = x_dist_legend / 0.2, las = 0, cex = x_label_size)
+            graphics::par(tcl = -graphics::par()$mgp[2] * sec_tick_length) # length of the secondary ticks are reduced
+            base::suppressWarnings(graphics::rug(10^base::outer(base::c((base::log10(graphics::par("xaxp")[1]) -1):base::log10(graphics::par("xaxp")[2])), base::log10(1:10), "+"), ticksize = NA, side = x_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+            graphics::par(tcl = -graphics::par()$mgp[2] * tick_length) # back to main ticks
+            graphics::axis(side = x_side, at = base::c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = base::expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = x_axis_size)
             x.text <- 10^graphics::par("usr")[2]
-        }else if(base::is.null(x.categ) & x.log.scale == FALSE){
-            graphics::axis(side=x.side, at=base::c(graphics::par()$usr[1], graphics::par()$usr[2]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
-            graphics::axis(side=x.side, at=base::round(base::seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), cex.axis = x.axis.size) # axis(side=x.side, at=round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), labels = format(round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), big.mark=','), cex.axis = x.axis.size) # to get the 1000 comma separator
-            graphics::mtext(side = x.side, text = x.lab, line = x.dist.legend / 0.2, las = 0, cex = x.label.size)
-            if(x.nb.inter.tick > 0){
+        }else if(base::is.null(x_categ) & x_log_scale == FALSE){
+            graphics::axis(side=x_side, at=base::c(graphics::par()$usr[1], graphics::par()$usr[2]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
+            graphics::axis(side=x_side, at=base::round(base::seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), cex.axis = x_axis_size) # axis(side=x_side, at=round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), labels = format(round(seq(graphics::par()$xaxp[1], graphics::par()$xaxp[2], length.out=graphics::par()$xaxp[3]+1), 2), big.mark=','), cex.axis = x_axis_size) # to get the 1000 comma separator
+            graphics::mtext(side = x_side, text = x_lab, line = x_dist_legend / 0.2, las = 0, cex = x_label_size)
+            if(x_nb_inter_tick > 0){
                 inter.tick.unit <- (graphics::par("xaxp")[2] - graphics::par("xaxp")[1]) / graphics::par("xaxp")[3]
-                graphics::par(tcl = -graphics::par()$mgp[2] * sec.tick.length) # length of the ticks are reduced
-                base::suppressWarnings(graphics::rug(base::seq(graphics::par("xaxp")[1] - 10 * inter.tick.unit, graphics::par("xaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + x.nb.inter.tick)), ticksize = NA, x.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
-                graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # back to main ticks
+                graphics::par(tcl = -graphics::par()$mgp[2] * sec_tick_length) # length of the ticks are reduced
+                base::suppressWarnings(graphics::rug(base::seq(graphics::par("xaxp")[1] - 10 * inter.tick.unit, graphics::par("xaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + x_nb_inter_tick)), ticksize = NA, x_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+                graphics::par(tcl = -graphics::par()$mgp[2] * tick_length) # back to main ticks
             }
             x.text <- graphics::par("usr")[2]
-        }else if(( ! base::is.null(x.categ)) & x.log.scale == FALSE){
-            if(base::is.null(x.categ.pos)){
-                x.categ.pos <- 1:base::length(x.categ)
-            }else if(base::length(x.categ.pos) != base::length(x.categ)){
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nx.categ.pos MUST BE THE SAME LENGTH AS x.categ")
+        }else if(( ! base::is.null(x_categ)) & x_log_scale == FALSE){
+            if(base::is.null(x_categ_pos)){
+                x_categ_pos <- 1:base::length(x_categ)
+            }else if(base::length(x_categ_pos) != base::length(x_categ)){
+                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nx_categ_pos MUST BE THE SAME LENGTH AS x_categ")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
             graphics::par(xpd = TRUE)
-            if(base::isTRUE(base::all.equal(x.side, 1))){ #isTRUE(all.equal(x.side, 1)) is similar to x.side == 1L but deals with float
+            if(base::isTRUE(base::all.equal(x_side, 1))){ #isTRUE(all.equal(x_side, 1)) is similar to x_side == 1L but deals with float
                 graphics::segments(x0 = x.left.plot.region, x1 = x.right.plot.region, y0 = y.bottom.plot.region, y1 = y.bottom.plot.region) # draw the line of the axis
-                graphics::text(x = x.categ.pos, y = y.mid.bottom.fig.region, labels = x.categ, srt = text.angle, cex = x.axis.size)
-            }else if(base::isTRUE(base::all.equal(x.side, 3))){ #isTRUE(all.equal(x.side, 1)) is similar to x.side == 3L but deals with float
+                graphics::text(x = x_categ_pos, y = y.mid.bottom.fig.region, labels = x_categ, srt = text_angle, cex = x_axis_size)
+            }else if(base::isTRUE(base::all.equal(x_side, 3))){ #isTRUE(all.equal(x_side, 1)) is similar to x_side == 3L but deals with float
                 graphics::segments(x0 = x.left.plot.region, x1 = x.right.plot.region, y0 = y.top.plot.region, y1 = y.top.plot.region) # draw the line of the axis
-                graphics::text(x = x.categ.pos, y = y.mid.top.fig.region, labels = x.categ, srt = text.angle, cex = x.axis.size)
-            }else{ # nocov start (unreachable: arg_check() above restricts x.side to 0, 1 and 3 when x.categ is not NULL)
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT x.side CAN ONLY BE 1 OR 3")
+                graphics::text(x = x_categ_pos, y = y.mid.top.fig.region, labels = x_categ, srt = text_angle, cex = x_axis_size)
+            }else{ # nocov start (unreachable: arg_check() above restricts x_side to 0, 1 and 3 when x_categ is not NULL)
+                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT x_side CAN ONLY BE 1 OR 3")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             } # nocov end
             graphics::par(xpd = FALSE)
             x.text <- graphics::par("usr")[2]
-        }else{ # nocov start (unreachable: the three branches above cover all combinations of x.categ NULL/non-NULL and x.log.scale TRUE/FALSE allowed by arg_check())
-            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE x.side (", x.side ,") OR x.log.scale (", x.log.scale,") ARGUMENTS")
+        }else{ # nocov start (unreachable: the three branches above cover all combinations of x_categ NULL/non-NULL and x_log_scale TRUE/FALSE allowed by arg_check())
+            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE x_side (", x_side ,") OR x_log_scale (", x_log_scale,") ARGUMENTS")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         } # nocov end
     }else{
         x.text <- graphics::par("usr")[2]
     }
-    if(base::any(base::sapply(FUN = all.equal, base::c(2, 4), y.side) == TRUE, na.rm = TRUE)){
+    if(base::any(base::sapply(FUN = all.equal, base::c(2, 4), y_side) == TRUE, na.rm = TRUE)){
         graphics::par(xpd=FALSE, yaxt="s")
-        if(base::is.null(y.categ) & y.log.scale == TRUE){
+        if(base::is.null(y_categ) & y_log_scale == TRUE){
             if(base::any(graphics::par()$yaxp[1:2] == 0L, na.rm = TRUE)){ # any(sapply(FUN = all.equal, graphics::par()$yaxp[1:2], 0) == TRUE) not used because we strictly need zero as a result. Beware: write "== TRUE", because the result is otherwise character and a warning message appears using any()
                 if(graphics::par()$yaxp[1] == 0L){ # strict zero needed
                     graphics::par(yaxp = base::c(10^-30, graphics::par()$yaxp[2:3])) # because log10(graphics::par()$yaxp[1] == 0) == -Inf
@@ -779,69 +779,69 @@ post_plot <- function(
                     graphics::par(yaxp = base::c(graphics::par()$yaxp[1], 10^-30, graphics::par()$yaxp[3])) # because log10(graphics::par()$yaxp[2] == 0) == -Inf
                 } # nocov end
             }
-            graphics::axis(side=y.side, at=base::c(10^graphics::par()$usr[3], 10^graphics::par()$usr[4]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
-            graphics::par(tcl = -graphics::par()$mgp[2] * sec.tick.length) # length of the ticks are reduced
-            base::suppressWarnings(graphics::rug(10^base::outer(base::c((base::log10(graphics::par("yaxp")[1])-1):base::log10(graphics::par("yaxp")[2])), base::log10(1:10), "+"), ticksize = NA, side = y.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
-            graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # back to main tick length
-            graphics::axis(side = y.side, at = base::c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = base::expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = y.axis.size)
+            graphics::axis(side=y_side, at=base::c(10^graphics::par()$usr[3], 10^graphics::par()$usr[4]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
+            graphics::par(tcl = -graphics::par()$mgp[2] * sec_tick_length) # length of the ticks are reduced
+            base::suppressWarnings(graphics::rug(10^base::outer(base::c((base::log10(graphics::par("yaxp")[1])-1):base::log10(graphics::par("yaxp")[2])), base::log10(1:10), "+"), ticksize = NA, side = y_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+            graphics::par(tcl = -graphics::par()$mgp[2] * tick_length) # back to main tick length
+            graphics::axis(side = y_side, at = base::c(1e-15, 1e-14, 1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1e0, 1e1, 1e2, 1e3, 1e4, 1e5, 1e6, 1e7, 1e8, 1e9, 1e10), labels = base::expression(10^-15, 10^-14, 10^-13, 10^-12, 10^-11, 10^-10, 10^-9, 10^-8, 10^-7, 10^-6, 10^-5, 10^-4, 10^-3, 10^-2, 10^-1, 10^0, 10^1, 10^2, 10^3, 10^4, 10^5, 10^6, 10^7, 10^8, 10^9, 10^10), lwd = 0, lwd.ticks = 1, cex.axis = y_axis_size)
             y.text <- 10^(graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
-            graphics::mtext(side = y.side, text = y.lab, line = y.dist.legend / 0.2, las = 0, cex = y.label.size)
-        }else if(base::is.null(y.categ) & y.log.scale == FALSE){
-            graphics::axis(side=y.side, at=base::c(graphics::par()$usr[3], graphics::par()$usr[4]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
-            graphics::axis(side=y.side, at=base::round(base::seq(graphics::par()$yaxp[1], graphics::par()$yaxp[2], length.out=graphics::par()$yaxp[3]+1), 2), cex.axis = y.axis.size)
-            graphics::mtext(side = y.side, text = y.lab, line = y.dist.legend / 0.2, las = 0, cex = y.label.size)
-            if(y.nb.inter.tick > 0){
+            graphics::mtext(side = y_side, text = y_lab, line = y_dist_legend / 0.2, las = 0, cex = y_label_size)
+        }else if(base::is.null(y_categ) & y_log_scale == FALSE){
+            graphics::axis(side=y_side, at=base::c(graphics::par()$usr[3], graphics::par()$usr[4]), labels=base::rep("", 2), lwd=1, lwd.ticks=0) # draw the axis line
+            graphics::axis(side=y_side, at=base::round(base::seq(graphics::par()$yaxp[1], graphics::par()$yaxp[2], length.out=graphics::par()$yaxp[3]+1), 2), cex.axis = y_axis_size)
+            graphics::mtext(side = y_side, text = y_lab, line = y_dist_legend / 0.2, las = 0, cex = y_label_size)
+            if(y_nb_inter_tick > 0){
                 inter.tick.unit <- (graphics::par("yaxp")[2] - graphics::par("yaxp")[1]) / graphics::par("yaxp")[3]
-                graphics::par(tcl = -graphics::par()$mgp[2] * sec.tick.length) # length of the ticks are reduced
-                base::suppressWarnings(graphics::rug(base::seq(graphics::par("yaxp")[1] - 10 * inter.tick.unit, graphics::par("yaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + y.nb.inter.tick)), ticksize = NA, side=y.side)) # ticksize = NA to allow the use of graphics::par()$tcl value
-                graphics::par(tcl = -graphics::par()$mgp[2] * tick.length) # back to main tick length
+                graphics::par(tcl = -graphics::par()$mgp[2] * sec_tick_length) # length of the ticks are reduced
+                base::suppressWarnings(graphics::rug(base::seq(graphics::par("yaxp")[1] - 10 * inter.tick.unit, graphics::par("yaxp")[2] + 10 * inter.tick.unit, by = inter.tick.unit / (1 + y_nb_inter_tick)), ticksize = NA, side=y_side)) # ticksize = NA to allow the use of graphics::par()$tcl value
+                graphics::par(tcl = -graphics::par()$mgp[2] * tick_length) # back to main tick length
             }
             y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
-        }else if(( ! base::is.null(y.categ)) & y.log.scale == FALSE){
-            if(base::is.null(y.categ.pos)){
-                y.categ.pos <- 1:base::length(y.categ)
-            }else if(base::length(y.categ.pos) != base::length(y.categ)){
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ny.categ.pos MUST BE THE SAME LENGTH AS y.categ")
+        }else if(( ! base::is.null(y_categ)) & y_log_scale == FALSE){
+            if(base::is.null(y_categ_pos)){
+                y_categ_pos <- 1:base::length(y_categ)
+            }else if(base::length(y_categ_pos) != base::length(y_categ)){
+                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ny_categ_pos MUST BE THE SAME LENGTH AS y_categ")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
-            graphics::axis(side = y.side, at = y.categ.pos, labels = base::rep("", base::length(y.categ)), lwd=0, lwd.ticks=1) # draw the line of the axis
+            graphics::axis(side = y_side, at = y_categ_pos, labels = base::rep("", base::length(y_categ)), lwd=0, lwd.ticks=1) # draw the line of the axis
             graphics::par(xpd = TRUE)
-            if(base::isTRUE(base::all.equal(y.side, 2))){ #isTRUE(all.equal(y.side, 2)) is similar to y.side == 2L but deals with float
-                graphics::text(x = x.mid.left.fig.region, y = y.categ.pos, labels = y.categ, srt = text.angle, cex = y.axis.size)
-            }else if(base::isTRUE(base::all.equal(y.side, 4))){ # idem
-                graphics::text(x = x.mid.right.fig.region, y = y.categ.pos, labels = y.categ, srt = text.angle, cex = y.axis.size)
-            }else{ # nocov start (unreachable: arg_check() above restricts y.side to 0, 2 and 4 when y.categ is not NULL)
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT y.side CAN ONLY BE 2 OR 4")
+            if(base::isTRUE(base::all.equal(y_side, 2))){ #isTRUE(all.equal(y_side, 2)) is similar to y_side == 2L but deals with float
+                graphics::text(x = x.mid.left.fig.region, y = y_categ_pos, labels = y_categ, srt = text_angle, cex = y_axis_size)
+            }else if(base::isTRUE(base::all.equal(y_side, 4))){ # idem
+                graphics::text(x = x.mid.right.fig.region, y = y_categ_pos, labels = y_categ, srt = text_angle, cex = y_axis_size)
+            }else{ # nocov start (unreachable: arg_check() above restricts y_side to 0, 2 and 4 when y_categ is not NULL)
+                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nARGUMENT y_side CAN ONLY BE 2 OR 4")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             } # nocov end
             graphics::par(xpd = FALSE)
             y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
-        }else{ # nocov start (unreachable: the three branches above cover all combinations of y.categ NULL/non-NULL and y.log.scale TRUE/FALSE allowed by arg_check())
-            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE y.side (", y.side ,") OR y.log.scale (", y.log.scale,") ARGUMENTS")
+        }else{ # nocov start (unreachable: the three branches above cover all combinations of y_categ NULL/non-NULL and y_log_scale TRUE/FALSE allowed by arg_check())
+            tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\nPROBLEM WITH THE y_side (", y_side ,") OR y_log_scale (", y_log_scale,") ARGUMENTS")
             base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
         } # nocov end
     }else{
         y.text <- (graphics::par("usr")[4] + (graphics::par("usr")[4] - graphics::par("usr")[3]) / (graphics::par("plt")[4] - graphics::par("plt")[3]) * (1 - graphics::par("plt")[4]))
     }
     graphics::par(xpd=NA)
-    graphics::text(x = x.mid.right.fig.region, y = y.text, corner.text, adj=base::c(1, 1.1), cex = corner.text.size) # text at the topright corner. Replace x.right.fig.region by x.text if text at the right edge of the plot region
-    if(just.label.add == TRUE & base::isTRUE(base::all.equal(x.side, 0)) & x.lab != ""){
-        graphics::text(x = x.mid.plot.region, y = y.mid.bottom.fig.region, x.lab, adj=base::c(0.5, 0.5), cex = x.label.size) # x label
+    graphics::text(x = x.mid.right.fig.region, y = y.text, corner_text, adj=base::c(1, 1.1), cex = corner_text_size) # text at the topright corner. Replace x.right.fig.region by x.text if text at the right edge of the plot region
+    if(just_label_add == TRUE & base::isTRUE(base::all.equal(x_side, 0)) & x_lab != ""){
+        graphics::text(x = x.mid.plot.region, y = y.mid.bottom.fig.region, x_lab, adj=base::c(0.5, 0.5), cex = x_label_size) # x label
     }
-    if(just.label.add == TRUE & base::isTRUE(base::all.equal(y.side, 0)) & y.lab != ""){
-        graphics::text(x = y.mid.plot.region, y = x.mid.left.fig.region, y.lab, adj=base::c(0.5, 0.5), cex = y.label.size) # x label
+    if(just_label_add == TRUE & base::isTRUE(base::all.equal(y_side, 0)) & y_lab != ""){
+        graphics::text(x = y.mid.plot.region, y = x.mid.left.fig.region, y_lab, adj=base::c(0.5, 0.5), cex = y_label_size) # x label
     }
     graphics::par(xpd=FALSE)
-    if(par.reset == TRUE){
+    if(par_reset == TRUE){
         tempo.par <- saferGraph::open2(pdf = FALSE, pdf_path = "working.dir", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, rescale = "R", remove_read_only = FALSE, return_output = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text)
         base::invisible(grDevices::dev.off()) # close the new window
-        if( ! base::is.null(custom.par)){
-            if( ! base::names(x = custom.par) %in% base::names(x = tempo.par$ini.par)){
-                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ncustom.par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
+        if( ! base::is.null(custom_par)){
+            if( ! base::names(x = custom_par) %in% base::names(x = tempo.par$ini.par)){
+                tempo.cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ncustom_par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST")
                 base::stop(base::paste0("\n\n================\n\n", tempo.cat, "\n\n================\n\n"), call. = FALSE) # == in stop() to be able to add several messages between ==
             }
-            base::suppressWarnings(expr = graphics::par(custom.par), classes = "warning") # apply the custom parameters on the current device
-            text <- base::c(text, "\nGRAPH PARAMETERS SET TO VALUES DEFINED BY custom.par ARGUMENT\n")
+            base::suppressWarnings(expr = graphics::par(custom_par), classes = "warning") # apply the custom parameters on the current device
+            text <- base::c(text, "\nGRAPH PARAMETERS SET TO VALUES DEFINED BY custom_par ARGUMENT\n")
         }else{
             base::suppressWarnings(expr = graphics::par(tempo.par$ini.par), classes = "warning") # reset to the default parameters of a fresh device
             text <- base::c(text, "\nGRAPH PARAMETERS RESET TO graphics::par() DEFAULT VALUES\n")

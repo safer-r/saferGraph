@@ -48,7 +48,7 @@ Read this [webpage](https://safer-r.github.io/saferGraph) for more details.
 | **close2()** | Close only specific graphic windows (devices). |
 | **inter_ticks()** | Define coordinates and values of secondary ticks. |
 | **open2()** | Open a pdf or screen (GUI) graphic window and return initial graphic parameters. |
-| **post_plot()** | Redesign axis. If x.side = 0, y.side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs. Provide also positions for legend or additional text on the graph. |
+| **post_plot()** | Redesign axis. If x_side = 0, y_side = 0, the function just adds text at topright of the graph and reset par() for next graphics and provides outputs. Provide also positions for legend or additional text on the graph. |
 | **scale2()** | Attempt to select nice scale numbers when setting n ticks on a lim axis range. |
 
 <br />

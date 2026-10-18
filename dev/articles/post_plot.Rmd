@@ -18,14 +18,14 @@ library(saferGraph)
 pdf("file2")
 prior.par <- prior_plot(param.reinitial = TRUE, xlog.scale = FALSE, ylog.scale = TRUE, remove.label = TRUE, remove.x.axis = FALSE, remove.y.axis = TRUE, down.space = 1, left.space = 1, up.space = 1, right.space = 1, orient = 1, dist.legend = 0.5, tick.length = 0.5, box.type = "n", amplif.label = 1, amplif.axis = 1, display.extend = FALSE, return.par = TRUE) ; 
 plot(1:100, log = "y") ; 
-post_plot(y.side = 2, y.log.scale = prior.par$ylog, x.lab = "Values", y.lab = "TEST", y.axis.size = 1.25, y.label.size = 1.5, y.dist.legend = 0.7, just.label.add = ! prior.par$ann)
+post_plot(y_side = 2, y_log_scale = prior.par$ylog, x_lab = "Values", y_lab = "TEST", y_axis_size = 1.25, y_label_size = 1.5, y_dist_legend = 0.7, just_label_add = ! prior.par$ann)
 ```
 <br>
 
 ### Example of title easily added to a plot:
 ```{r}
 plot(1:100) ; 
-para <- post_plot(corner.text = "TITLE ADDED") 
+para <- post_plot(corner_text = "TITLE ADDED") 
 
 par(xpd = TRUE) ; text(x = para$x.mid.left.fig.region, y = para$y.mid.top.fig.region, labels = "TITLE ADDED", cex = 0.5)
 ```
@@ -37,7 +37,7 @@ pdf("file2") ;
 prior_plot(box.type = "o") ; 
 graphics::par(mai=c(0.5,0.5,0.5,0.5), omi = c(0.25,0.25,1,0.25), xaxs = "i", yaxs = "i") ; 
 plot(0:10) ; 
-a <- post_plot(x.side = 0, y.side = 0) ; 
+a <- post_plot(x_side = 0, y_side = 0) ; 
 x <- c(a$x.mid.left.dev.region, a$x.left.dev.region, a$x.mid.right.dev.region, a$x.right.dev.region, a$x.mid.left.fig.region, a$x.left.fig.region, a$x.mid.right.fig.region, a$x.right.fig.region, a$x.right.plot.region, a$x.left.plot.region, a$x.mid.plot.region) ; 
 y <- c(a$y.mid.bottom.dev.region, a$y.bottom.dev.region, a$y.mid.top.dev.region, a$y.top.dev.region, a$y.mid.bottom.fig.region, a$y.bottom.fig.region, a$y.mid.top.fig.region, a$y.top.fig.region, a$y.top.plot.region, a$y.bottom.plot.region, a$y.mid.plot.region) ; 
 graphics::par(xpd = NA) ; 

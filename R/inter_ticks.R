@@ -428,6 +428,7 @@ inter_ticks <- function(
     ######## warning initiation
     ini_warning_length <- base::options()$warning.length # required to have the max characters of output messages
     base::options(warning.length = 8170)
+    base::on.exit(expr = base::options(warning.length = ini_warning_length), add = TRUE, after = TRUE) # registered here so that warning.length is restored even if an error occurs before the warning-output on.exit() registrations below
     warn <- NULL
     warn_count <- 0
     ######## end warning initiation
