@@ -1,4 +1,5 @@
 testthat::test_that("open2()", {
+    if(Sys.info()[["sysname"]] == "Windows" & testthat::is_checking()){testthat::skip(message = "open2() opens a windows() screen device on Windows, forbidden by R CMD check --as-cran")}
 
     ## data argument values
     str1 <- "working.dir"

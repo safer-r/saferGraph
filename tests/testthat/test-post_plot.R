@@ -1,4 +1,5 @@
 testthat::test_that("post_plot()", {
+    if(Sys.info()[["sysname"]] == "Windows" & testthat::is_checking()){testthat::skip(message = "open2() opens a windows() screen device on Windows, forbidden by R CMD check --as-cran")}
 
     ## data argument values
     int1 <- 1L
