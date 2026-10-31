@@ -96,7 +96,8 @@
 #'
 #' prior.par <- prior_plot(param.reinitial = TRUE) ; 
 #' plot(1:100) ; 
-#' post_plot(x_side = 1, x_lab = "Values", y_side = 2, y_lab = "TEST", y_axis_size = 1, y_label_size = 2, y_dist_legend = 0.6)
+#' post_plot(x_side = 1, x_lab = "Values", y_side = 2, y_lab = "TEST", y_axis_size = 1,
+#'     y_label_size = 2, y_dist_legend = 0.6)
 #' }
 #' @importFrom saferDev arg_check
 #' @export

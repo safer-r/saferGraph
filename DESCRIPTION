@@ -1,6 +1,6 @@
 Package: saferGraph
 Type: Package
-Title: Classical graphic handling
+Title: Classical Graphic Handling
 Version: 1.0.0
 Date: 2026-10-14
 Authors@R: c(
@@ -12,7 +12,8 @@ Authors@R: c(
 Encoding: UTF-8
 Maintainer: Gael Millot <gael.millot@pasteur.fr>
 Description: Set of functions that perform checks according to the safer-r project recommendations for R function development (see <https://github.com/safer-r>). This includes checking argument values, ensuring correct specification of all mandatory arguments for embedded functions, as well as their explicit package namespace qualification, among other things.
-URL: <https://github.com/safer-r/saferGraph>, <https://safer-r.github.io/saferGraph/>
+URL: https://github.com/safer-r/saferGraph, https://safer-r.github.io/saferGraph/
+BugReports: https://github.com/safer-r/saferGraph/issues
 License: GPL-3
 Depends: 
     R (>= 4.5.0)
