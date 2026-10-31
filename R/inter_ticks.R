@@ -391,14 +391,14 @@ inter_ticks <- function(
     text_check <- NULL
     checked_arg_names <- NULL # for function debbuging: used by r_debugging_tools
     arg_check_error_text <- base::paste0("ERROR ", embed_error_text, "\n\n", collapse = NULL, recycle0 = FALSE) # must be used instead of error_text = embed_error_text when several arg_check are performed on the same argument (tempo1, tempo2, see below)
-    ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object.name))
+    ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object_name))
     # copy - paste ththe line below as much, one for each of the arguments of your own function
     tempo <- saferDev::arg_check(data = lim, class = NULL, typeof = NULL, mode = "numeric", length = 2, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = FALSE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = log, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c("no", "log2", "log10"), all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
-    if( ! base::is.null(breaks)){ 
+    if( ! base::is.null(x = breaks)){ 
         tempo <- saferDev::arg_check(data = breaks, class = NULL, typeof = NULL, mode = "numeric", length = NULL, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = FALSE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     }
-    if( ! base::is.null(n)){ 
+    if( ! base::is.null(x = n)){ 
         tempo <- saferDev::arg_check(data = n, class = "integer", typeof = "integer", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = TRUE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = FALSE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     }
     tempo <- saferDev::arg_check(data = warn_print, class = NULL, typeof = NULL, mode = "logical", length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = FALSE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
@@ -437,7 +437,7 @@ inter_ticks <- function(
     ######## end graphic device checking
 
     ######## other checkings
-    if(base::all(base::diff(lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
+    if(base::all(base::diff(x = lim) == 0L, na.rm = TRUE)){ # isTRUE(all.equal(diff(lim), rep(0, length(diff(lim))))) not used because we strictly need zero as a result
         tempo_cat <- base::paste0(
             error_text_start, 
             "lim ARGUMENT HAS A NULL RANGE (2 IDENTICAL VALUES):\n", 
@@ -447,7 +447,7 @@ inter_ticks <- function(
         )
         base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
     }
-    if(log == "no" & base::is.null(breaks)){
+    if(log == "no" & base::is.null(x = breaks)){
         tempo_cat <- base::paste0(
             error_text_start, 
             "breaks ARGUMENT CANNOT BE NULL IF log ARGUMENT IS \"no\"", 
@@ -456,34 +456,34 @@ inter_ticks <- function(
         )
         base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
     }
-    if( ! base::is.null(breaks)){
-        if(base::length(breaks) < 2){
+    if( ! base::is.null(x = breaks)){
+        if(base::length(x = breaks) < 2){
             tempo_cat <- base::paste0(
                 error_text_start, 
                 "breaks ARGUMENT MUST HAVE 2 VALUES AT LEAST (OTHERWISE, INTER TICK POSITIONS CANNOT BE COMPUTED):\n", 
-                base::paste(breaks, collapse = " "), 
+                base::paste(breaks, collapse = " ", sep = " ", recycle0 = FALSE), 
             collapse = NULL, 
             recycle0 = FALSE
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         }
-        if( ! base::isTRUE(base::all.equal(base::diff(base::sort(breaks)), base::rep(base::diff(base::sort(breaks))[1], base::length(base::diff(base::sort(breaks))))))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
+        if( ! base::isTRUE(x = base::all.equal(target = base::diff(x = base::sort(x = breaks, decreasing = FALSE)), current = base::rep(x = base::diff(x = base::sort(x = breaks, decreasing = FALSE))[1], base::length(x = base::diff(x = base::sort(x = breaks, decreasing = FALSE))))))){ # isTRUE(all.equal(n, 0)) equivalent to n == 0 but deals with floats (approx ok)
             tempo_cat <- base::paste0(
                 error_text_start, 
                 "breaks ARGUMENT MUST HAVE EQUIDISTANT VALUES (OTHERWISE, EQUAL NUMBER OF INTER TICK BETWEEN MAIN TICKS CANNOT BE COMPUTED):\n", 
-                base::paste(breaks, collapse = " "), 
+                base::paste(breaks, collapse = " ", sep = " ", recycle0 = FALSE), 
             collapse = NULL, 
             recycle0 = FALSE
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         }
     }
-    if( ! base::is.null(n)){
+    if( ! base::is.null(x = n)){
         if(n <= 0){
             tempo_cat <- base::paste0(
                 error_text_start, 
                 "n ARGUMENT MUST BE A POSITIVE AND NON NULL INTEGER:\n", 
-                base::paste(n, collapse = " "), 
+                base::paste(n, collapse = " ", sep = " ", recycle0 = FALSE), 
             collapse = NULL, 
             recycle0 = FALSE
             )
@@ -495,45 +495,45 @@ inter_ticks <- function(
     #### end second round of checking and data preparation
 
     #### main code
-    lim_rank <- base::rank(lim) # to deal with inverse axis
+    lim_rank <- base::rank(x = lim, na.last = TRUE, ties.method = base::c("average", "first", "last", "random", "max", "min")) # to deal with inverse axis
     if(log != "no"){
         ini_scipen <- base::options()$scipen
         base::options(scipen = -9) # force scientific format
-        power10_exp <- base::as.integer(base::substring(text = 10^lim, first = (base::regexpr(pattern = "\\+|\\-", text = 10^lim)))) # recover the power of 10, i.e., integer part of lim. Example recover 08 from 1e+08. Works for log2
+        power10_exp <- base::as.integer(x = base::substring(text = 10^lim, first = (base::regexpr(pattern = "\\+|\\-", text = 10^lim, ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)), last = 1000000L)) # recover the power of 10, i.e., integer part of lim. Example recover 08 from 1e+08. Works for log2
         # mantisse <- as.numeric(substr(x = 10^lim, start = 1, stop = (regexpr(pattern = "\\+|\\-", text = 10^lim) - 2))) # recover the mantisse. Example recover 1.22 from 1.22e+08
         base::options(scipen = ini_scipen) # restore the initial scientific penalty
-        tick_pos <- base::unique(base::as.vector(base::outer(2:10, base::ifelse(log == "log2", 2, 10)^((power10_exp[1] - base::ifelse(base::diff(lim_rank) > 0, 1, -1)):(power10_exp[2] + base::ifelse(base::diff(lim_rank) > 0, 1, -1)))))) # use log10(2:10) even if log2: it is to get log values between 0 and 1
-        tick_pos <- base::sort(tick_pos, decreasing = base::ifelse(base::diff(lim_rank) > 0, FALSE, TRUE))
+        tick_pos <- base::unique(x = base::as.vector(x = base::outer(X = 2:10, Y = base::ifelse(test = log == "log2", yes = 2, no = 10)^((power10_exp[1] - base::ifelse(test = base::diff(x = lim_rank) > 0, yes = 1, no = -1)):(power10_exp[2] + base::ifelse(test = base::diff(x = lim_rank) > 0, yes = 1, no = -1))), FUN = "*"), mode = "any"), incomparables = FALSE) # use log10(2:10) even if log2: it is to get log values between 0 and 1
+        tick_pos <- base::sort(x = tick_pos, decreasing = base::ifelse(test = base::diff(x = lim_rank) > 0, yes = FALSE, no = TRUE))
         if(log == "log2"){
-            tick_values <- tick_pos[tick_pos >= base::min(2^lim) & tick_pos <= base::max(2^lim)]
-            tick_pos <- base::log2(tick_values)
+            tick_values <- tick_pos[tick_pos >= base::min(2^lim, na.rm = FALSE) & tick_pos <= base::max(2^lim, na.rm = FALSE)]
+            tick_pos <- base::log2(x = tick_values)
         }else if(log == "log10"){
-            tick_values <- tick_pos[tick_pos >= base::min(10^lim) & tick_pos <= base::max(10^lim)]
-            tick_pos <- base::log10(tick_values)
+            tick_values <- tick_pos[tick_pos >= base::min(10^lim, na.rm = FALSE) & tick_pos <= base::max(10^lim, na.rm = FALSE)]
+            tick_pos <- base::log10(x = tick_values)
         }
     }else{
         # if(length(breaks) > 1){ # not required because already checked above
-        breaks_rank <- base::rank(base::c(breaks[1], breaks[base::length(breaks)]))
-        if(base::diff(breaks_rank) != base::diff(lim_rank)){
-            breaks <- base::sort(breaks, decreasing = base::ifelse(base::diff(lim_rank) < 0, TRUE, FALSE))
+        breaks_rank <- base::rank(x = base::c(breaks[1], breaks[base::length(x = breaks)]), na.last = TRUE, ties.method = base::c("average", "first", "last", "random", "max", "min"))
+        if(base::diff(x = breaks_rank) != base::diff(x = lim_rank)){
+            breaks <- base::sort(x = breaks, decreasing = base::ifelse(test = base::diff(x = lim_rank) < 0, yes = TRUE, no = FALSE))
             warn_count <- warn_count + 1
-            tempo_warn <- base::paste0("(", warn_count,") VALUES IN breaks ARGUMENT NOT IN THE SAME ORDER AS IN lim ARGUMENT -> VALUES REORDERED AS IN lim: ", base::paste(breaks, collapse = " "))
+            tempo_warn <- base::paste0("(", warn_count,") VALUES IN breaks ARGUMENT NOT IN THE SAME ORDER AS IN lim ARGUMENT -> VALUES REORDERED AS IN lim: ", base::paste(breaks, collapse = " ", sep = " ", recycle0 = FALSE), collapse = NULL, recycle0 = FALSE)
             warn <- base::paste0(base::ifelse(test = base::is.null(x = warn), yes = tempo_warn, no = base::paste0(warn, "\n\n", tempo_warn, collapse = NULL, recycle0 = FALSE)), collapse = NULL, recycle0 = FALSE)
-            breaks_rank <- base::rank(base::c(breaks[1], breaks[base::length(breaks)]))
+            breaks_rank <- base::rank(x = base::c(breaks[1], breaks[base::length(x = breaks)]), na.last = TRUE, ties.method = base::c("average", "first", "last", "random", "max", "min"))
         }
         # }
-        main_tick_dist <- base::mean(base::diff(breaks), na.rm = TRUE)
+        main_tick_dist <- base::mean(x = base::diff(x = breaks), na.rm = TRUE)
         tick_dist <- main_tick_dist / (n + 1)
-        tempo_extra_margin <- base::max(base::abs(base::diff(breaks)), na.rm = TRUE)
+        tempo_extra_margin <- base::max(base::abs(x = base::diff(x = breaks)), na.rm = TRUE)
         tick_pos <- base::seq(
-            if(base::diff(breaks_rank) > 0){breaks[1] - tempo_extra_margin}else{breaks[1] + tempo_extra_margin}, 
-            if(base::diff(breaks_rank) > 0){breaks[base::length(breaks)] + tempo_extra_margin}else{breaks[base::length(breaks)] - tempo_extra_margin}, 
+            if(base::diff(x = breaks_rank) > 0){breaks[1] - tempo_extra_margin}else{breaks[1] + tempo_extra_margin}, 
+            if(base::diff(x = breaks_rank) > 0){breaks[base::length(x = breaks)] + tempo_extra_margin}else{breaks[base::length(x = breaks)] - tempo_extra_margin}, 
             by = tick_dist
         )
-        tick_pos <- tick_pos[tick_pos >= base::min(lim) & tick_pos <= base::max(lim)]
+        tick_pos <- tick_pos[tick_pos >= base::min(lim, na.rm = FALSE) & tick_pos <= base::max(lim, na.rm = FALSE)]
         tick_values <- tick_pos
     }
-    if(base::any(base::is.na(tick_pos) | ! base::is.finite(tick_pos), na.rm = TRUE)){ 
+    if(base::any(base::is.na(x = tick_pos) | ! base::is.finite(x = tick_pos), na.rm = TRUE)){ 
         # nocov start
         # codecov inactivated because it is an internal control of code writing, impossible to cover with argument values.
         tempo_cat <- base::paste0(
@@ -548,9 +548,9 @@ inter_ticks <- function(
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", base::ifelse(test = base::is.null(x = warn), yes = "", no = base::paste0("IN ADDITION\nWARNING", base::ifelse(test = warn_count > 1, yes = "S", no = ""), ":\n\n", warn, collapse = NULL, recycle0 = FALSE)), collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         # nocov end
     }
-    if(base::length(tick_pos) == 0L){
+    if(base::length(x = tick_pos) == 0L){
         warn_count <- warn_count + 1
-        tempo_warn <- base::paste0("(", warn_count,") NO INTER TICKS COMPUTED BETWEEN THE LIMITS INDICATED: ", base::paste(lim, collapse = " "))
+        tempo_warn <- base::paste0("(", warn_count,") NO INTER TICKS COMPUTED BETWEEN THE LIMITS INDICATED: ", base::paste(lim, collapse = " ", sep = " ", recycle0 = FALSE), collapse = NULL, recycle0 = FALSE)
         warn <- base::paste0(base::ifelse(test = base::is.null(x = warn), yes = tempo_warn, no = base::paste0(warn, "\n\n", tempo_warn, collapse = NULL, recycle0 = FALSE)), collapse = NULL, recycle0 = FALSE)
     }
     output <- base::list(log = log, coordinates = tick_pos, values = tick_values, warn = warn)

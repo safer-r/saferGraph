@@ -327,7 +327,7 @@ close2 <- function(
     text_check <- NULL
     checked_arg_names <- NULL # for function debbuging: used by r_debugging_tools
     arg_check_error_text <- base::paste0("ERROR ", embed_error_text, "\n\n", collapse = NULL, recycle0 = FALSE) # must be used instead of error_text = embed_error_text when several arg_check are performed on the same argument (tempo1, tempo2, see below)
-    ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object.name))
+    ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object_name))
     tempo <- saferDev::arg_check(data = kind, class = NULL, typeof = NULL, mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = base::c("windows", "quartz", "x11", "X11", "pdf", "bmp", "png", "tiff"), all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = return_text, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     # lib_path already checked above
@@ -406,39 +406,41 @@ close2 <- function(
     #### end second round of checking and data preparation
 
     #### main code
-    text <- base::paste0("THE REQUIRED KIND OF GRAPHIC DEVICES TO CLOSE ARE ", base::paste(kind, collapse = " "))
+    text <- base::paste0("THE REQUIRED KIND OF GRAPHIC DEVICES TO CLOSE ARE ", base::paste(kind, collapse = " ", sep = " ", recycle0 = FALSE), collapse = NULL, recycle0 = FALSE)
     if(base::Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
-        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"))){
+        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"), na.rm = FALSE)){
             tempo <- kind %in% base::c("windows", "quartz", "x11", "X11")
             kind[tempo] <- "windows" # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
         }
     }else if(base::Sys.info()["sysname"] == "Linux"){ # nocov start (Linux-only branch)
         # codecov inactivated because this branch is only executed on Linux systems
-        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"))){
-            tempo_device <- base::suppressWarnings(base::try(grDevices::X11(display = "", width = 7, height = 7, pointsize = 12, gamma = 1, bg = "white", canvas = "white", fonts = NULL, family = "", xpos = 0, ypos = 0, title = "", type = "cairo", antialias = "default", symbolfamily = ""), silent = TRUE))[] # open a X11 window to try to recover the X11 system used. All the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the x11 options settings
-            if( ! base::is.null(tempo_device)){
-                text <- base::paste0(text, "\nCANNOT CLOSE GUI GRAPHIC DEVICES AS REQUIRED BECAUSE THIS LINUX SYSTEM DOES NOT HAVE IT")
+        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"), na.rm = FALSE)){
+            tempo_device <- base::suppressWarnings(expr = base::try(expr = grDevices::X11(display = "", width = 7, height = 7, pointsize = 12, gamma = 1, bg = "white", canvas = "white", fonts = NULL, family = "", xpos = 0, ypos = 0, title = "", type = "cairo", antialias = "default", symbolfamily = ""), silent = TRUE, outFile = base::getOption(x = "try.outFile", default = base::stderr())), classes = "warning")[] # open a X11 window to try to recover the X11 system used. All the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the x11 options settings
+            if( ! base::is.null(x = tempo_device)){
+                text <- base::paste0(text, "\nCANNOT CLOSE GUI GRAPHIC DEVICES AS REQUIRED BECAUSE THIS LINUX SYSTEM DOES NOT HAVE IT", collapse = NULL, recycle0 = FALSE)
             }else{
                 tempo <- kind %in% base::c("windows", "quartz", "x11", "X11")
-                kind[tempo] <- base::names(grDevices::dev.list()[base::length(grDevices::dev.list())]) # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
-                base::invisible(grDevices::dev.off()) # close the X11 opened by tempo
+                kind[tempo] <- base::names(x = grDevices::dev.list()[base::length(x = grDevices::dev.list())]) # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
+                base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the X11 opened by tempo
             }
         }
         # nocov end
     }else{ # for macOS # nocov start (macOS-only branch)
         # codecov inactivated because this branch is only executed on macOS systems
-        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"))){
+        if(base::any(kind %in% base::c("windows", "quartz", "x11", "X11"), na.rm = FALSE)){
             tempo <- kind %in% base::c("windows", "quartz", "x11", "X11")
             kind[tempo] <- "quartz" # term are replaced by what is displayed when using a <- grDevices::dev.list() ; names(a)
         }
         # nocov end
     }
-    kind <- base::unique(kind)
-    if(base::length(grDevices::dev.list()) != 0){
-        for(i in base::length(base::names(grDevices::dev.list())):1){
-            if(base::names(grDevices::dev.list())[i] %in% kind){
-                text <- base::paste0(text, "\n", base::names(grDevices::dev.list())[i], " DEVICE NUMBER ", grDevices::dev.list()[i], " HAS BEEN CLOSED")
-                base::invisible(grDevices::dev.off(grDevices::dev.list()[i]))
+    kind <- base::unique(x = kind, incomparables = FALSE)
+    if(base::length(x = grDevices::dev.list()) != 0){
+        tempo_dev_nb <- base::length(x = base::names(x = grDevices::dev.list()))
+        for(i0 in base::seq_len(length.out = tempo_dev_nb)){ # i from the last device to the first one, because each closing modifies grDevices::dev.list()
+            i <- tempo_dev_nb - i0 + 1
+            if(base::names(x = grDevices::dev.list())[i] %in% kind){
+                text <- base::paste0(text, "\n", base::names(x = grDevices::dev.list())[i], " DEVICE NUMBER ", grDevices::dev.list()[i], " HAS BEEN CLOSED", collapse = NULL, recycle0 = FALSE)
+                base::invisible(x = grDevices::dev.off(which = grDevices::dev.list()[i]))
             }
         }
     }

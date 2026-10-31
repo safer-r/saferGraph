@@ -390,7 +390,7 @@ open2 <- function(
     text_check <- NULL
     checked_arg_names <- NULL # for function debbuging: used by r_debugging_tools
     arg_check_error_text <- base::paste0("ERROR ", embed_error_text, "\n\n", collapse = NULL, recycle0 = FALSE) # must be used instead of error_text = embed_error_text when several arg_check are performed on the same argument (tempo1, tempo2, see below)
-    ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object.name))
+    ee <- base::expression(argum_check <- base::c(argum_check, tempo$problem) , text_check <- base::c(text_check, tempo$text) , checked_arg_names <- base::c(checked_arg_names, tempo$object_name))
     # copy - paste ththe line below as much, one for each of the arguments of your own function
     tempo <- saferDev::arg_check(data = pdf, class = NULL, typeof = "logical", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
     tempo <- saferDev::arg_check(data = pdf_path, class = NULL, typeof = "character", mode = NULL, length = 1, prop = FALSE, double_as_integer_allowed = FALSE, options = NULL, all_options_in_data = FALSE, na_contain = TRUE, neg_values = TRUE, inf_values = TRUE, print = FALSE, data_name = NULL, data_arg = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text) ; base::eval(expr = ee, envir = base::environment(fun = NULL), enclos = base::environment(fun = NULL))
@@ -479,12 +479,12 @@ open2 <- function(
     if(pdf_path == "working.dir"){
         pdf_path <- base::getwd()
     }else{
-        if(base::grepl(x = pdf_path, pattern = ".+/$")){
-            pdf_path <- base::sub(x = pdf_path, pattern = "/$", replacement = "") # remove the last /
-        }else if(base::grepl(x = pdf_path, pattern = ".+[\\]$")){ # or ".+\\\\$" # cannot be ".+\$" because \$ does not exist contrary to \n
-            pdf_path <- base::sub(x = pdf_path, pattern = "[\\]$", replacement = "") # remove the last /
+        if(base::grepl(x = pdf_path, pattern = ".+/$", ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)){
+            pdf_path <- base::sub(x = pdf_path, pattern = "/$", replacement = "", ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE) # remove the last /
+        }else if(base::grepl(pattern = ".+[\\]$", x = pdf_path, ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)){ # or ".+\\\\$" # cannot be ".+\$" because \$ does not exist contrary to \n
+            pdf_path <- base::sub(pattern = "[\\]$", replacement = "", x = pdf_path, ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE) # remove the last /
         }
-        if(base::dir.exists(pdf_path) == FALSE){
+        if(base::dir.exists(paths = pdf_path) == FALSE){
             tempo_cat <- base::paste0(
                 error_text_start, 
                 "pdf_path ARGUMENT DOES NOT CORRESPOND TO EXISTING DIRECTORY:\n", 
@@ -501,28 +501,28 @@ open2 <- function(
         open_fail <- NULL
         grDevices::windows(width = 7, height = 7, pointsize = 12, record = FALSE, rescale = "fit", xpinch = NA_real_, ypinch = NA_real_, bg = "transparent", canvas = "white", gamma = 1, xpos = -25, ypos = 10, buffered = TRUE, title = "", restoreConsole = TRUE, clickToConfirm = TRUE, fillOddEven = TRUE, family = "", antialias = "default") # all the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the grDevices::windows.options() settings
         ini_par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-        base::invisible(grDevices::dev.off()) # close the new window
+        base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the new window
     }else if(base::Sys.info()["sysname"] == "Linux"){ # nocov start (Linux-only branch)
         # codecov inactivated because this branch is only executed on Linux systems
         if(pdf == TRUE){# cannot use pdf(file = NULL), because some small differences between pdf() and other devices. For instance, differences with windows() for par()$fin, par()$pin and par()$plt
-            if(base::exists(".Random.seed", envir = .GlobalEnv)){ # if .Random.seed does not exists, it means that no random operation has been performed yet in any R environment
+            if(base::exists(x = ".Random.seed", envir = .GlobalEnv, where = -1, frame = , mode = "any", inherits = TRUE)){ # if .Random.seed does not exists, it means that no random operation has been performed yet in any R environment
                 tempo_random_seed <- .Random.seed
-                base::on.exit(base::assign(".Random.seed", tempo_random_seed, envir = .GlobalEnv))
+                base::on.exit(expr = base::assign(x = ".Random.seed", value = tempo_random_seed, envir = .GlobalEnv, pos = -1, inherits = FALSE, immediate = TRUE), add = FALSE, after = TRUE)
             }else{
-                base::on.exit(base::set.seed(NULL)) # inactivate seeding -> return to complete randomness
+                base::on.exit(expr = base::set.seed(seed = NULL, kind = NULL, normal.kind = NULL, sample.kind = NULL), add = FALSE, after = TRUE) # inactivate seeding -> return to complete randomness
             }
-            base::set.seed(NULL)
-            tempo_code <- base::sample(x = 1:1e7, size = 1)
-            while(base::file.exists(base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf")) == TRUE){
+            base::set.seed(seed = NULL, kind = NULL, normal.kind = NULL, sample.kind = NULL)
+            tempo_code <- base::sample(x = 1:1e7, size = 1, replace = FALSE, prob = NULL)
+            while(base::file.exists(base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf", collapse = NULL, recycle0 = FALSE)) == TRUE){
                 tempo_code <- tempo_code + 1
             }
-            grDevices::pdf(width = width, height = height, file=base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf"), paper = paper)
+            grDevices::pdf(width = width, height = height, file=base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf", collapse = NULL, recycle0 = FALSE), paper = paper, onefile = , family = , title = , fonts = , version = , encoding = , bg = , fg = , pointsize = , pagecentre = , colormodel = , useDingbats = , useKerning = , fillOddEven = , compress = , timestamp = , producer = , author = )
             ini_par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-            base::invisible(grDevices::dev.off()) # close the pdf window
-            base::file.remove(base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf")) # remove the pdf file
+            base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the pdf window
+            base::file.remove(base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf", collapse = NULL, recycle0 = FALSE)) # remove the pdf file
         }else{
             # test if X11 can be opened
-            if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
+            if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf", collapse = NULL, recycle0 = FALSE))){
                 tempo_cat <- base::paste0(
                     error_text_start, 
                     "THIS FUNCTION CANNOT BE USED ON LINUX IF A Rplots.pdf FILE ALREADY EXISTS HERE:\n", 
@@ -532,12 +532,12 @@ open2 <- function(
                 )
                 base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
             }else{
-                open_fail <- base::suppressWarnings(base::try(grDevices::X11(display = "", width = 7, height = 7, pointsize = 12, gamma = 1, bg = "white", canvas = "white", fonts = NULL, family = "", xpos = 0, ypos = 0, title = "", type = "cairo", antialias = "default", symbolfamily = ""), silent = TRUE))[] # try to open a X11 window. If open_fail == NULL, no problem, meaning that the X11 window is opened. If open_fail != NULL, a pdf can be opened here base::paste0(getwd(), "/Rplots.pdf"). All the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the x11 options settings
-                if(base::is.null(open_fail)){
+                open_fail <- base::suppressWarnings(expr = base::try(expr = grDevices::X11(display = "", width = 7, height = 7, pointsize = 12, gamma = 1, bg = "white", canvas = "white", fonts = NULL, family = "", xpos = 0, ypos = 0, title = "", type = "cairo", antialias = "default", symbolfamily = ""), silent = TRUE, outFile = base::getOption(x = "try.outFile", default = base::stderr())), classes = "warning")[] # try to open a X11 window. If open_fail == NULL, no problem, meaning that the X11 window is opened. If open_fail != NULL, a pdf can be opened here base::paste0(getwd(), "/Rplots.pdf"). All the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the x11 options settings
+                if(base::is.null(x = open_fail)){
                     ini_par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-                    base::invisible(grDevices::dev.off()) # close the new window
-                }else if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf"))){
-                    base::file.remove(base::paste0(base::getwd(), "/Rplots.pdf")) # remove the pdf file
+                    base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the new window
+                }else if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf", collapse = NULL, recycle0 = FALSE))){
+                    base::file.remove(base::paste0(base::getwd(), "/Rplots.pdf", collapse = NULL, recycle0 = FALSE)) # remove the pdf file
                     tempo_cat <- base::paste0(
                         error_text_start, 
                         "THIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM.\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function_name, "() TO TRUE AND RERUN.", 
@@ -555,16 +555,16 @@ open2 <- function(
         quartz_fun <- utils::getFromNamespace(x = "quartz", ns = "grDevices", pos = -1, envir = ) # the quartz() function of grDevices is not exported on all systems (only macOS), so that a static checking by saferDev::all_args_here() fails on the other systems: call through getFromNamespace() instead
         quartz_fun()
         ini_par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-        base::invisible(grDevices::dev.off()) # close the new window
+        base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the new window
         # nocov end
     }
     # end par.ini recovery 
-    zone_ini <- base::matrix(1, ncol=1) # to recover the initial parameters for next figure region when device region split into several figure regions
+    zone_ini <- base::matrix(data = 1, ncol=1, nrow = 1, byrow = FALSE, dimnames = NULL) # to recover the initial parameters for next figure region when device region split into several figure regions
     if(pdf == TRUE){
-        if(base::grepl(x = pdf_name, pattern = "\\.pdf$")){
-            pdf_name <- base::sub(x = pdf_name, pattern = "\\.pdf$", replacement = "") # remove the last .pdf
+        if(base::grepl(pattern = "\\.pdf$", x = pdf_name, ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)){
+            pdf_name <- base::sub(pattern = "\\.pdf$", replacement = "", x = pdf_name, ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE) # remove the last .pdf
         }
-        pdf_loc <- base::paste0(pdf_path, "/", pdf_name, ".pdf")
+        pdf_loc <- base::paste0(pdf_path, "/", pdf_name, ".pdf", collapse = NULL, recycle0 = FALSE)
         if(base::file.exists(pdf_loc) == TRUE & pdf_overwrite == FALSE){
             tempo_cat <- base::paste0(
                 error_text_start, 
@@ -575,15 +575,15 @@ open2 <- function(
             )
             base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
         }else{
-            grDevices::pdf(width = width, height = height, file=pdf_loc, paper = paper)
+            grDevices::pdf(width = width, height = height, file=pdf_loc, paper = paper, onefile = , family = , title = , fonts = , version = , encoding = , bg = , fg = , pointsize = , pagecentre = , colormodel = , useDingbats = , useKerning = , fillOddEven = , compress = , timestamp = , producer = , author = )
         }
     }else if(pdf == FALSE){
         pdf_loc <- NULL
         if(base::Sys.info()["sysname"] == "Windows"){ # .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
-            grDevices::windows(width = width, height = height, rescale = rescale)
+            grDevices::windows(width = width, height = height, rescale = rescale, pointsize = , record = , xpinch = , ypinch = , bg = , canvas = , gamma = , xpos = , ypos = , buffered = , title = , restoreConsole = , clickToConfirm = , fillOddEven = , family = "", antialias = )
         }else if(base::Sys.info()["sysname"] == "Linux"){ # nocov start (Linux-only branch)
             # codecov inactivated because this branch is only executed on Linux systems
-            if( ! base::is.null(open_fail)){
+            if( ! base::is.null(x = open_fail)){
                 tempo_cat <- base::paste0(
                     error_text_start, 
                     "THIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM.\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function_name, "() TO TRUE AND RERUN.", 
@@ -609,7 +609,7 @@ open2 <- function(
 
     #### output
     if(return_output == TRUE){
-        output <- base::list(pdf_loc = pdf_loc, ini_par = ini_par, zone_ini = zone_ini, dim = grDevices::dev.size())
+        output <- base::list(pdf_loc = pdf_loc, ini_par = ini_par, zone_ini = zone_ini, dim = grDevices::dev.size(units = base::c("in", "cm", "px")))
         base::return(output)
     }
     #### end output
