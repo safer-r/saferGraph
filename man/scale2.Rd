@@ -41,7 +41,9 @@ n = 5 ;
 scale <- scale2(n = n, lim = c(ymin, ymax), kind = "strict") ; 
 scale ; 
 par(yaxt = "n", yaxs = "i", las = 1) ; 
-plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE", ylab = "NEW SCALE") ;
+plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))],
+    ylim = base::range(scale, ymin, ymax)[order(c(ymin, ymax))], xlab = "DEFAULT SCALE",
+    ylab = "NEW SCALE") ;
 par(yaxt = "s") ; 
 axis(side = 2, at = scale)
 }

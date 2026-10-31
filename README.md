@@ -1,5 +1,5 @@
 
-# saferGraph <a href="https://safer-r.github.io/saferGraph">[<img src="man/figures/saferGraph.png" align="right" height="140" />](https://safer-r.github.io/saferGraph/)</a>
+# saferGraph <a href="https://safer-r.github.io/saferGraph/">[<img src="man/figures/saferGraph.png" align="right" height="140" />](https://safer-r.github.io/saferGraph/)</a>
 
 <br />
 
@@ -39,7 +39,7 @@ Set of R functions for classical graphic handling, written according to the [saf
 ## Content
 <br />
 
-Read this [webpage](https://safer-r.github.io/saferGraph) for more details.
+Read this [webpage](https://safer-r.github.io/saferGraph/) for more details.
 
 <br />
 

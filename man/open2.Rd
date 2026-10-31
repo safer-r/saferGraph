@@ -83,7 +83,8 @@ On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meani
 \examples{
 \dontrun{
 # Screen devices should not be used in examples
-open2(pdf = FALSE, pdf_path = ".", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, return_output = TRUE)
+open2(pdf = FALSE, pdf_path = ".", pdf_name = "graph", width = 7, height = 7,
+    paper = "special", pdf_overwrite = FALSE, return_output = TRUE)
 }
 }
 \author{
