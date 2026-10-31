@@ -63,15 +63,11 @@ Open a pdf or screen (GUI) graphic window and return initial graphic parameters.
 
 This order can be used:
 
-width()
-
 open2()
 
-prior_plot() # not for ggplot2
+plot() or any other plotting, with the axes not drawn (xaxt = "n", yaxt = "n") if post_plot() is used next # not for ggplot2
 
-plot() or any other plotting
-
-post_plot() if prior_plot() has been used # not for ggplot2
+post_plot() # not for ggplot2
 
 close2()
 }
@@ -81,10 +77,17 @@ WARNINGS
 On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
 }
 \examples{
-\dontrun{
-# Screen devices should not be used in examples
-open2(pdf = FALSE, pdf_path = ".", pdf_name = "graph", width = 7, height = 7,
-    paper = "special", pdf_overwrite = FALSE, return_output = TRUE)
+# interactive only: open2() opens a screen device, even with pdf = TRUE on Windows and macOS
+if(base::interactive()){
+    # pdf file in the temporary directory
+    open2(pdf = TRUE, pdf_path = base::tempdir(check = FALSE), pdf_name = "graph", width = 7,
+        height = 7, paper = "special", pdf_overwrite = TRUE, return_output = TRUE)
+    graphics::plot(x = 1:10, y = NULL)
+    grDevices::dev.off(which = grDevices::dev.cur())
+    # screen device
+    open2(pdf = FALSE, width = 7, height = 7, return_output = TRUE)
+    graphics::plot(x = 1:10, y = NULL)
+    grDevices::dev.off(which = grDevices::dev.cur())
 }
 }
 \author{

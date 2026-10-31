@@ -12,6 +12,7 @@
 #' @author Yushi Han <yushi.han2000@gmail.com>
 #' @author Haiding Wang <wanghaiding442@gmail.com>
 #' @examples
+#' ini_par <- graphics::par(no.readonly = TRUE) # initial graphic parameters
 #' # approximate number of main ticks
 #' 
 #' ymin = 2 ; 
@@ -25,6 +26,7 @@
 #'     ylab = "NEW SCALE") ;
 #' par(yaxt = "s") ; 
 #' axis(side = 2, at = scale)
+#' graphics::par(ini_par, no.readonly = FALSE) # initial graphic parameters restored
 #' @importFrom ggplot2 ggplot_build
 #' @importFrom ggplot2 ggplot
 #' @importFrom ggplot2 scale_y_continuous

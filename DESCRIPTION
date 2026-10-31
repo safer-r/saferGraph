@@ -1,6 +1,6 @@
 Package: saferGraph
 Type: Package
-Title: Classical Graphic Handling
+Title: Device, Axis and Tick Tools for Base R Graphics
 Version: 1.0.0
 Date: 2026-10-14
 Authors@R: c(
@@ -11,7 +11,7 @@ Authors@R: c(
   )
 Encoding: UTF-8
 Maintainer: Gael Millot <gael.millot@pasteur.fr>
-Description: Set of functions that perform checks according to the safer-r project recommendations for R function development (see <https://github.com/safer-r>). This includes checking argument values, ensuring correct specification of all mandatory arguments for embedded functions, as well as their explicit package namespace qualification, among other things.
+Description: Set of functions for base R graphics, written according to the safer-r project recommendations (see <https://github.com/safer-r>): opening of a PDF or screen graphic device that returns the initial graphic parameters, closing of specific kinds of graphic devices, redrawing of the axes of a plot (log scale, qualitative axis, secondary ticks, grid and background color) with coordinates for legends and additional text, selection of nice tick values for an axis range, and coordinates and values of secondary ticks. This includes strict checking of argument values, explicit package namespace qualification of all the called functions and explicit writing of all their arguments, among other things.
 URL: https://github.com/safer-r/saferGraph, https://safer-r.github.io/saferGraph/
 BugReports: https://github.com/safer-r/saferGraph/issues
 License: GPL-3

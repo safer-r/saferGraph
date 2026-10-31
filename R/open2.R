@@ -3,17 +3,13 @@
 #' Open a pdf or screen (GUI) graphic window and return initial graphic parameters.
 #' 
 #' This order can be used:
-#' 
-#' width()
-#' 
+#'
 #' open2()
-#' 
-#' prior_plot() # not for ggplot2
-#' 
-#' plot() or any other plotting
-#' 
-#' post_plot() if prior_plot() has been used # not for ggplot2
-#' 
+#'
+#' plot() or any other plotting, with the axes not drawn (xaxt = "n", yaxt = "n") if post_plot() is used next # not for ggplot2
+#'
+#' post_plot() # not for ggplot2
+#'
 #' close2()
 #' @param pdf Single logical value. Use pdf display? If FALSE, a GUI is opened.
 #' @param pdf_path Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.
@@ -46,10 +42,17 @@
 #' @author Yushi Han <yushi.han2000@gmail.com>
 #' @author Haiding Wang <wanghaiding442@gmail.com>
 #' @examples
-#' \dontrun{
-#' # Screen devices should not be used in examples
-#' open2(pdf = FALSE, pdf_path = ".", pdf_name = "graph", width = 7, height = 7,
-#'     paper = "special", pdf_overwrite = FALSE, return_output = TRUE)
+#' # interactive only: open2() opens a screen device, even with pdf = TRUE on Windows and macOS
+#' if(base::interactive()){
+#'     # pdf file in the temporary directory
+#'     open2(pdf = TRUE, pdf_path = base::tempdir(check = FALSE), pdf_name = "graph", width = 7,
+#'         height = 7, paper = "special", pdf_overwrite = TRUE, return_output = TRUE)
+#'     graphics::plot(x = 1:10, y = NULL)
+#'     grDevices::dev.off(which = grDevices::dev.cur())
+#'     # screen device
+#'     open2(pdf = FALSE, width = 7, height = 7, return_output = TRUE)
+#'     graphics::plot(x = 1:10, y = NULL)
+#'     grDevices::dev.off(which = grDevices::dev.cur())
 #' }
 #' @importFrom saferDev arg_check
 #' @export

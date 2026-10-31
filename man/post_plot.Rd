@@ -158,19 +158,13 @@ Redesign axis. If x_side = 0, y_side = 0, the function just adds text at toprigh
 
 Provide also positions for legend or additional text on the graph.
 
-Use prior_plot() before this function for initial inactivation of the axis drawings.
+To redesign the axes, do not draw them with the plotting function used before post_plot() (for instance, plot(..., xaxt = "n", yaxt = "n", ann = FALSE)).
 }
 \examples{
-\dontrun{
-# Screen devices should not be used in examples
-
-# Example of log axis with redrawn x-axis and y-axis:
-
-prior.par <- prior_plot(param.reinitial = TRUE) ; 
-plot(1:100) ; 
+# Example of x-axis and y-axis redrawn by post_plot():
+graphics::plot(x = 1:100, y = NULL, xaxt = "n", yaxt = "n", ann = FALSE) # no axes, no labels
 post_plot(x_side = 1, x_lab = "Values", y_side = 2, y_lab = "TEST", y_axis_size = 1,
     y_label_size = 2, y_dist_legend = 0.6)
-}
 }
 \author{
 Gael Millot <gael.millot@pasteur.fr>

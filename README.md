@@ -32,7 +32,7 @@
 
 ## Description
 
-Set of R functions for classical graphic handling, written according to the [safer-R project](https://github.com/safer-r) specifications.
+Set of R functions for base R graphics (opening and closing of graphic devices, redrawing of axes, nice tick values and secondary ticks), written according to the [safer-R project](https://github.com/safer-r) specifications.
 
 <br />
 
@@ -61,8 +61,11 @@ The different *saferGraph* releases are tagged [here](https://github.com/safer-r
 
 ## Installation
 
+*saferGraph* can currently be installed from GitHub, together with its *saferTool* dependency, which is not on CRAN yet:
+
 ```r
-install.packages("saferGraph")
+install.packages("remotes")
+remotes::install_github(c("https://github.com/safer-r/saferTool", "https://github.com/safer-r/saferGraph")) # or open R as admin and add lib = "C:/Program Files/R/R-4.6.0/library"
 ```
 
 Older versions can be installed like this:

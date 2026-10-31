@@ -4,7 +4,7 @@
 #' 
 #' Provide also positions for legend or additional text on the graph.
 #' 
-#' Use prior_plot() before this function for initial inactivation of the axis drawings.
+#' To redesign the axes, do not draw them with the plotting function used before post_plot() (for instance, plot(..., xaxt = "n", yaxt = "n", ann = FALSE)).
 #' @param x_side Single integer value indicating the axis at the bottom (1) or top (3) of the region figure. Write 0 for no change.
 #' @param x_log_scale Single logical value. Log scale for the x-axis?
 #' @param x_categ Vector of character indicating the categories when the x-axis is qualitative(stripchart, boxplot).
@@ -89,16 +89,10 @@
 #' @author Yushi Han <yushi.han2000@gmail.com>
 #' @author Haiding Wang <wanghaiding442@gmail.com>
 #' @examples
-#' \dontrun{
-#' # Screen devices should not be used in examples
-#' 
-#' # Example of log axis with redrawn x-axis and y-axis:
-#'
-#' prior.par <- prior_plot(param.reinitial = TRUE) ; 
-#' plot(1:100) ; 
+#' # Example of x-axis and y-axis redrawn by post_plot():
+#' graphics::plot(x = 1:100, y = NULL, xaxt = "n", yaxt = "n", ann = FALSE) # no axes, no labels
 #' post_plot(x_side = 1, x_lab = "Values", y_side = 2, y_lab = "TEST", y_axis_size = 1,
 #'     y_label_size = 2, y_dist_legend = 0.6)
-#' }
 #' @importFrom saferDev arg_check
 #' @export
 post_plot <- function(

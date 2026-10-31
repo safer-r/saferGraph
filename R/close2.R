@@ -11,17 +11,17 @@
 #' @author Yushi Han <yushi.han2000@gmail.com>
 #' @author Haiding Wang <wanghaiding442@gmail.com>
 #' @examples
-#' \dontrun{
 #' # Screen devices (windows(), quartz() and x11()) should not be used in examples
-#' postscript() # open a postscript graphic device
-#' pdf(NULL) # open a pdf graphic device
-#' postscript() # open a postscript graphic device
-#' pdf(NULL) # open a pdf graphic device
-#' grDevices::dev.list() ; 
-#' close2(kind = c("pdf"), return_text = TRUE) ; 
-#' grDevices::dev.list() # only remains the postscript devices
-#' grDevices::graphics.off()
-#' }
+#' # Two png graphic devices, of the cairo type to have the same device name on all systems
+#' file1 <- base::tempfile(pattern = "file", tmpdir = base::tempdir(check = FALSE), fileext = ".png")
+#' file2 <- base::tempfile(pattern = "file", tmpdir = base::tempdir(check = FALSE), fileext = ".png")
+#' grDevices::png(filename = file1, width = 480, height = 480, units = "px", pointsize = 12,
+#'     bg = "white", res = NA, type = "cairo")
+#' grDevices::png(filename = file2, width = 480, height = 480, units = "px", pointsize = 12,
+#'     bg = "white", res = NA, type = "cairo")
+#' grDevices::dev.list()
+#' close2(kind = "png", return_text = TRUE)
+#' grDevices::dev.list() # the png graphic devices are closed
 #' @importFrom saferDev arg_check
 #' @export
 close2 <- function(

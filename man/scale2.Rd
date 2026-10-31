@@ -33,6 +33,7 @@ A vector of numbers.
 Attempt to select nice scale numbers when setting n ticks on a lim axis range.
 }
 \examples{
+ini_par <- graphics::par(no.readonly = TRUE) # initial graphic parameters
 # approximate number of main ticks
 
 ymin = 2 ; 
@@ -46,6 +47,7 @@ plot(ymin:ymax, ymin:ymax, xlim = base::range(scale, ymin, ymax)[order(c(ymin, y
     ylab = "NEW SCALE") ;
 par(yaxt = "s") ; 
 axis(side = 2, at = scale)
+graphics::par(ini_par, no.readonly = FALSE) # initial graphic parameters restored
 }
 \author{
 Gael Millot <gael.millot@pasteur.fr>
