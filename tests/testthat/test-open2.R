@@ -23,13 +23,13 @@ testthat::test_that("open2()", {
     ## tests (ordered by arg appearance and conditions in the code)
 
     #### function name
-    # the "::()" dev branch is triggered by any call via saferGraph:::open2(), but such a call opens a "graph.pdf" device in the current working directory: run the two no-args calls from tempdir() and clean after
-    ini_wd <- base::getwd()
-    base::setwd(dir = temp_dir)
+    # the "::()" dev branch is triggered by any call via saferGraph:::open2(): with all defaults, the "graph.pdf" file is in the temporary directory (default pdf_path), never in the working directory: clean after
+    ini_wd_files <- base::list.files(path = base::getwd(), all.files = TRUE, recursive = FALSE)
     testthat::expect_error(saferGraph:::open2()) # to test if(function_name[1] == "::()" | function_name[1] == ":::()") # runs with all defaults
     result0c <- open2(pdf_overwrite = TRUE) # all-default call: covers the arg_user_setting_eval <- NULL branch
-    base::setwd(dir = ini_wd)
     testthat::expect_true(object = base::is.list(x = result0c))
+    testthat::expect_equal(object = result0c$pdf_loc, expected = base::file.path(temp_dir, "graph.pdf")) # default pdf_path: temporary directory
+    testthat::expect_equal(object = base::list.files(path = base::getwd(), all.files = TRUE, recursive = FALSE), expected = ini_wd_files) # no file written in the working directory
     if(base::length(x = grDevices::dev.list()) > 0){
         base::invisible(grDevices::dev.off())
     }
@@ -378,6 +378,21 @@ testthat::test_that("open2()", {
     # actually, the pdf file is only written on dev.off()
     base::invisible(grDevices::dev.off())
     testthat::expect_true(object = base::file.exists(pdf_file))
+    # par.ini recovery with pdf = TRUE: pdf device without file, thus no screen device opened, even when screen devices are forbidden (as by R CMD check --as-cran, through _R_CHECK_SCREEN_DEVICE_ = "stop")
+    ini_screen_check <- base::Sys.getenv(x = "_R_CHECK_SCREEN_DEVICE_", unset = "", names = NA)
+    result4 <- base::tryCatch(
+        expr = {
+            base::Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
+            open2(pdf = TRUE, pdf_path = temp_dir, pdf_name = "open2_test4", width = 5, height = 6, paper = "special", pdf_overwrite = TRUE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = "")
+        },
+        finally = if(ini_screen_check == ""){base::Sys.unsetenv(x = "_R_CHECK_SCREEN_DEVICE_")}else{base::Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = ini_screen_check)}
+    )
+    base::invisible(grDevices::dev.off())
+    grDevices::pdf(file = NULL, width = 5, height = 6, paper = "special")
+    par_pdf <- graphics::par(no.readonly = TRUE)
+    base::invisible(grDevices::dev.off())
+    testthat::expect_equal(object = result4$ini_par, expected = par_pdf) # initial par() of a pdf device of the same dimensions
+    base::invisible(base::file.remove(base::file.path(temp_dir, "open2_test4.pdf")))
     # pdf_name with .pdf extension
     pdf_file2 <- base::file.path(temp_dir, "open2_test2.pdf")
     if(base::file.exists(pdf_file2)){
@@ -405,5 +420,17 @@ testthat::test_that("open2()", {
 
     ## other tests
     ## end other tests
+    base::rm(list = base::ls()) # to avoid a warning that block CRAN tests
+})
+
+testthat::test_that("open2() screen device", {
+    # pdf = FALSE opens a screen device: forbidden by R CMD check --as-cran (_R_CHECK_SCREEN_DEVICE_ = "stop"), and the Linux and macOS branches are not covered (nocov): only run on Windows, outside R CMD check
+    testthat::skip_if(condition = testthat::is_checking(), message = "screen devices are forbidden by R CMD check --as-cran")
+    testthat::skip_if_not(condition = base::Sys.info()[["sysname"]] == "Windows", message = "screen device branches only tested on Windows")
+    result <- open2(pdf = FALSE, pdf_path = base::tempdir(), pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, rescale = "fixed", remove_read_only = TRUE, return_output = TRUE, safer_check = TRUE, lib_path = NULL, error_text = "")
+    testthat::expect_null(object = result$pdf_loc) # no pdf file
+    testthat::expect_true(object = base::is.list(x = result$ini_par))
+    base::invisible(grDevices::dev.off(which = grDevices::dev.cur()))
+    testthat::expect_null(object = grDevices::dev.list())
     base::rm(list = base::ls()) # to avoid a warning that block CRAN tests
 })

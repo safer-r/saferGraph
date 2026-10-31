@@ -94,7 +94,7 @@ post_plot(
 
 \item{just_label_add}{Single logical value that just add axis labels (legend). If TRUE, at least (x_side == 0 & x_lab != "") or (y_side == 0 & y_lab != "") must be set to display the corresponding x_lab or y_lab.}
 
-\item{par_reset}{Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.}
+\item{par_reset}{Single logical value that resets all the graphics parameters. The default values are those of a new 7 x 7 inches pdf device, recovered without writing any file and without opening any screen device (see the file argument of \code{grDevices::pdf()}). BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.}
 
 \item{custom_par}{List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par_reset == TRUE, the default par() parameters are used.}
 

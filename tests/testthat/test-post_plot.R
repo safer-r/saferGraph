@@ -485,6 +485,21 @@ testthat::test_that("post_plot()", {
     graphics::plot(x = 1:3, y = 1:3)
     result11 <- post_plot(x_side = 0, x_log_scale = FALSE, x_categ = NULL, x_categ_pos = NULL, x_lab = "", x_axis_size = num1, x_label_size = num1, x_dist_legend = num2, x_nb_inter_tick = int1, y_side = 0, y_log_scale = FALSE, y_categ = NULL, y_categ_pos = NULL, y_lab = "", y_axis_size = num1, y_label_size = num1, y_dist_legend = num2, y_nb_inter_tick = int1, text_angle = 90, tick_length = num2, sec_tick_length = 0.3, bg_color = NULL, grid_lwd = NULL, grid_col = "white", corner_text = "c", corner_text_size = 1, just_label_add = FALSE, par_reset = TRUE, custom_par = NULL, safer_check = TRUE, lib_path = NULL, error_text = "")
     testthat::expect_true(object = base::grepl(x = result11$text[1], pattern = "GRAPH PARAMETERS RESET TO graphics::par() DEFAULT VALUES", fixed = TRUE))
+    # par_reset = TRUE: default parameters recovered on a pdf device without file, thus no screen device opened, even when screen devices are forbidden (as by R CMD check --as-cran, through _R_CHECK_SCREEN_DEVICE_ = "stop"), and reset applied to the current device, which stays the current one
+    graphics::par(mar = base::c(1, 1, 1, 1))
+    graphics::plot(x = 1:3, y = 1:3)
+    ini_dev <- grDevices::dev.cur()
+    ini_screen_check <- base::Sys.getenv(x = "_R_CHECK_SCREEN_DEVICE_", unset = "", names = NA)
+    result12 <- base::tryCatch(
+        expr = {
+            base::Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = "stop")
+            post_plot(x_side = 0, x_log_scale = FALSE, x_categ = NULL, x_categ_pos = NULL, x_lab = "", x_axis_size = num1, x_label_size = num1, x_dist_legend = num2, x_nb_inter_tick = int1, y_side = 0, y_log_scale = FALSE, y_categ = NULL, y_categ_pos = NULL, y_lab = "", y_axis_size = num1, y_label_size = num1, y_dist_legend = num2, y_nb_inter_tick = int1, text_angle = 90, tick_length = num2, sec_tick_length = 0.3, bg_color = NULL, grid_lwd = NULL, grid_col = "white", corner_text = "c", corner_text_size = 1, just_label_add = FALSE, par_reset = TRUE, custom_par = NULL, safer_check = TRUE, lib_path = NULL, error_text = "")
+        },
+        finally = if(ini_screen_check == ""){base::Sys.unsetenv(x = "_R_CHECK_SCREEN_DEVICE_")}else{base::Sys.setenv("_R_CHECK_SCREEN_DEVICE_" = ini_screen_check)}
+    )
+    testthat::expect_true(object = base::grepl(x = result12$text[1], pattern = "GRAPH PARAMETERS RESET TO graphics::par() DEFAULT VALUES", fixed = TRUE))
+    testthat::expect_equal(object = grDevices::dev.cur(), expected = ini_dev)
+    testthat::expect_equal(object = graphics::par("mar", no.readonly = FALSE), expected = base::c(5.1, 4.1, 4.1, 2.1)) # default margins of a new device
     # wrong x_categ_pos length
     testthat::expect_error(post_plot(x_side = 1, x_log_scale = FALSE, x_categ = vec1, x_categ_pos = base::c(1, 2), x_lab = "x", x_axis_size = num1, x_label_size = num1, x_dist_legend = num2, x_nb_inter_tick = int1, y_side = 0, y_log_scale = FALSE, y_categ = NULL, y_categ_pos = NULL, y_lab = "", y_axis_size = num1, y_label_size = num1, y_dist_legend = num2, y_nb_inter_tick = int1, text_angle = 90, tick_length = num2, sec_tick_length = 0.3, bg_color = NULL, grid_lwd = NULL, grid_col = "white", corner_text = "c", corner_text_size = 1, just_label_add = FALSE, par_reset = FALSE, custom_par = NULL, safer_check = TRUE, lib_path = NULL, error_text = ""))
     # wrong y_categ_pos length

@@ -12,7 +12,7 @@
 #'
 #' close2()
 #' @param pdf Single logical value. Use pdf display? If FALSE, a GUI is opened.
-#' @param pdf_path Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.
+#' @param pdf_path Single character string. Directory where the pdf is saved (do not terminate by / or \\). By default, the temporary directory of the R session (see \code{tempdir()}), which is deleted at the end of the session: the path of the pdf file is returned in $pdf_loc (see below). Write "working.dir" to save the pdf in the working directory. Ignored if pdf == FALSE.
 #' @param pdf_name Single character string. Name of the pdf file containing the graphs (the .pdf extension is added by the function, if not detected in the name end). Ignored if pdf == FALSE.
 #' @param width Single positive numeric value indicating the width of the window (in inches).
 #' @param height Single positive numeric value indicating the height of the window (in inches).
@@ -37,19 +37,21 @@
 #' @details 
 #' WARNINGS
 #'
-#' On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
+#' With pdf = TRUE, no screen device is opened, whatever the operating system: the initial graphic parameters are recovered on a pdf device of the same dimensions that does not write any file (see the file argument of \code{grDevices::pdf()}). Thus, open2() can be used on computers without display.
+#'
+#' With pdf = FALSE, a screen (GUI) graphic window is opened, which is not always available on Linux, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
 #' @author Gael Millot <gael.millot@pasteur.fr>
 #' @author Yushi Han <yushi.han2000@gmail.com>
 #' @author Haiding Wang <wanghaiding442@gmail.com>
 #' @examples
-#' # interactive only: open2() opens a screen device, even with pdf = TRUE on Windows and macOS
+#' # pdf file written in the temporary directory of the R session (default of pdf_path)
+#' res <- open2(pdf = TRUE, pdf_path = base::tempdir(check = FALSE), pdf_name = "graph",
+#'     width = 7, height = 7, paper = "special", pdf_overwrite = TRUE, return_output = TRUE)
+#' res$pdf_loc
+#' graphics::plot(x = 1:10, y = NULL)
+#' grDevices::dev.off(which = grDevices::dev.cur())
+#' # screen device (interactive sessions only)
 #' if(base::interactive()){
-#'     # pdf file in the temporary directory
-#'     open2(pdf = TRUE, pdf_path = base::tempdir(check = FALSE), pdf_name = "graph", width = 7,
-#'         height = 7, paper = "special", pdf_overwrite = TRUE, return_output = TRUE)
-#'     graphics::plot(x = 1:10, y = NULL)
-#'     grDevices::dev.off(which = grDevices::dev.cur())
-#'     # screen device
 #'     open2(pdf = FALSE, width = 7, height = 7, return_output = TRUE)
 #'     graphics::plot(x = 1:10, y = NULL)
 #'     grDevices::dev.off(which = grDevices::dev.cur())
@@ -57,9 +59,9 @@
 #' @importFrom saferDev arg_check
 #' @export
 open2 <- function(
-    pdf = TRUE, 
-    pdf_path = "working.dir", 
-    pdf_name = "graph", 
+    pdf = TRUE,
+    pdf_path = base::tempdir(check = FALSE),
+    pdf_name = "graph",
     width = 7, 
     height = 7, 
     paper = "special", 
@@ -72,7 +74,7 @@ open2 <- function(
     error_text = "" 
 ){
     # DEBUGGING
-    # pdf = TRUE ; pdf_path = "C:/Users/Gael/Desktop" ; pdf_name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf_overwrite = FALSE ; rescale = "fixed" ; remove_read_only = TRUE ; return_output = TRUE ; safer_check = TRUE # for function debugging
+    # pdf = TRUE ; pdf_path = base::tempdir(check = FALSE) ; pdf_name = "graphs" ; width = 7 ; height = 7 ; paper = "special" ; pdf_overwrite = FALSE ; rescale = "fixed" ; remove_read_only = TRUE ; return_output = TRUE ; safer_check = TRUE # for function debugging
 
 
     #### package name
@@ -500,38 +502,27 @@ open2 <- function(
         }
     }
     # par.ini recovery
-    # cannot use pdf(file = NULL), because some small differences between pdf() and other devices. For instance, differences with windows() for par()$fin, par()$pin and par()$plt
-    if(base::Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
-        open_fail <- NULL
-        grDevices::windows(width = 7, height = 7, pointsize = 12, record = FALSE, rescale = "fit", xpinch = NA_real_, ypinch = NA_real_, bg = "transparent", canvas = "white", gamma = 1, xpos = -25, ypos = 10, buffered = TRUE, title = "", restoreConsole = TRUE, clickToConfirm = TRUE, fillOddEven = TRUE, family = "", antialias = "default") # all the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the grDevices::windows.options() settings
+    if(pdf == TRUE){
+        # pdf device that does not write any file (file = NULL, see the file argument of grDevices::pdf()), with the settings of the pdf device opened below, thus with the same par() values: no temporary file written and no screen device opened, whatever the operating system, so that open2() works without display (and under R CMD check --as-cran, which forbids screen devices)
+        grDevices::pdf(width = width, height = height, file = NULL, paper = paper, onefile = , family = , title = , fonts = , version = , encoding = , bg = , fg = , pointsize = , pagecentre = , colormodel = , useDingbats = , useKerning = , fillOddEven = , compress = , timestamp = , producer = , author = )
         ini_par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-        base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the new window
-    }else if(base::Sys.info()["sysname"] == "Linux"){ # nocov start (Linux-only branch)
-        # codecov inactivated because this branch is only executed on Linux systems
-        if(pdf == TRUE){# cannot use pdf(file = NULL), because some small differences between pdf() and other devices. For instance, differences with windows() for par()$fin, par()$pin and par()$plt
-            if(base::exists(x = ".Random.seed", envir = .GlobalEnv, where = -1, frame = , mode = "any", inherits = TRUE)){ # if .Random.seed does not exists, it means that no random operation has been performed yet in any R environment
-                tempo_random_seed <- .Random.seed
-                base::on.exit(expr = base::assign(x = ".Random.seed", value = tempo_random_seed, envir = .GlobalEnv, pos = -1, inherits = FALSE, immediate = TRUE), add = FALSE, after = TRUE)
-            }else{
-                base::on.exit(expr = base::set.seed(seed = NULL, kind = NULL, normal.kind = NULL, sample.kind = NULL), add = FALSE, after = TRUE) # inactivate seeding -> return to complete randomness
-            }
-            base::set.seed(seed = NULL, kind = NULL, normal.kind = NULL, sample.kind = NULL)
-            tempo_code <- base::sample(x = 1:1e7, size = 1, replace = FALSE, prob = NULL)
-            while(base::file.exists(base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf", collapse = NULL, recycle0 = FALSE)) == TRUE){
-                tempo_code <- tempo_code + 1
-            }
-            grDevices::pdf(width = width, height = height, file=base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf", collapse = NULL, recycle0 = FALSE), paper = paper, onefile = , family = , title = , fonts = , version = , encoding = , bg = , fg = , pointsize = , pagecentre = , colormodel = , useDingbats = , useKerning = , fillOddEven = , compress = , timestamp = , producer = , author = )
+        base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the pdf device without file
+    }else{
+        # screen device: cannot use pdf(file = NULL), because some small differences between pdf() and other devices. For instance, differences with windows() for par()$fin, par()$pin and par()$plt
+        if(base::Sys.info()["sysname"] == "Windows"){ # Note that .Platform$OS.type() only says "unix" for macOS and Linux and "Windows" for Windows
+            open_fail <- NULL
+            grDevices::windows(width = 7, height = 7, pointsize = 12, record = FALSE, rescale = "fit", xpinch = NA_real_, ypinch = NA_real_, bg = "transparent", canvas = "white", gamma = 1, xpos = -25, ypos = 10, buffered = TRUE, title = "", restoreConsole = TRUE, clickToConfirm = TRUE, fillOddEven = TRUE, family = "", antialias = "default") # all the arguments written because their default values are options based, which is not tolerated by saferDev::all_args_here(). Note: writing the documented default values makes the call independent of the grDevices::windows.options() settings
             ini_par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-            base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the pdf window
-            base::file.remove(base::paste0(pdf_path, "/recover_ini_par", tempo_code, ".pdf", collapse = NULL, recycle0 = FALSE)) # remove the pdf file
-        }else{
+            base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the new window
+        }else if(base::Sys.info()["sysname"] == "Linux"){ # nocov start (Linux-only branch)
+            # codecov inactivated because this branch is only executed on Linux systems
             # test if X11 can be opened
             if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf", collapse = NULL, recycle0 = FALSE))){
                 tempo_cat <- base::paste0(
-                    error_text_start, 
-                    "THIS FUNCTION CANNOT BE USED ON LINUX IF A Rplots.pdf FILE ALREADY EXISTS HERE:\n", 
+                    error_text_start,
+                    "THIS FUNCTION CANNOT BE USED ON LINUX IF A Rplots.pdf FILE ALREADY EXISTS HERE:\n",
                     base::getwd(),
-                    collapse = NULL, 
+                    collapse = NULL,
                     recycle0 = FALSE
                 )
                 base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
@@ -543,26 +534,26 @@ open2 <- function(
                 }else if(base::file.exists(base::paste0(base::getwd(), "/Rplots.pdf", collapse = NULL, recycle0 = FALSE))){
                     base::file.remove(base::paste0(base::getwd(), "/Rplots.pdf", collapse = NULL, recycle0 = FALSE)) # remove the pdf file
                     tempo_cat <- base::paste0(
-                        error_text_start, 
-                        "THIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM.\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function_name, "() TO TRUE AND RERUN.", 
-                        collapse = NULL, 
+                        error_text_start,
+                        "THIS FUNCTION CANNOT OPEN GUI ON LINUX OR NON MACOS UNIX SYSTEM.\nTO OVERCOME THIS, EITHER SET THE X GRAPHIC INTERFACE OF THE SYSTEM OR SET THE pdf ARGUMENT OF THE ", function_name, "() TO TRUE AND RERUN.",
+                        collapse = NULL,
                         recycle0 = FALSE
                     )
                     base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL)
                 }
             }
+            # nocov end
+        }else{ # nocov start (macOS-only branch)
+            # codecov inactivated because this branch is only executed on macOS systems
+            open_fail <- NULL
+            quartz_fun <- utils::getFromNamespace(x = "quartz", ns = "grDevices", pos = -1, envir = ) # the quartz() function of grDevices is not exported on all systems (only macOS), so that a static checking by saferDev::all_args_here() fails on the other systems: call through getFromNamespace() instead
+            quartz_fun()
+            ini_par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
+            base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the new window
+            # nocov end
         }
-        # nocov end
-    }else{ # nocov start (macOS-only branch)
-        # codecov inactivated because this branch is only executed on macOS systems
-        open_fail <- NULL
-        quartz_fun <- utils::getFromNamespace(x = "quartz", ns = "grDevices", pos = -1, envir = ) # the quartz() function of grDevices is not exported on all systems (only macOS), so that a static checking by saferDev::all_args_here() fails on the other systems: call through getFromNamespace() instead
-        quartz_fun()
-        ini_par <- graphics::par(no.readonly = remove_read_only) # to recover the initial graphical parameters if required (reset). BEWARE: this command alone opens a pdf of GUI window if no window already opened. But here, protected with the code because always a tempo window opened
-        base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the new window
-        # nocov end
     }
-    # end par.ini recovery 
+    # end par.ini recovery
     zone_ini <- base::matrix(data = 1, ncol=1, nrow = 1, byrow = FALSE, dimnames = NULL) # to recover the initial parameters for next figure region when device region split into several figure regions
     if(pdf == TRUE){
         if(base::grepl(pattern = "\\.pdf$", x = pdf_name, ignore.case = FALSE, perl = FALSE, fixed = FALSE, useBytes = FALSE)){

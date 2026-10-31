@@ -6,7 +6,7 @@
 \usage{
 open2(
   pdf = TRUE,
-  pdf_path = "working.dir",
+  pdf_path = base::tempdir(check = FALSE),
   pdf_name = "graph",
   width = 7,
   height = 7,
@@ -23,7 +23,7 @@ open2(
 \arguments{
 \item{pdf}{Single logical value. Use pdf display? If FALSE, a GUI is opened.}
 
-\item{pdf_path}{Single character string. Where the pdf is saved (do not terminate by / or \\). Write "working.dir" if working directory is required (default). Ignored if pdf == FALSE.}
+\item{pdf_path}{Single character string. Directory where the pdf is saved (do not terminate by / or \\). By default, the temporary directory of the R session (see \code{tempdir()}), which is deleted at the end of the session: the path of the pdf file is returned in $pdf_loc (see below). Write "working.dir" to save the pdf in the working directory. Ignored if pdf == FALSE.}
 
 \item{pdf_name}{Single character string. Name of the pdf file containing the graphs (the .pdf extension is added by the function, if not detected in the name end). Ignored if pdf == FALSE.}
 
@@ -74,17 +74,19 @@ close2()
 \details{
 WARNINGS
 
-On Linux, use pdf = TRUE, if (GUI) graphic window is not always available, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
+With pdf = TRUE, no screen device is opened, whatever the operating system: the initial graphic parameters are recovered on a pdf device of the same dimensions that does not write any file (see the file argument of \code{grDevices::pdf()}). Thus, open2() can be used on computers without display.
+
+With pdf = FALSE, a screen (GUI) graphic window is opened, which is not always available on Linux, meaning that X is not installed (clusters for instance). Use X11() in R to test if available.
 }
 \examples{
-# interactive only: open2() opens a screen device, even with pdf = TRUE on Windows and macOS
+# pdf file written in the temporary directory of the R session (default of pdf_path)
+res <- open2(pdf = TRUE, pdf_path = base::tempdir(check = FALSE), pdf_name = "graph",
+    width = 7, height = 7, paper = "special", pdf_overwrite = TRUE, return_output = TRUE)
+res$pdf_loc
+graphics::plot(x = 1:10, y = NULL)
+grDevices::dev.off(which = grDevices::dev.cur())
+# screen device (interactive sessions only)
 if(base::interactive()){
-    # pdf file in the temporary directory
-    open2(pdf = TRUE, pdf_path = base::tempdir(check = FALSE), pdf_name = "graph", width = 7,
-        height = 7, paper = "special", pdf_overwrite = TRUE, return_output = TRUE)
-    graphics::plot(x = 1:10, y = NULL)
-    grDevices::dev.off(which = grDevices::dev.cur())
-    # screen device
     open2(pdf = FALSE, width = 7, height = 7, return_output = TRUE)
     graphics::plot(x = 1:10, y = NULL)
     grDevices::dev.off(which = grDevices::dev.cur())

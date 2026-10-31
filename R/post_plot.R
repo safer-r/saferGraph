@@ -31,7 +31,7 @@
 #' @param grid_col Grid line colors (only if grid_lwd non NULL). A single character string. Color can be a color name (see ?colors() in R), or an hexadecimal color code.
 #' @param corner_text Single character string adding a text at the top right corner of the window.
 #' @param corner_text_size Single positive numeric value to increase or decrease the size of the text. Value 1 does not change it, 0.5 decreases by half, 2 increases by 2.
-#' @param par_reset Single logical value that resets all the graphics parameters. BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.
+#' @param par_reset Single logical value that resets all the graphics parameters. The default values are those of a new 7 x 7 inches pdf device, recovered without writing any file and without opening any screen device (see the file argument of \code{grDevices::pdf()}). BEWARE: TRUE can generate display problems, mainly in graphic devices with multiple figure regions.
 #' @param just_label_add Single logical value that just add axis labels (legend). If TRUE, at least (x_side == 0 & x_lab != "") or (y_side == 0 & y_lab != "") must be set to display the corresponding x_lab or y_lab.
 #' @param custom_par List that provides the parameters that reset all the graphics parameters. BEWARE: if NULL and par_reset == TRUE, the default par() parameters are used.
 #' @param safer_check Single logical value. Perform the "safer" checks? If \code{TRUE}, checkings are performed before main code running (see the \href{https://github.com/safer-r}{safer-r project}): 1) required functions and related packages effectively present in local R libraries and 2) R classical operators (like \code{"<-"}) not overwritten by another package because of the R scope. Warning: must be set to \code{FALSE} if this function is used inside another "safer" function to avoid pointless multiple checkings.
@@ -466,7 +466,6 @@ post_plot <- function(
             fun = base::c(
                 # functions required in this code
                 "saferDev::arg_check", # write each function preceeded by their package name
-                "saferGraph::open2",
                 # end functions required in this code
                 # internal functions required in this code
                 "saferDev:::.base_op_check"
@@ -829,17 +828,21 @@ post_plot <- function(
     }
     graphics::par(xpd=FALSE, no.readonly = FALSE)
     if(par_reset == TRUE){
-        tempo_par <- saferGraph::open2(pdf = FALSE, pdf_path = "working.dir", pdf_name = "graph", width = 7, height = 7, paper = "special", pdf_overwrite = FALSE, rescale = "R", remove_read_only = FALSE, return_output = TRUE, safer_check = FALSE, lib_path = lib_path, error_text = embed_error_text)
-        base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the new window
+        # default graphic parameters of a new device, recovered on a 7 x 7 inches pdf device that does not write any file (file = NULL, see the file argument of grDevices::pdf()): no screen device opened, so that post_plot() works without display (and under R CMD check --as-cran, which forbids screen devices)
+        ini_dev <- grDevices::dev.cur() # device to reset
+        grDevices::pdf(width = 7, height = 7, file = NULL, paper = "special", onefile = , family = , title = , fonts = , version = , encoding = , bg = , fg = , pointsize = , pagecentre = , colormodel = , useDingbats = , useKerning = , fillOddEven = , compress = , timestamp = , producer = , author = )
+        ini_par <- graphics::par(no.readonly = FALSE) # read only (R.O.) graphical parameters included
+        base::invisible(x = grDevices::dev.off(which = grDevices::dev.cur())) # close the pdf device without file
+        base::invisible(x = grDevices::dev.set(which = ini_dev)) # back to the device to reset (dev.off() makes the next device the current one)
         if( ! base::is.null(x = custom_par)){
-            if( ! base::names(x = custom_par) %in% base::names(x = tempo_par$ini_par)){
+            if( ! base::names(x = custom_par) %in% base::names(x = ini_par)){
                 tempo_cat <- base::paste0("ERROR IN ", function_name, " OF THE ", package_name, " PACKAGE\ncustom_par ARGUMENT SHOULD HAVE THE NAMES OF THE COMPARTMENT LIST COMING FROM THE graphics::par() LIST", collapse = NULL, recycle0 = FALSE)
                 base::stop(base::paste0("\n\n================\n\n", tempo_cat, "\n\n================\n\n", collapse = NULL, recycle0 = FALSE), call. = FALSE, domain = NULL) # == in stop() to be able to add several messages between ==
             }
             base::suppressWarnings(expr = graphics::par(custom_par, no.readonly = FALSE), classes = "warning") # apply the custom parameters on the current device
             text <- base::c(text, "\nGRAPH PARAMETERS SET TO VALUES DEFINED BY custom_par ARGUMENT\n")
         }else{
-            base::suppressWarnings(expr = graphics::par(tempo_par$ini_par, no.readonly = FALSE), classes = "warning") # reset to the default parameters of a fresh device
+            base::suppressWarnings(expr = graphics::par(ini_par, no.readonly = FALSE), classes = "warning") # reset to the default parameters of a fresh device
             text <- base::c(text, "\nGRAPH PARAMETERS RESET TO graphics::par() DEFAULT VALUES\n")
         }
     }
