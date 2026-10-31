@@ -10,7 +10,7 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/saferGraph)](https://r-pkg.org/pkg/saferGraph)<br />
 [![Rworkflows](https://github.com/safer-r/saferGraph/actions/workflows/rworkflows.yml/badge.svg)](https://github.com/safer-r/saferGraph/actions/workflows/rworkflows.yml)
 [![Codecov](https://codecov.io/github/safer-r/saferGraph/coverage.svg?branch=master)](https://app.codecov.io/github/safer-r/saferGraph?branch=master)
-[![safer-R Status](https://img.shields.io/badge/Safer--R%20status-backbone%20v21.1-brightgreen)](https://github.com/safer-r/.github/blob/main/profile/backbone.R)<br />
+[![safer-R Status](https://img.shields.io/badge/Safer--R%20status-backbone%20v21.2-brightgreen)](https://github.com/safer-r/saferMake/tree/main/inst)<br />
 [![](https://img.shields.io/badge/license-GPL3.0-lightgrey.svg)](https://opensource.org/license/gpl-3.0)
 <!-- badges: end -->
 

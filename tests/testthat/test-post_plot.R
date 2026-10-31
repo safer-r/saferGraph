@@ -149,6 +149,8 @@ testthat::test_that("post_plot()", {
     testthat::expect_error(post_plot(lib_path = expr1))
     testthat::expect_error(post_plot(lib_path = fun1))
     testthat::expect_error(post_plot(lib_path = "PATH_NOT_GOOD"))
+    # lib_path is checked even when safer_check is FALSE (backbone v21.2: lib_path used outside if(safer_check == TRUE){}, so the lib_path check is always executed)
+    testthat::expect_error(post_plot(lib_path = "PATH_NOT_GOOD", safer_check = FALSE))
     testthat::expect_no_error(post_plot(lib_path = base:::.libPaths(new = , include.site = TRUE)))
     ######## end check of lib_path
 

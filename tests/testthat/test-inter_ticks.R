@@ -124,6 +124,8 @@ testthat::test_that("inter_ticks()", {
     testthat::expect_error(inter_ticks(lim = c(-4, 4), log = "no", breaks = c(-2, 0, 2), n = 3, warn_print = TRUE, safer_check = TRUE, lib_path = expr1, error_text = ""))
     testthat::expect_error(inter_ticks(lim = c(-4, 4), log = "no", breaks = c(-2, 0, 2), n = 3, warn_print = TRUE, safer_check = TRUE, lib_path = fun1, error_text = ""))
     testthat::expect_error(inter_ticks(lim = c(-4, 4), log = "no", breaks = c(-2, 0, 2), n = 3, warn_print = TRUE, safer_check = TRUE, lib_path = "PATH_NOT_GOOD", error_text = ""))
+    # lib_path is checked even when safer_check is FALSE (backbone v21.2: lib_path used outside if(safer_check == TRUE){}, so the lib_path check is always executed)
+    testthat::expect_error(inter_ticks(lim = c(-4, 4), log = "no", breaks = c(-2, 0, 2), n = 3, warn_print = TRUE, safer_check = FALSE, lib_path = "PATH_NOT_GOOD", error_text = ""))
     testthat::expect_no_error(inter_ticks(lim = c(-4, 4), log = "no", breaks = c(-2, 0, 2), n = 3, warn_print = TRUE, safer_check = TRUE, lib_path = base:::.libPaths(new = , include.site = TRUE), error_text = ""))
     ######## end check of lib_path
 
